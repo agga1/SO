@@ -23,20 +23,22 @@ FILE* load_file(char* filename){
 
 void compare_pairs(char *pairs, int nr_of_pairs){
     //// creating tmp files with 'diff' command output
-//    printf("%s", pairs);
     int pairs_nr=0;
     char *pair_names[nr_of_pairs];
     char * token = strtok(pairs, " ");
     while( token != NULL ) {
         char *pair = calloc(strlen(token), sizeof(char));
         strcpy(pair, token);
-        char out_file[50];
-        snprintf(out_file, sizeof(out_file), "tmp_%d.txt", pairs_nr);
+        pair_names[pairs_nr] = pair;
         pairs_nr +=1;
-        compare_pair(pair, out_file); // comparing each pair of files
         token = strtok(NULL, " ");
     }
     printf("%d pairs found", pairs_nr);
+    for(int i=0;i<pairs_nr;i++){
+        char out_file[50];
+        snprintf(out_file, sizeof(out_file), "tmp_%d.txt", i);
+        compare_pair(pair_names[i], out_file); // comparing each pair of files
+    }
 
     //// populating main array with pointers to blocks
     struct main_array* ma = main_array_new(pairs_nr);
