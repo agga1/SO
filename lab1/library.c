@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-const char* path = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/";
-struct block ** create_table(int size) {
-    struct block** a =(struct block**)malloc(size*sizeof(struct block*));
-    return a;
+const char* path = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/txt_files/";
+
+struct main_array* create_table(int size) {
+    return main_array_new(size);
 }
 
 FILE* load_file(char* filename){
@@ -22,7 +22,7 @@ FILE* load_file(char* filename){
 }
 
 void compare_pairs(char *pairs, int nr_of_pairs){
-    //// creating tmp files with 'diff' command output
+    //// split string into array of pairs
     int pairs_nr=0;
     char *pair_names[nr_of_pairs];
     char * token = strtok(pairs, " ");
@@ -33,7 +33,11 @@ void compare_pairs(char *pairs, int nr_of_pairs){
         pairs_nr +=1;
         token = strtok(NULL, " ");
     }
-    printf("%d pairs found", pairs_nr);
+    if(nr_of_pairs != pairs_nr){
+        printf("%d pairs found, %d declared", pairs_nr, nr_of_pairs);
+        return;
+    }
+    //// creating tmp files for each pair
     for(int i=0;i<pairs_nr;i++){
         char out_file[50];
         snprintf(out_file, sizeof(out_file), "tmp_%d.txt", i);
@@ -50,12 +54,10 @@ void compare_pairs(char *pairs, int nr_of_pairs){
         ma->blocks[i] = b;
     }
 }
-void compare_pair(char *pair, char *out_filename) {
-    char * token = strtok(pair, ":");
-    char * file_a = token;
-    token = strtok(NULL, ":");
-    char *file_b= token;
-    char command[256];
+void compare_pair(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
+    char *file_a = strtok(pair, ":");
+    char *file_b = strtok(NULL, ":");
+    char command[512];
     snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", path, file_a, file_b, out_filename);
     system(command);
 }
@@ -87,23 +89,43 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
             {
                 b->a[i] = malloc(strlen(ed_op)* sizeof(char));
                 strcpy(b->a[i], ed_op);
+//                printf("b->a[%d]=%s", i, b->a[i]);
                 i++;
                 strcpy(ed_op, "");
             }
-            strcat(ed_op, line);
         }
+        strcat(ed_op, line);
     }
     if(strcmp(ed_op, "") != 0) // last editing operation
     {
         b->a[i] = malloc(strlen(ed_op)* sizeof(char));
         strcpy(b->a[i], ed_op);
-        strcpy(ed_op, "");
     }
 
     fclose(tmp_file);
     if (line)
         free(line);
     return b;
+}
+
+void remove_block(int index, struct main_array* ma){
+    if(ma->size<=index){
+        printf("no block with such index");
+        exit(EXIT_FAILURE);
+    }
+
+}
+void remove_ed_op(int b_index, int ed_op_index, struct main_array* ma){
+    if(ma->size<=b_index){
+        printf("no block with such index");
+        exit(EXIT_FAILURE);
+    }
+    if(ma->blocks[b_index]->size<=ed_op_index){
+        printf("no operation with such index");
+        exit(EXIT_FAILURE);
+    }
+
+
 }
 struct main_array* main_array_new(int size) {
     struct main_array* ma = malloc(sizeof(struct main_array));

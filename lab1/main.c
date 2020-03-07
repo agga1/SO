@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv){
 //    system("cd /mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1 && diff a.txt b.txt > c.txt");
-    char string[50] = "a.txt:b.txt c.txt:d.txt d.txt:c.txt";
+    char string[50] = "a.txt:b.txt c.txt:d.txt a.txt:c.txt";
     int nr_of_pairs=3;
     compare_pairs(string, nr_of_pairs);
     return 0;
