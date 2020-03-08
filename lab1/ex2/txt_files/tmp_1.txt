@@ -1,0 +1,9 @@
+1,4c1,3
+< abb
+< cdf
+< gff
+< 
+---
+> dsd
+> ggds
+> cdd
