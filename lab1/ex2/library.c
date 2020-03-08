@@ -20,7 +20,7 @@ FILE* load_file(char* filename){
     }
     return filestream;
 }
-char ** seq_to_pairs(char *pairs, int nr_of_pairs){ //// split string into array of pairs
+char ** seq_to_pair_array(char *pairs, int nr_of_pairs){ //// split string into array of pairs
     int pairs_nr=0;
     char **pair_names = calloc((size_t) nr_of_pairs, sizeof(char*));
     char * token = strtok(pairs, " ");
@@ -31,12 +31,14 @@ char ** seq_to_pairs(char *pairs, int nr_of_pairs){ //// split string into array
         pairs_nr +=1;
         token = strtok(NULL, " ");
     }
-    if(nr_of_pairs != pairs_nr){
+    if(nr_of_pairs != pairs_nr){ // incorrect input msg
         printf("%d pairs found, %d declared", pairs_nr, nr_of_pairs);
         return NULL;
     }
     return pair_names;
 }
+
+//// compare each pair from pairs (pair like"a.txt:b.txt")
 void compare_to_tmp_file(char **pair_names, int pairs_nr){
     for(int i=0;i<pairs_nr;i++){
         char out_file[50];
@@ -44,6 +46,8 @@ void compare_to_tmp_file(char **pair_names, int pairs_nr){
         compare_pair(pair_names[i], out_file); // comparing each pair of files
     }
 }
+
+//// process tmp files (named "tmp_%d.txt", i<-0 until pairs_nr) and create array of blocks
 struct main_array* tmp_to_array(int pairs_nr){
     struct main_array* ma = main_array_new(pairs_nr);
     for(int i=0;i<pairs_nr;i++){
@@ -55,38 +59,11 @@ struct main_array* tmp_to_array(int pairs_nr){
     }
     return ma;
 }
-void compare_pairs(char *pairs, int nr_of_pairs){
-    //// split string into array of pairs
-    int pairs_nr=0;
-    char *pair_names[nr_of_pairs];
-    char * token = strtok(pairs, " ");
-    while( token != NULL ) {
-        char *pair = calloc(strlen(token), sizeof(char));
-        strcpy(pair, token);
-        pair_names[pairs_nr] = pair;
-        pairs_nr +=1;
-        token = strtok(NULL, " ");
-    }
-    if(nr_of_pairs != pairs_nr){
-        printf("%d pairs found, %d declared", pairs_nr, nr_of_pairs);
-        return;
-    }
-    //// creating tmp files for each pair
-    for(int i=0;i<pairs_nr;i++){
-        char out_file[50];
-        snprintf(out_file, sizeof(out_file), "tmp_%d.txt", i);
-        compare_pair(pair_names[i], out_file); // comparing each pair of files
-    }
-
-    //// populating main array with pointers to blocks
-    struct main_array* ma = main_array_new(pairs_nr);
-    for(int i=0;i<pairs_nr;i++){
-        char filename[50];
-        snprintf(filename, sizeof(filename), "tmp_%d.txt", i);
-        struct block* b = process_tmp_file(filename); // populating each block w pointers to ed_ops
-        printf("size of block no %d = %d",i, b->size);
-        ma->blocks[i] = b;
-    }
+struct main_array * compare_pairs(char *pairs, int nr_of_pairs){
+    char **pair_names = seq_to_pair_array(pairs, nr_of_pairs);
+    compare_to_tmp_file(pair_names, nr_of_pairs);
+    struct main_array* ma = tmp_to_array(nr_of_pairs);
+    return ma;
 }
 void compare_pair(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
     char *file_a = strtok(pair, ":");
@@ -123,7 +100,6 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
             {
                 b->a[i] = malloc(strlen(ed_op)* sizeof(char));
                 strcpy(b->a[i], ed_op);
-//                printf("b->a[%d]=%s", i, b->a[i]);
                 i++;
                 strcpy(ed_op, "");
             }

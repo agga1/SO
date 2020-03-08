@@ -15,7 +15,7 @@ struct main_array{
 };
 struct main_array* main_array_new(int size);
 struct main_array* create_table(int size);
-void compare_pairs(char *pairs, int nr_of_pairs);
+struct main_array * compare_pairs(char *pairs, int nr_of_pairs);
 void compare_pair( char *pair, char *out_filename);
 int remove_block(int index, struct main_array* ma);
 int remove_ed_op(int b_index, int ed_op_index, struct main_array* ma);
