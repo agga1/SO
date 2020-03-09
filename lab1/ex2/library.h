@@ -22,6 +22,7 @@ char ** seq_to_pair_array(char *pairs, int nr_of_pairs);
 void compare_to_tmp_file(char **pair_names, int pairs_nr);
 void compare_pair_to_tmp(char *pair, char *out_filename);
 void tmp_to_array(struct main_array* ma);
+void save_block(int idx, struct main_array* ma);
 
 int remove_block(int index, struct main_array* ma);
 int remove_ed_op(int b_index, int ed_op_index, struct main_array* ma);

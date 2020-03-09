@@ -48,11 +48,7 @@ void compare_to_tmp_file(char **pair_names, int pairs_nr){
 //// process tmp files (named "tmp_%d.txt", i<-0 until pairs_nr) and create array of blocks
 void tmp_to_array(struct main_array* ma){
     for(int i=0;i<ma->size;i++){
-        char filename[50];
-        snprintf(filename, sizeof(filename), "tmp_%d.txt", i);
-        struct block* b = process_tmp_file(filename); // populating each block w pointers to ed_ops
-        printf("size of block no %d = %d",i, b->size);
-        ma->blocks[i] = b;
+        save_block(i, ma);
     }
 }
 struct main_array * compare_pairs(char *pairs, int nr_of_pairs){
@@ -67,6 +63,7 @@ void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.t
     char *file_b = strtok(NULL, ":");
     char command[512];
     snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", variab, file_a, file_b, out_filename);
+    printf("%s", command);
     system(command);
 }
 void compare_pairs_to_array(char *pairs, struct main_array * ma){
@@ -120,6 +117,13 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
     return b;
 }
 
+//// save single block from tmp_{idx}.txt file
+void save_block(int idx, struct main_array* ma){
+    char filename[50];
+    snprintf(filename, sizeof(filename), "tmp_%d.txt", idx);
+    struct block* b = process_tmp_file(filename); // populating each block w pointers to ed_ops
+    ma->blocks[idx] = b;
+}
 int remove_block(int index, struct main_array* ma){
     if(ma == NULL || ma->blocks[index] == NULL || index < 0 || index >= ma->size ) return -1;
     free(ma->blocks[index]);

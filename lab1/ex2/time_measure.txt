@@ -1,0 +1,7 @@
+create_table 5
+compare_pairs a.txt:b.txt c.txt:d.txt e.txt:f.txt e.txt:f.txt e.txt:f.txt e.txt:f.txt
+start
+save_block 1
+save_block 0
+remove_block 1
+remove_block 0
