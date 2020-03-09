@@ -73,7 +73,7 @@ void compare_pairs_to_array(char *pairs, struct main_array * ma){
 }
 
 struct block* process_tmp_file(char *filename){ // populates block with array of pointers to diff edit. op
-//    printf("\nprocessing %s... \n", filename);
+    printf("\nprocessing %s... \n", filename);
     char * line = NULL;
     size_t len = 0;
 
@@ -90,7 +90,7 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
     struct block* b=block_new(nr_ed_op);
 
     tmp_file = load_file(filename);
-    char ed_op[1024];
+    char ed_op[4084];
     strcpy(ed_op, "");
     int i=0;
     while ((getline(&line, &len, tmp_file)) != -1) {
@@ -105,6 +105,7 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
         }
         strcat(ed_op, line);
     }
+    printf("here");
     if(strcmp(ed_op, "") != 0) // last editing operation
     {
         b->a[i] = malloc(strlen(ed_op)* sizeof(char));

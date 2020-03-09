@@ -21,6 +21,37 @@ clean:
 	rm -f *.o
 
 tests:
-	./test clear_file create_table 2 compare_pairs a.txt:b.txt start_time save_block 0 remove_block 0
-	./test create_table 5 start_time compare_pairs long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt
+	# similar files
+	./test create_table 5 start_time compare_pairs lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsim.txt
+	# kinda similar files
+	./test create_table 5 start_time compare_pairs dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt
+	# very different files
+	./test create_table 5 start_time compare_pairs lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt
+	# a few comparisons
+	./test create_table 5 start_time compare_pairs lsim.txt:lsimb.txt
+	# some comparisons
+	./test create_table 5 start_time compare_pairs lsim.txt:lsimb.txt \
+    lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+    lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+    lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt
+	# a lot of comparisons
+	./test create_table 5 start_time compare_pairs lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt \
+	lsim.txt:lsimb.txt lsim.txt:lsimb.txt lsim.txt:lsimb.txt
+	# saving small blocks
+	./test create_table 5 compare_pairs a.txt:b.txt a.txt:b.txt a.txt:b.txt a.txt:b.txt a.txt:b.txt \
+	start_time save_block 0 save_block 1 save_block 2 save_block 3 save_block 4
+	#saving big blocks
+	./test create_table 5 compare_pairs lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt \
+	start_time save_block 0 save_block 1 save_block 2 save_block 3 save_block 4
+	#removing big blocks
+	./test create_table 5 compare_pairs lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt lrgb.txt:lrg.txt \
+	save_block 0 save_block 1 save_block 2 \
+	start_time remove_block 0 remove_block 1 remove_block 2
+
 

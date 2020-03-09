@@ -1,0 +1,32 @@
+The function clock_getres() finds the resolution (
+precision) of the specified clock clk_id, and, if res is non-NULL, stores
+ it in the struct timespec pointed to by res. The resolution of clocks depends on the imp
+ lementation and cannot be configured by a particular process. If the time value pointed to
+ by the argument tp of clock_settime() is not a multiple of res, then it is truncated to a multiple of res.
+The functions clock_gettime() and clock_settime() retrieve and set the time of
+ the specified clock clk_id.
+The res and tp arguments are timespec structs, as specified in <time.h>:
+The function clock_getres() finds the resolution (
+precision) of the specified clock clk_id, and, if res is non-NULL, stores
+ it in the struct timespec pointed to by res. The resolution of clocks depends on the imp
+ lementation and cannot be configured by a particular process. If the time value pointed to
+ by the argument tp of clock_settime() is not a multiple of res, then it is truncated to a multiple of res.
+The functions clock_gettime() and clock_settime() retrieve and set the time of
+ the specified clock clk_id.
+The res and tp arguments are timespec structs, as specified in <time.h>:
+The function clock_getres() finds the resolution (
+precision) of the specified clock clk_id, and, if res is non-NULL, stores
+ it in the struct timespec pointed to by res. The resolution of clocks depends on the imp
+ lementation and cannot be configured by a particular process. If the time value pointed to
+ by the argument tp of clock_settime() is not a multiple of res, then it is truncated to a multiple of res.
+The functions clock_gettime() and clock_settime() retrieve and set the time of
+ the specified clock clk_id.
+The res and tp arguments are timespec structs, as specified in <time.h>:
+The function clock_getres() finds the resolution (
+precision) of the specified clock clk_id, and, if res is non-NULL, stores
+ it in the struct timespec pointed to by res. The resolution of clocks depends on the imp
+ lementation and cannot be configured by a particular process. If the time value pointed to
+ by the argument tp of clock_settime() is not a multiple of res, then it is truncated to a multiple of res.
+The functions clock_gettime() and clock_settime() retrieve and set the time of
+ the specified clock clk_id.
+The res and tp arguments are timespec structs, as specified in <time.h>:

@@ -17,11 +17,10 @@
 void append_file(FILE* result_file, char* data){
     fprintf(result_file, "%s\n", data);
 }
-void write_time(FILE *result_file, struct timespec *start_time, struct timespec *end_time, struct rusage *start_usage,
-                struct rusage *end_usage){
-    fprintf(result_file, "REAL_TIME: %ldns\n", end_time->tv_nsec - start_time->tv_nsec);
-    fprintf(result_file, "USER_TIME: %ldµs\n", end_usage->ru_utime.tv_usec - start_usage->ru_utime.tv_usec);
-    fprintf(result_file, "SYSTEM_TIME: %ldµs\n", end_usage->ru_stime.tv_usec - start_usage->ru_stime.tv_usec);
+void write_time(FILE *result_file, double r, double u, double s){
+    fprintf(result_file, "REAL_TIME: %fns\n", r);
+    fprintf(result_file, "USER_TIME: %fµs\n", u);
+    fprintf(result_file, "SYSTEM_TIME: %fµs\n", s);
 }
 bool in(char* el, char ** str_array, int ar_len){
     for(int i = 0; i < ar_len; i++) {
@@ -36,33 +35,21 @@ double calculate_time(clock_t start, clock_t end) {
 int main(int argc, char **argv){
     char *commands[N]= {"create_table", "compare_pairs", "remove_block", "remove_operation", "save_block", "start_time", "clear_file"};
 
-    struct tms **tms_time = malloc(6 * sizeof(struct tms *));
-    clock_t real_time[6];
-    for (int i = 0; i < 6; i++) {
-        tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
-    }
-
-//    printf("running");
     //// time measurement
+    bool count_time = false;
+    struct tms **tms_time = malloc(6 * sizeof(struct tms *));
+    clock_t real_time[2];
+    for (int i = 0; i < 2; i++) tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
+
+    /// output file
     const char* cwd = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
     char *path = calloc(256, sizeof(char));
     snprintf(path, 256, "%s%s", cwd, "raport2.txt");
-
     FILE *result_file;
     int nr=1;
     if(strcmp(argv[nr], commands[6])==0) {result_file = fopen(path, "w"); nr++;}
     else result_file = fopen(path, "a");
-
-    struct rusage *start_usage = calloc(1, sizeof * start_usage);
-    struct rusage *end_usage = calloc(1, sizeof * end_usage);
-    struct timespec *start_time = calloc(1, sizeof *start_time);
-    struct timespec *end_time = calloc(1, sizeof *end_time);
-
-
     append_file(result_file, "\texecuted operations:");
-    clock_gettime(0, start_time); // if "start" not defined, measure all by default
-    getrusage(RUSAGE_SELF, start_usage);
-    bool count_time = false;
 
     if(strcmp(argv[nr], commands[0])!=0) {
         printf("command chain must start with %s!", commands[0]);
@@ -87,7 +74,7 @@ int main(int argc, char **argv){
 
             char cmd[256];
             if(length<=5) snprintf(cmd, 256, "%s size small", commands[1]);
-            else if(length<15) snprintf(cmd, 256, "%s size medium", commands[1]);
+            else if(length<20) snprintf(cmd, 256, "%s size medium", commands[1]);
             else snprintf(cmd, 256, "%s size large", commands[1]);
             if(count_time) append_file(result_file, cmd);
 
@@ -110,16 +97,23 @@ int main(int argc, char **argv){
             if(count_time) append_file(result_file, commands[4]);
         }
         else if(strcmp(argv[i], commands[5])==0){
-            clock_gettime(0, start_time);
-            getrusage(RUSAGE_SELF, start_usage);
+            real_time[0] = times(tms_time[0]);
             count_time=true;
         }
     }
 
-    clock_gettime(0, end_time);
-    getrusage(RUSAGE_SELF, end_usage);
+    real_time[1] = times(tms_time[1]);
+    double r= calculate_time(real_time[0], real_time[1]);
+    double u=calculate_time(tms_time[0]->tms_utime, tms_time[1]->tms_utime);
+    double s=calculate_time(tms_time[0]->tms_stime, tms_time[1]->tms_stime);
+    printf("   Real   |   User   |   System\n");
+    printf("%lf   ", r);
+    printf("%lf   ", u);
+    printf("%lf ", s);
+    printf("\n");
 
-    write_time(result_file, start_time, end_time, start_usage, end_usage);
+
+    write_time(result_file, r, u, s);
     fclose(result_file);
     return 0;
 }
