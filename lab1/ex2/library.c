@@ -3,16 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-const char* path = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex1/txt_files/";
-
-struct main_array* create_table(int size) {
-    return main_array_new(size);
-}
+char* variab = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
 
 FILE* load_file(char* filename){
     if(filename == NULL) return NULL;
     char _path[500];
-    snprintf(_path, sizeof(_path), "%s%s", path, filename);
+    snprintf(_path, sizeof(_path), "%s%s", variab, filename);
     FILE* filestream = fopen(_path,"r");
     if(filestream == NULL) {
         printf("file %s not found", _path);
@@ -20,7 +16,9 @@ FILE* load_file(char* filename){
     }
     return filestream;
 }
-char ** seq_to_pair_array(char *pairs, int nr_of_pairs){ //// split string into array of pairs
+
+//// split string into array of pairs
+char ** seq_to_pair_array(char *pairs, int nr_of_pairs){
     int pairs_nr=0;
     char **pair_names = calloc((size_t) nr_of_pairs, sizeof(char*));
     char * token = strtok(pairs, " ");
@@ -43,34 +41,38 @@ void compare_to_tmp_file(char **pair_names, int pairs_nr){
     for(int i=0;i<pairs_nr;i++){
         char out_file[50];
         snprintf(out_file, sizeof(out_file), "tmp_%d.txt", i);
-        compare_pair(pair_names[i], out_file); // comparing each pair of files
+        compare_pair_to_tmp(pair_names[i], out_file); // comparing each pair of files
     }
 }
 
 //// process tmp files (named "tmp_%d.txt", i<-0 until pairs_nr) and create array of blocks
-struct main_array* tmp_to_array(int pairs_nr){
-    struct main_array* ma = main_array_new(pairs_nr);
-    for(int i=0;i<pairs_nr;i++){
+void tmp_to_array(struct main_array* ma){
+    for(int i=0;i<ma->size;i++){
         char filename[50];
         snprintf(filename, sizeof(filename), "tmp_%d.txt", i);
         struct block* b = process_tmp_file(filename); // populating each block w pointers to ed_ops
         printf("size of block no %d = %d",i, b->size);
         ma->blocks[i] = b;
     }
-    return ma;
 }
 struct main_array * compare_pairs(char *pairs, int nr_of_pairs){
     char **pair_names = seq_to_pair_array(pairs, nr_of_pairs);
     compare_to_tmp_file(pair_names, nr_of_pairs);
-    struct main_array* ma = tmp_to_array(nr_of_pairs);
+    struct main_array* ma = main_array_new(nr_of_pairs);
+    tmp_to_array(ma);
     return ma;
 }
-void compare_pair(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
+void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
     char *file_a = strtok(pair, ":");
     char *file_b = strtok(NULL, ":");
     char command[512];
-    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", path, file_a, file_b, out_filename);
+    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", variab, file_a, file_b, out_filename);
     system(command);
+}
+void compare_pairs_to_array(char *pairs, struct main_array * ma){
+    char **pair_names = seq_to_pair_array(pairs, ma->size);
+    compare_to_tmp_file(pair_names, ma->size);
+    tmp_to_array(ma);
 }
 
 struct block* process_tmp_file(char *filename){ // populates block with array of pointers to diff edit. op
