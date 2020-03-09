@@ -5,6 +5,7 @@
 #include <limits.h>
 #include <unistd.h>
 #include <sys/resource.h>
+#include<sys/times.h>
 #include <time.h>
 //#include <bits/time.h>
 #include <string.h>
@@ -29,10 +30,19 @@ bool in(char* el, char ** str_array, int ar_len){
     }
     return false;
 }
+double calculate_time(clock_t start, clock_t end) {
+    return (double) (end - start) / sysconf(_SC_CLK_TCK);
+}
 int main(int argc, char **argv){
     char *commands[N]= {"create_table", "compare_pairs", "remove_block", "remove_operation", "save_block", "start_time", "clear_file"};
 
-    printf("running");
+    struct tms **tms_time = malloc(6 * sizeof(struct tms *));
+    clock_t real_time[6];
+    for (int i = 0; i < 6; i++) {
+        tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
+    }
+
+//    printf("running");
     //// time measurement
     const char* cwd = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
     char *path = calloc(256, sizeof(char));

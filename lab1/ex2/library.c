@@ -63,7 +63,7 @@ void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.t
     char *file_b = strtok(NULL, ":");
     char command[512];
     snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", variab, file_a, file_b, out_filename);
-    printf("%s", command);
+//    printf("%s", command);
     system(command);
 }
 void compare_pairs_to_array(char *pairs, struct main_array * ma){
@@ -73,7 +73,7 @@ void compare_pairs_to_array(char *pairs, struct main_array * ma){
 }
 
 struct block* process_tmp_file(char *filename){ // populates block with array of pointers to diff edit. op
-    printf("\nprocessing %s... \n", filename);
+//    printf("\nprocessing %s... \n", filename);
     char * line = NULL;
     size_t len = 0;
 

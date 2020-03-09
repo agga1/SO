@@ -1,6 +1,11 @@
 	executed operations:
 save_block
 remove_block
-REAL_TIME: 3150100ns
+REAL_TIME: 1193600ns
+USER_TIME: 0µs
+SYSTEM_TIME: 0µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 139983700ns
 USER_TIME: 0µs
 SYSTEM_TIME: 0µs

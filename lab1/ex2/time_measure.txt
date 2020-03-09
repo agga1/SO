@@ -6,7 +6,7 @@ compare_pairs a.txt:b.txt c.txt:d.txt e.txt:f.txt e.txt:f.txt e.txt:f.txt e.txt:
 // long similar files
 create_table 5
 start
-compare_pairs long_sim.txt:long_simb.txt
+compare_pairs long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt
 
 // measuring adding/removing blocks
 create_table 5

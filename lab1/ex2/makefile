@@ -21,6 +21,6 @@ clean:
 	rm -f *.o
 
 tests:
-	./test create_table 2
 	./test clear_file create_table 2 compare_pairs a.txt:b.txt start_time save_block 0 remove_block 0
+	./test create_table 5 start_time compare_pairs long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt long_sim.txt:long_simb.txt
 
