@@ -82,7 +82,7 @@ struct block* process_tmp_file(char *filename){ // populates block with array of
         exit(EXIT_FAILURE);
 
     int nr_ed_op = 0;
-    while ((getline(&line, &len, tmp_file)) != -1) {
+    while ((getline(&line,(size_t*) &len, tmp_file)) != -1) {
         if(line[0] <= '9' && line[0]>='0')
             nr_ed_op ++;
     }

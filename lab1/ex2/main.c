@@ -32,11 +32,12 @@ bool in(char* el, char ** str_array, int ar_len){
 int main(int argc, char **argv){
     char *commands[N]= {"create_table", "compare_pairs", "remove_block", "remove_operation", "save_block", "start"};
 
+    printf("running");
     //// time measurement
     const char* cwd = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
     char *path = calloc(256, sizeof(char));
     snprintf(path, 256, "%s%s", cwd, "raport2.txt");
-    FILE *result_file = fopen(path, "w");
+    FILE *result_file = fopen(path, "a");
     struct rusage *start_usage = calloc(1, sizeof * start_usage);
     struct rusage *end_usage = calloc(1, sizeof * end_usage);
     struct timespec *start_time = calloc(1, sizeof *start_time);

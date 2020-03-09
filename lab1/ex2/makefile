@@ -11,5 +11,13 @@ shared:
 	$(CC) -c -fPIC library.c
 	$(CC) -shared -fPIC -o library.so library.o
 
+zad2_static:
+	make static
+	$(CC) -o test main.c library.a -I .
+	# make tests
+
 clean:
 	rm -f *.o
+
+tests:
+	./test  create_table 2
