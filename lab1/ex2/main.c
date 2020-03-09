@@ -6,12 +6,12 @@
 #include <unistd.h>
 #include <sys/resource.h>
 #include <time.h>
-#include <bits/time.h>
+//#include <bits/time.h>
 #include <string.h>
 #include <error.h>
 #include <stdbool.h>
 #include "library.h"
-#define N 6
+#define N 7
 
 void append_file(FILE* result_file, char* data){
     fprintf(result_file, "%s\n", data);
@@ -30,14 +30,19 @@ bool in(char* el, char ** str_array, int ar_len){
     return false;
 }
 int main(int argc, char **argv){
-    char *commands[N]= {"create_table", "compare_pairs", "remove_block", "remove_operation", "save_block", "start"};
+    char *commands[N]= {"create_table", "compare_pairs", "remove_block", "remove_operation", "save_block", "start_time", "clear_file"};
 
     printf("running");
     //// time measurement
     const char* cwd = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
     char *path = calloc(256, sizeof(char));
     snprintf(path, 256, "%s%s", cwd, "raport2.txt");
-    FILE *result_file = fopen(path, "a");
+
+    FILE *result_file;
+    int nr=1;
+    if(strcmp(argv[nr], commands[6])==0) {result_file = fopen(path, "w"); nr++;}
+    else result_file = fopen(path, "a");
+
     struct rusage *start_usage = calloc(1, sizeof * start_usage);
     struct rusage *end_usage = calloc(1, sizeof * end_usage);
     struct timespec *start_time = calloc(1, sizeof *start_time);
@@ -45,19 +50,19 @@ int main(int argc, char **argv){
 
 
     append_file(result_file, "\texecuted operations:");
-    clock_gettime(CLOCK_REALTIME, start_time); // if "start" not defined, measure all by default
+    clock_gettime(0, start_time); // if "start" not defined, measure all by default
     getrusage(RUSAGE_SELF, start_usage);
     bool count_time = false;
 
-    if(strcmp(argv[1], commands[0])!=0) {
-        printf("First argument must be %s!", commands[0]);
+    if(strcmp(argv[nr], commands[0])!=0) {
+        printf("command chain must start with %s!", commands[0]);
         return 1;
     }
 
-    int size = atoi(argv[2]);
+    int size = atoi(argv[++nr]);
     struct main_array *ma = main_array_new(size);
 
-    for(int i=3; i<argc; i++){
+    for(int i=++nr; i<argc; i++){
         if(strcmp(argv[i], commands[1])==0){ // compare pairs
             int start = ++i;
             int length = 0;
@@ -95,13 +100,13 @@ int main(int argc, char **argv){
             if(count_time) append_file(result_file, commands[4]);
         }
         else if(strcmp(argv[i], commands[5])==0){
-            clock_gettime(CLOCK_REALTIME, start_time);
+            clock_gettime(0, start_time);
             getrusage(RUSAGE_SELF, start_usage);
             count_time=true;
         }
     }
 
-    clock_gettime(CLOCK_REALTIME, end_time);
+    clock_gettime(0, end_time);
     getrusage(RUSAGE_SELF, end_usage);
 
     write_time(result_file, start_time, end_time, start_usage, end_usage);

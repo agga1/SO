@@ -1,32 +1,6 @@
 	executed operations:
-compare_pairs size medium
-REAL_TIME: 85472600ns
-USER_TIME: 0µs
-SYSTEM_TIME: 0µs
-	executed operations:
-save_block
 save_block
 remove_block
-remove_block
-save_block
-save_block
-remove_block
-remove_block
-REAL_TIME: 1246600ns
-USER_TIME: 0µs
-SYSTEM_TIME: 0µs
-	executed operations:
-compare_pairs size small
-REAL_TIME: 18115300ns
-USER_TIME: 0µs
-SYSTEM_TIME: 0µs
-	executed operations:
-compare_pairs size small
-REAL_TIME: 15642900ns
-USER_TIME: 0µs
-SYSTEM_TIME: 0µs
-	executed operations:
-compare_pairs size small
-REAL_TIME: 31457700ns
+REAL_TIME: 3150100ns
 USER_TIME: 0µs
 SYSTEM_TIME: 0µs

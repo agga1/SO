@@ -1,15 +1,10 @@
-1,5c1,8
-< ssss
-< gggg
-< iii
-< gggggggggggggggggggggggggggg
-< jjjjjjjjjj
+1,4c1,4
+< aaa
+< bbb
+< fff
+< ccc
 ---
-> fffff
-> jjjjj
-> iiiii
-> ggggg
-> ssssssssssssssss
-> ffff
-> bbbb
-> hhhff
+> abb
+> cdf
+> gff
+> 

@@ -11,7 +11,7 @@ compare_pairs long_sim.txt:long_simb.txt
 // measuring adding/removing blocks
 create_table 5
 compare_pairs a.txt:b.txt c.txt:d.txt e.txt:f.txt e.txt:f.txt e.txt:f.txt e.txt:f.txt
-start
+start_time
 save_block 1
 save_block 0
 remove_block 1

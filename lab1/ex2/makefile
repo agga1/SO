@@ -11,13 +11,16 @@ shared:
 	$(CC) -c -fPIC library.c
 	$(CC) -shared -fPIC -o library.so library.o
 
-zad2_static:
+zad2_static: clean
 	make static
 	$(CC) -o test main.c library.a -I .
-	# make tests
+	make tests
+
 
 clean:
 	rm -f *.o
 
 tests:
-	./test  create_table 2
+	./test create_table 2
+	./test clear_file create_table 2 compare_pairs a.txt:b.txt start_time save_block 0 remove_block 0
+
