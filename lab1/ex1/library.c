@@ -3,16 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-char* variab = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
+char* my_dir = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
 
 FILE* load_file(char* filename){
     if(filename == NULL) return NULL;
     char _path[500];
-    snprintf(_path, sizeof(_path), "%s%s", variab, filename);
+    snprintf(_path, sizeof(_path), "%s%s", my_dir, filename);
     FILE* filestream = fopen(_path,"r");
     if(filestream == NULL) {
-        printf("file %s not found", _path);
-        return NULL;
+        perror("file not found");
+        exit(-1);
     }
     return filestream;
 }
@@ -30,8 +30,8 @@ char ** seq_to_pair_array(char *pairs, int nr_of_pairs){
         token = strtok(NULL, " ");
     }
     if(nr_of_pairs != pairs_nr){ // incorrect input msg
-        printf("%d pairs found, %d declared", pairs_nr, nr_of_pairs);
-        return NULL;
+        perror("number of found and declared pairs do not match");
+        exit(-1);
     }
     return pair_names;
 }
@@ -51,6 +51,7 @@ void tmp_to_array(struct main_array* ma){
         save_block(i, ma);
     }
 }
+//// all-in-one
 struct main_array * compare_pairs(char *pairs, int nr_of_pairs){
     char **pair_names = seq_to_pair_array(pairs, nr_of_pairs);
     compare_to_tmp_file(pair_names, nr_of_pairs);
@@ -58,68 +59,76 @@ struct main_array * compare_pairs(char *pairs, int nr_of_pairs){
     tmp_to_array(ma);
     return ma;
 }
-void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
-    char *file_a = strtok(pair, ":");
-    char *file_b = strtok(NULL, ":");
-    char command[512];
-    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", variab, file_a, file_b, out_filename);
-    system(command);
-}
+//// all-in-one with already initializaed array
 void compare_pairs_to_array(char *pairs, struct main_array * ma){
     char **pair_names = seq_to_pair_array(pairs, ma->size);
     compare_to_tmp_file(pair_names, ma->size);
     tmp_to_array(ma);
 }
+void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.txt:file2.txt"
+    char *file_a = strtok(pair, ":");
+    char *file_b = strtok(NULL, ":");
+    char command[512];
+    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", my_dir, file_a, file_b, out_filename);
+    system(command);
+}
+struct block* process_tmp_file(char *filename){
+    if(filename == NULL) return NULL;
 
-struct block* process_tmp_file(char *filename){ // populates block with array of pointers to diff edit. op
-    char * line = NULL;
-    size_t len = 0;
+    char _path[500];
+    snprintf(_path, sizeof(_path), "%s%s", my_dir, filename);
+    FILE *fptr = fopen(_path,"r");
 
-    FILE* tmp_file = load_file(filename);
-    if (tmp_file == NULL)
-        exit(EXIT_FAILURE);
-
-    int nr_ed_op = 0;
-    while ((getline(&line,(size_t*) &len, tmp_file)) != -1) {
-        if(line[0] <= '9' && line[0]>='0')
-            nr_ed_op ++;
+    if( fptr == NULL ){
+        perror("cannot open file");
+        exit(-1);
     }
-    fclose(tmp_file);
-    struct block* b=block_new(nr_ed_op);
 
-    tmp_file = load_file(filename);
-    char ed_op[1024];
-    strcpy(ed_op, "");
-    int i=0;
-    while ((getline(&line, &len, tmp_file)) != -1) {
-        if(line[0] <= '9' && line[0]>='0'){
-            if(strcmp(ed_op, "") != 0) // not equal
-            {
-                b->a[i] = malloc(strlen(ed_op)* sizeof(char));
-                strcpy(b->a[i], ed_op);
-                i++;
-                strcpy(ed_op, "");
+    int buf_size=255;
+    char buffer[buf_size];
+    int op_nr=0, size=1;
+//// counts number of ed_ops
+    while(fgets(buffer,buf_size,fptr)!=NULL){
+        if(buffer[0]<='9' && buffer[0]>='0')         // 60=='<' 62=='>' 45=='-'
+            op_nr++;
+        size+=strlen(buffer);
+    }
+    struct block* b=block_new(op_nr);
+    rewind(fptr);
+
+    char *str=(char*)calloc((size_t) size, sizeof(char));
+    int k=0;
+    strcpy(str,"");
+//// saves array of ed_ops
+    while(fgets(buffer,buf_size,fptr)!=NULL){
+        if(buffer[0]<='9' && buffer[0]>='0'){
+
+            if(strcmp(str,"")!=0){
+                b->a[k]= (char*) calloc (strlen(str)+1, sizeof(char));
+                strcpy(b->a[k],str);
+                k++;
+                strcpy(str,"");
             }
+            strcpy(str,buffer);
         }
-        strcat(ed_op, line);
+        else{
+            strcat(str,buffer);
+        }
     }
-    if(strcmp(ed_op, "") != 0) // last editing operation
-    {
-        b->a[i] = malloc(strlen(ed_op)* sizeof(char));
-        strcpy(b->a[i], ed_op);
+    if(strcmp(str, "")!=0){
+        b->a[k] = (char*) calloc (strlen(str)+1, sizeof(char));
+        strcpy(b->a[k],str);               //adds last operations
     }
 
-    fclose(tmp_file);
-    if (line)
-        free(line);
+    fclose(fptr);
+    free(str);
     return b;
 }
-
 //// save single block from tmp_{idx}.txt file
 void save_block(int idx, struct main_array* ma){
     char filename[50];
     snprintf(filename, sizeof(filename), "tmp_%d.txt", idx);
-    struct block* b = process_tmp_file(filename); // populating each block w pointers to ed_ops
+    struct block* b = process_tmp_file(filename);  // populating each block w pointers to ed_ops
     ma->blocks[idx] = b;
 }
 int remove_block(int index, struct main_array* ma){
