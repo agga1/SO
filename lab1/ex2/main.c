@@ -37,9 +37,10 @@ int main(int argc, char **argv){
 
     //// time measurement
     bool count_time = false;
-    struct tms **tms_time = malloc(6 * sizeof(struct tms *));
+    struct tms **tms_time = malloc(2 * sizeof(struct tms *));
     clock_t real_time[2];
     for (int i = 0; i < 2; i++) tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
+    real_time[0] = times(tms_time[0]);
 
     /// output file
     const char* cwd = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
@@ -96,7 +97,7 @@ int main(int argc, char **argv){
             save_block(block_nr, ma);
             if(count_time) append_file(result_file, commands[4]);
         }
-        else if(strcmp(argv[i], commands[5])==0){
+        else if(strcmp(argv[i], commands[5])==0){ // start time
             real_time[0] = times(tms_time[0]);
             count_time=true;
         }

@@ -27,6 +27,8 @@ tests:
 	./test create_table 5 start_time compare_pairs dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt dif.txt:difb.txt
 	# very different files
 	./test create_table 5 start_time compare_pairs lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt lsim.txt:dif.txt
+	# big files comparisons
+	./test create_table 5 start_time compare_pairs lrg.txt:lrgb.txt lrg.txt:lrgb.txt
 	# a few comparisons
 	./test create_table 5 start_time compare_pairs lsim.txt:lsimb.txt
 	# some comparisons
