@@ -1377,3 +1377,4341 @@ USER_TIME: 0.000000µs
 SYSTEM_TIME: 0.000000µs
 	executed operations:
 remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.330000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.320000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.330000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.330000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 4498.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.330000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 4504.320000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 4515.260000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.360000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+remove_block
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.160000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.260000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.250000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.630000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.070000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.560000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.080000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.550000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.370000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.770000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.290000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.650000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.740000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.270000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.650000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.290000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.450000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.610000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.080000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.720000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.340000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.080000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.700000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.090000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.370000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.600000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.350000ns
+USER_TIME: 0.020000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.690000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.320000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.570000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.260000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.520000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.630000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.080000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.330000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.660000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.500000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.140000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.510000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.070000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.500000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.350000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.600000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.320000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.620000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.020000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.290000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.650000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.090000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.370000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.720000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.110000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.500000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.240000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.510000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.340000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.660000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.140000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.660000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.150000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.270000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.540000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.090000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.510000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.360000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.580000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.190000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.120000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.230000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.640000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.090000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.180000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.170000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.130000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.030000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.250000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.590000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.020000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.020000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.060000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.010000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.040000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.090000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.030000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+remove_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+REAL_TIME: 20172.760000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.060000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.210000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 20185.650000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 20364.760000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.040000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 20666.070000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.050000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size small
+REAL_TIME: 0.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+compare_pairs size medium
+REAL_TIME: 0.100000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.050000µs
+	executed operations:
+compare_pairs size large
+REAL_TIME: 0.220000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.010000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+REAL_TIME: 0.000000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
+	executed operations:
+REAL_TIME: 20870.010000ns
+USER_TIME: 0.000000µs
+SYSTEM_TIME: 0.000000µs
