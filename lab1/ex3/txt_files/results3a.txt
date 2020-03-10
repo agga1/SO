@@ -1,0 +1,118 @@
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+	executed operations:
+compare_pairs size small
+	executed operations:
+compare_pairs size small
+	executed operations:
+compare_pairs size small
+	executed operations:
+compare_pairs size small
+	executed operations:
+compare_pairs size medium
+	executed operations:
+compare_pairs size large
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+	executed operations:
+	executed operations:
+compare_pairs size small
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+ 	executed operations:
+compare_pairs size small
+   Real   |   User   |   System
+ 0.060000	0.000000	0.000000
+ 	executed operations:
+compare_pairs size small
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+ 	executed operations:
+compare_pairs size small
+   Real   |   User   |   System
+ 0.010000	0.000000	0.010000
+ 	executed operations:
+compare_pairs size medium
+   Real   |   User   |   System
+ 0.100000	0.000000	0.000000
+ 	executed operations:
+compare_pairs size large
+   Real   |   User   |   System
+ 0.230000	0.000000	0.030000
+ 	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+remove_block
+remove_block
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+ 	executed operations:
+save_block
+save_block
+save_block
+save_block
+save_block
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+ 	executed operations:
+   Real   |   User   |   System
+ 0.070000	0.000000	0.010000
+ 
