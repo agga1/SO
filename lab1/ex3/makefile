@@ -32,6 +32,8 @@ zad3_shared:
 
 clean:
 	rm -f *.o
+	ls
+	rm -f tmp_files/*
 
 tests:
 	# similar files

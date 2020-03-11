@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-char* my_dir = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex2/txt_files/";
+char* my_dir_tmp = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex3/tmp_files/";
+char* my_dir_txt = "/mnt/d/Agnieszka/Documents/Studia/4semestr/SO/lab1/ex3/txt_files/";
 
 FILE* load_file(char* filename){
     if(filename == NULL) return NULL;
     char _path[500];
-    snprintf(_path, sizeof(_path), "%s%s", my_dir, filename);
+    snprintf(_path, sizeof(_path), "%s%s", my_dir_tmp, filename);
     FILE* filestream = fopen(_path,"r");
     if(filestream == NULL) {
         perror("file not found");
@@ -69,14 +70,16 @@ void compare_pair_to_tmp(char *pair, char *out_filename) { // pair like "file1.t
     char *file_a = strtok(pair, ":");
     char *file_b = strtok(NULL, ":");
     char command[512];
-    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", my_dir, file_a, file_b, out_filename);
+    char out_path[500];
+    snprintf(out_path, sizeof(out_path), "%s%s", my_dir_tmp, out_filename);
+    snprintf(command, sizeof(command), "cd %s && diff  %s %s > %s", my_dir_txt, file_a, file_b, out_path);
     system(command);
 }
 struct block* process_tmp_file(char *filename){
     if(filename == NULL) return NULL;
 
     char _path[500];
-    snprintf(_path, sizeof(_path), "%s%s", my_dir, filename);
+    snprintf(_path, sizeof(_path), "%s%s", my_dir_tmp, filename);
     FILE *fptr = fopen(_path,"r");
 
     if( fptr == NULL ){
