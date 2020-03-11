@@ -1,18 +1,18 @@
 similar_files
    Real   |   User   |   System
- 0.180000	0.000000	0.010000
+ 0.200000	0.000000	0.000000
 
 kinda_similar_files
    Real   |   User   |   System
- 0.180000	0.000000	0.000000
+ 0.210000	0.000000	0.000000
 
 very_different_files
    Real   |   User   |   System
- 0.190000	0.000000	0.010000
+ 0.230000	0.000000	0.010000
 
 big_files
    Real   |   User   |   System
- 0.090000	0.000000	0.000000
+ 0.110000	0.010000	0.000000
 
 few_comparisons
    Real   |   User   |   System
@@ -20,11 +20,11 @@ few_comparisons
 
 more_comparisons
    Real   |   User   |   System
- 0.400000	0.000000	0.030000
+ 0.430000	0.000000	0.030000
 
 many_comparisons
    Real   |   User   |   System
- 0.930000	0.000000	0.120000
+ 0.820000	0.000000	0.030000
 
 small_blocks_save
    Real   |   User   |   System
@@ -36,5 +36,5 @@ big_blocks_save
 
 big_blocks_remove
    Real   |   User   |   System
- 2037.090000	0.000000	0.040000
+ 2064.390000	0.010000	0.010000
 
