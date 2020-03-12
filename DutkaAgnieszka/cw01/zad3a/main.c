@@ -48,7 +48,7 @@ int main(int argc, char **argv){
     /// output file - specify option!
     const char* cwd = dir();
     char *path = calloc(256, sizeof(char));
-    snprintf(path, 256, "%s/txt_files/%s", cwd, "raport3aOther3.txt");
+    snprintf(path, 256, "%s/txt_files/%s", cwd, "raport3aSh2.txt");
     FILE *result_file;
     int nr=1;
     if(strcmp(argv[nr], commands[6])==0) {result_file = fopen(path, "w"); nr++;}

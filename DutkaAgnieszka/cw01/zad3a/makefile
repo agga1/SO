@@ -10,7 +10,6 @@ static:
 shared:
 	$(CC) -fPIC -shared library.c -o liblibrary.so
 
-
 zad3_static:
 	make static
 	$(CC) -o test main.c library.a -I .

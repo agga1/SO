@@ -36,5 +36,5 @@ big_blocks_save
 
 big_blocks_remove
    Real   |   User   |   System
- 2064.390000	0.010000	0.010000
+ 0.240000	0.010000	0.010000
 

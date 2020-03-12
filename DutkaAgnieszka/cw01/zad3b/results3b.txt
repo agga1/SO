@@ -1,0 +1,501 @@
+Z poniższych wyników możemy zauważyć, że poziom optymalizacji -O2 jest na ogół najszybszy (i porównywalny z-O1),
+ a -O0 oraz -Os - nieznacznie wolniejszy. Różnice czasowe pomiędzy różnymi rodzajami bibliotek 
+praktycznie nie występują.
+
+~~~~~~~~~~~~ Wyniki dla biblioteki statycznej - -O0  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.170000	0.000000	0.000000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.160000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.170000	0.000000	0.010000
+
+big_files
+   Real   |   User   |   System
+ 0.090000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.040000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.470000	0.000000	0.020000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.940000	0.000000	0.030000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.020000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.270000	0.000000	0.000000
+~~~~~~~~~~~~ Wyniki dla biblioteki statycznej - -O1  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.100000	0.000000	0.000000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.220000	0.000000	0.030000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.000000
+
+
+~~~~~~~~~~~~ Wyniki dla biblioteki statycznej - -O2  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.100000	0.000000	0.000000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.230000	0.000000	0.030000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.010000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.010000
+
+
+~~~~~~~~~~~~ Wyniki dla biblioteki statycznej - -Os  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.030000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.100000	0.000000	0.000000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.220000	0.000000	0.000000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.000000
+
+
+~~~~~~~~~~~~ Wyniki dla biblioteki dzielonej - -O0   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.170000	0.000000	0.030000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.150000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.220000	0.000000	0.000000
+
+big_files
+   Real   |   User   |   System
+ 0.110000	0.000000	0.010000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.050000	0.000000	0.010000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.300000	0.000000	0.040000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.810000	0.000000	0.060000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.240000	0.000000	0.080000
+
+
+~~~~~~~~~~~~ Wyniki dla biblioteki dzielonej - -O1   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.210000	0.000000	0.020000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.220000	0.000000	0.030000
+
+very_different_files
+   Real   |   User   |   System
+ 0.220000	0.000000	0.020000
+
+big_files
+   Real   |   User   |   System
+ 0.100000	0.000000	0.030000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.040000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.400000	0.010000	0.020000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.870000	0.000000	0.030000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.310000	0.000000	0.030000
+
+~~~~~~~~~~~~ Wyniki dla biblioteki dzielonej - -O2   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.030000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.110000	0.000000	0.000000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.230000	0.000000	0.040000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.000000
+
+~~~~~~~~~~~~ Wyniki dla biblioteki dzielonej- -Os  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.040000
+
+big_files
+   Real   |   User   |   System
+ 0.020000	0.000000	0.000000
+
+few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+more_comparisons
+   Real   |   User   |   System
+ 0.100000	0.000000	0.010000
+
+many_comparisons
+   Real   |   User   |   System
+ 0.230000	0.000000	0.030000
+
+small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.010000
+
+big_blocks_remove
+   Real   |   User   |   System
+ 0.070000	0.000000	0.010000
+~~~~~~~~~~~~ Wyniki dla biblioteki dynamicznej- -O0  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.130000	0.000000	0.000000
+
+ kinda_similar_files
+   Real   |   User   |   System
+ 0.130000	0.000000	0.010000
+
+ very_different_files
+   Real   |   User   |   System
+ 0.150000	0.000000	0.040000
+
+ big_files
+   Real   |   User   |   System
+ 0.070000	0.000000	0.020000
+
+ few_comparisons
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+ more_comparisons
+   Real   |   User   |   System
+ 0.300000	0.000000	0.010000
+
+ many_comparisons
+   Real   |   User   |   System
+ 0.930000	0.000000	0.040000
+
+ small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+ big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+ big_blocks_remove
+   Real   |   User   |   System
+ 0.270000	0.010000	0.040000
+
+ 
+~~~~~~~~~~~~ Wyniki dla biblioteki dynamicznej- -O1  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+ kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.010000
+
+ very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+ big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+ few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+ more_comparisons
+   Real   |   User   |   System
+ 0.110000	0.000000	0.010000
+
+ many_comparisons
+   Real   |   User   |   System
+ 0.230000	0.000000	0.010000
+
+ small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+ big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+ big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.010000
+
+ 
+~~~~~~~~~~~~ Wyniki dla biblioteki dynamicznej- -O2  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+ kinda_similar_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+ very_different_files
+   Real   |   User   |   System
+ 0.050000	0.000000	0.000000
+
+ big_files
+   Real   |   User   |   System
+ 0.030000	0.000000	0.000000
+
+ few_comparisons
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+ more_comparisons
+   Real   |   User   |   System
+ 0.110000	0.000000	0.000000
+
+ many_comparisons
+   Real   |   User   |   System
+ 0.230000	0.000000	0.060000
+
+ small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+ big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.000000
+
+ big_blocks_remove
+   Real   |   User   |   System
+ 0.080000	0.000000	0.000000
+
+ ~~~~~~~~~~ Wyniki dla biblioteki dynamicznej - -Os ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+similar_files
+   Real   |   User   |   System
+ 0.160000	0.000000	0.030000
+
+ kinda_similar_files
+   Real   |   User   |   System
+ 0.120000	0.000000	0.010000
+
+ very_different_files
+   Real   |   User   |   System
+ 0.140000	0.000000	0.030000
+
+ big_files
+   Real   |   User   |   System
+ 0.080000	0.000000	0.000000
+
+ few_comparisons
+   Real   |   User   |   System
+ 0.040000	0.000000	0.000000
+
+ more_comparisons
+   Real   |   User   |   System
+ 0.220000	0.000000	0.030000
+
+ many_comparisons
+   Real   |   User   |   System
+ 0.740000	0.000000	0.130000
+
+ small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+ big_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.000000
+
+ big_blocks_remove
+   Real   |   User   |   System
+ 0.170000	0.010000	0.040000
+
+ 
