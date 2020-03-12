@@ -1,0 +1,54 @@
+8,10c8,10
+<  happened to be the one he lived in. He had lived in it for about three years, ever since he had moved
+<  out of London because it made him nervous and irritable. He was about thirty as well, tall, dark-haired
+<  and never quite at ease with himself. The thing that used to worry him most was the fact that people always
+---
+>  happened to be the one he lived in. He had lived in it for about three years, ever since he had moved 
+>  out of London because it made him nervous and irritable. He was about thirty as well, tall, dark-haired 
+>  and never quite at ease with himself. The thing that used to worry him most was the fact that people always 
+19c19
+<  blearily round his room, opened a window, saw a bulldozer, found his slippers, and stomped off to the
+---
+>  blearily round his room, opened a window, saw a bulldozer, found his slippers, and stomped off to the 
+22c22
+< Shaving mirror—pointing at the ceiling. He adjusted it. For a moment it reflected a second bulldozer
+---
+> Shaving mirror—pointing at the ceiling. He adjusted it. For a moment it reflected a second bulldozer 
+30c30
+< Passing the bathroom he stopped to drink a large glass of water, and another. He began to suspect that
+---
+> Passing the bathroom he stopped to drink a large glass of water, and another. He began to suspect that 
+33c33
+< He stood and thought. The pub, he thought. Oh dear, the pub. He vaguely remembered being angry, angry about
+---
+> He stood and thought. The pub, he thought. Oh dear, the pub. He vaguely remembered being angry, angry about 
+35c35
+< he rather suspected: his clearest visual recollection was of glazed looks on other people’s faces. Something
+---
+> he rather suspected: his clearest visual recollection was of glazed looks on other people’s faces. Something 
+37c37
+< have known about it. Ridiculous. He took a swig of water. It would sort itself out, he’d decided, no one
+---
+> have known about it. Ridiculous. He took a swig of water. It would sort itself out, he’d decided, no one 
+40c40
+<  out his tongue. “Yellow,” he thought. The word yellow wandered through his mind in search of something to
+---
+>  out his tongue. “Yellow,” he thought. The word yellow wandered through his mind in search of something to 
+42c42
+< Fifteen seconds later he was out of the house and lying in front of a big yellow bulldozer that was advancing
+---
+> Fifteen seconds later he was out of the house and lying in front of a big yellow bulldozer that was advancing 
+44c44
+< Mr. L. Prosser was, as they say, only human. In other words he was a carbon-based bipedal life form descended
+---
+> Mr. L. Prosser was, as they say, only human. In other words he was a carbon-based bipedal life form descended 
+46,47c46,47
+< though he didn’t know it, he was also a direct male-line descendant of Genghis Khan, though intervening
+< generations and racial mixing had so juggled his genes that he had no discernible Mongoloid characteristics,
+---
+> though he didn’t know it, he was also a direct male-line descendant of Genghis Khan, though intervening 
+> generations and racial mixing had so juggled his genes that he had no discernible Mongoloid characteristics, 
+49c49
+< and a predilection for little fur hats.prompted the government to relocate inland to a new city, Belmopan.
+---
+> and a predilection for little fur hats.prompted the government to relocate inland to a new city, Belmopan. 

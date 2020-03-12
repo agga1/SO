@@ -1,6 +1,0 @@
-	executed operations:
-save_block
-remove_block
-REAL_TIME: 3150100ns
-USER_TIME: 0µs
-SYSTEM_TIME: 0µs

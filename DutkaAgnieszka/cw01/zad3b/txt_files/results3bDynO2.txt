@@ -1,0 +1,41 @@
+similar_files
+   Real   |   User   |   System
+ 0.190000	0.000000	0.000000
+
+ kinda_similar_files
+   Real   |   User   |   System
+ 0.180000	0.000000	0.030000
+
+ very_different_files
+   Real   |   User   |   System
+ 0.180000	0.000000	0.020000
+
+ big_files
+   Real   |   User   |   System
+ 0.100000	0.000000	0.000000
+
+ few_comparisons
+   Real   |   User   |   System
+ 0.040000	0.000000	0.010000
+
+ more_comparisons
+   Real   |   User   |   System
+ 0.420000	0.000000	0.030000
+
+ many_comparisons
+   Real   |   User   |   System
+ 1.030000	0.000000	0.080000
+
+ small_blocks_save
+   Real   |   User   |   System
+ 0.000000	0.000000	0.020000
+
+ big_blocks_save
+   Real   |   User   |   System
+ 0.010000	0.000000	0.010000
+
+ big_blocks_remove
+   Real   |   User   |   System
+ 0.280000	0.010000	0.030000
+
+ 
