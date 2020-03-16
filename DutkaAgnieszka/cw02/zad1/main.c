@@ -3,13 +3,16 @@
 #include <string.h>
 #include <stdbool.h>
 #include <linux/limits.h>
+#include <sys/resource.h>
+#include <time.h>
+#include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/times.h>
 
-const int N=3;
-const char* commands[]= {"generate", "sort", "copy"};
+const int N=5;
+const char* commands[]= {"generate", "sort", "copy", "write", "comment"};
 bool in_commands(char* el){
     for(int i = 0; i < N; i++) {
         if(strcmp(commands[i], el) == 0)
@@ -17,10 +20,25 @@ bool in_commands(char* el){
     }
     return false;
 }
+char *dir() {
+    char *cwd = calloc(PATH_MAX, sizeof(char));
+    getcwd(cwd, PATH_MAX);
+    return cwd;
+}
+void append_file(FILE* result_file, char* data){
+    fprintf(result_file, "%s\n", data);
+}
+void write_time(FILE *result_file, double r, double u, double s){
+    fprintf(result_file,"   Real   |   User   |   System\n");
+    fprintf(result_file, " %f  %f  %f\n\n", r, u, s);
+}
+double calc_time(clock_t start, clock_t end) {
+    return (double) (end - start) / sysconf(_SC_CLK_TCK);
+}
 char* file_path(char *file_name);
 int generate(char *file_path, int records_no, size_t size );
-int sort_lib(char *file_path, int records_no, size_t size);
-int sort_sys(char *file_path, int records_no, size_t size);
+int sort_lib(char *file_path, int record_no, size_t size);
+int sort_sys(char *file_path, int record_no, size_t size);
 int copy_lib(char *from_path, char *to_path, int records_no, size_t bytes);
 int copy_sys(char *from_path, char *to_path, int records_no, size_t bytes);
 
@@ -29,7 +47,23 @@ int main(int argc, char **argv) {
         printf("no action specified");
         return 1;
     }
+
+    //// time measurement
+    struct tms **tms_time = malloc(6 * sizeof(struct tms *));
+    clock_t real_time[2];
+    for (int i = 0; i < 2; i++) tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
+    real_time[0] = times(tms_time[0]);
+
+    /// output file - specify option!
+    const char* cwd = dir();
+    char *path = calloc(256, sizeof(char));
+    snprintf(path, 256, "%s/out-fin/%s", cwd, "wyniki2.txt");
+    FILE *result_file;
     int nr=1;
+    if(strcmp(argv[nr], commands[3])==0) {result_file = fopen(path, "w"); nr++;}
+    else result_file = fopen(path, "a");
+    if(strcmp(argv[nr], commands[4])==0)  {nr++; append_file(result_file, argv[nr]); nr++;}
+
     if (strcmp(argv[nr], commands[0]) == 0) { // generate
         if(nr+3>=argc){
             printf("not enough arguments for generate, provide [filename], [record_nr], [record_bytes(size_t)]\n");
@@ -39,12 +73,8 @@ int main(int argc, char **argv) {
         int record_nr = atoi(argv[++nr]);
         size_t record_bytes= (size_t) atoi(argv[++nr]);
         generate(filename, record_nr, record_bytes);
-//            printf("generated\n");
-//        else
-//            perror("files not generated");
     }
     else if (strcmp(argv[nr], commands[1]) == 0) { // sort
-        printf("sorta");
         if(nr+4>=argc){
             printf("not enough arguments for sort, provide [filename], [record_nr], [record_size_t], [sys|lib]\n");
             return 2;
@@ -62,7 +92,6 @@ int main(int argc, char **argv) {
         }
     }
     else if (strcmp(argv[nr], commands[2]) == 0) { // copy
-        printf("cp");
         if(nr+5>=argc){
             printf("not enough arguments for copy, provide [filename1], [filename2], [record_nr], [record_size_t], [sys|lib]\n");
             return 2;
@@ -83,6 +112,20 @@ int main(int argc, char **argv) {
     else{
         printf("no such command: %s", argv[nr]);
     }
+
+    real_time[1] = times(tms_time[1]);
+    double r= calc_time(real_time[0], real_time[1]);
+    double u= calc_time(tms_time[0]->tms_utime, tms_time[1]->tms_utime);
+    double s= calc_time(tms_time[0]->tms_stime, tms_time[1]->tms_stime);
+    printf("   Real   |   User   |   System\n");
+    printf("%lf   ", r);
+    printf("%lf   ", u);
+    printf("%lf ", s);
+    printf("\n");
+
+
+    write_time(result_file, r, u, s);
+    fclose(result_file);
     return 0;
 }
 int generate(char *file_path, int records_no, size_t size){
@@ -93,7 +136,7 @@ int generate(char *file_path, int records_no, size_t size){
         for (int j = 0; j < size; j++) {
             buffer[j] = (char) ('a' + (rand() % 26));
         }
-        buffer[size-1] = '\n';
+//        buffer[size-1] = '\n';
         fwrite(buffer, sizeof(char), (size_t) size, my_file);
     }
     free(buffer);
@@ -110,94 +153,100 @@ char* file_path(char *file_name){
     return path;
 }
 
-void swap_lib(FILE* file, char* i_line, char* j_line, int i, int j, size_t length){
-    fseek(file, i * length * sizeof(char), SEEK_SET);
-    fwrite(j_line, sizeof(char), length, file);
-    fseek(file, j * length * sizeof(char), SEEK_SET);
-    fwrite(i_line, sizeof(char), length, file);
+void lib_swap(FILE *file, char *line1, char *line2, int ind1, int ind2, size_t size){
+    fseek(file, ind1 * size * sizeof(char), SEEK_SET);
+    fwrite(line2, sizeof(char), size, file);
+    fseek(file, ind2 * size * sizeof(char), SEEK_SET);
+    fwrite(line1, sizeof(char), size, file);
 }
-
-void sort_lib_body(FILE *file, size_t size, int start, int end){
-    if(start > end) return;
+int lib_partition(FILE* file, size_t size, int low, int high){
     char *pivot = calloc(size, sizeof(char));
-    fseek(file, end * size * sizeof(char), SEEK_SET);
+    fseek(file, high * size * sizeof(char), SEEK_SET);
     fread(pivot, sizeof(char), size, file);
 
     char *curr = calloc(size, sizeof(char));
 
-    int i = start;
+    int i = low;
 
-    for (int j = start; j < end; ++j) {
+    for (int j = low; j < high; ++j) {
         fseek(file, j * size * sizeof(char), SEEK_SET);
         fread(curr, sizeof(char), size, file);
 
         if (strcmp(curr, pivot) < 0) {
             fseek(file, i * size * sizeof(char), SEEK_SET);
             fread(pivot, sizeof(char), size, file);
-            swap_lib(file, pivot, curr, i, j, size);
+            lib_swap(file, pivot, curr, i, j, size);
             i++;
-            fseek(file, end * size * sizeof(char), SEEK_SET);
+            fseek(file, high * size * sizeof(char), SEEK_SET);
             fread(pivot, sizeof(char), size, file);
         }
     }
     fseek(file, i * size * sizeof(char), SEEK_SET);
     fread(curr, sizeof(char), size, file);
-    swap_lib(file, curr, pivot, i, end, size);
+    lib_swap(file, curr, pivot, i, high, size);
     free(pivot);
     free(curr);
-    sort_lib_body(file, size, start, i - 1);
-    sort_lib_body(file, size, i + 1, end);
+    return i;
+}
+void lib_qsort(FILE *file, size_t size, int low, int high){
+    if (low < high) {
+        int pivot = lib_partition(file, size, low, high);
+        lib_qsort(file, size, low, pivot - 1);
+        lib_qsort(file, size, pivot + 1, high);
+    }
 }
 
-int sort_lib(char *file_path, int lines, size_t size){
+int sort_lib(char *file_path, int record_no, size_t size){
     FILE *handle = fopen(file_path, "r+");
-    sort_lib_body(handle, size,  0, lines - 1);
+    lib_qsort(handle, size, 0, record_no - 1);
     fclose(handle);
     return 0;
 }
-void swap_sys(int file, char* i_line, char* j_line, int i, int j, size_t length){
-    lseek(file, i * length * sizeof(char), SEEK_SET);
-    write(file, j_line, length);
-    lseek(file, j * length * sizeof(char), SEEK_SET);
-    write(file, i_line, length);
+void sys_swap(int fd, char *line1, char *line2, int ind1, int ind2, size_t size){
+    lseek(fd, ind1 * size * sizeof(char), SEEK_SET);
+    write(fd, line2, size);
+    lseek(fd, ind2 * size * sizeof(char), SEEK_SET);
+    write(fd, line1, size);
 }
-
-void sort_sys_body(int fd, size_t size, int start, int end){
-    if(start > end) return; // wyjście rekurencji
-
+int sys_partition(int fd, size_t size, int low, int high){
     char *pivot = calloc(size, sizeof(char));
-    lseek(fd, end * size * sizeof(char), SEEK_SET);
+    lseek(fd, high * size * sizeof(char), SEEK_SET);
     read(fd, pivot, size);
 
     char *curr = calloc(size, sizeof(char));
 
-    int i = start;
-
-    for (int j = start; j < end; ++j) {
+    int i = low;
+    for (int j = low; j < high; j++) {
         lseek(fd, j * size * sizeof(char), SEEK_SET);
         read(fd, curr, size);
 
         if (strcmp(curr, pivot) < 0) {
             lseek(fd, i * size * sizeof(char), SEEK_SET);
             read(fd, pivot, size);
-            swap_sys(fd, pivot, curr, i, j, size);
+            sys_swap(fd, pivot, curr, i, j, size);
             i++;
-            lseek(fd, end * size * sizeof(char), SEEK_SET);
+            lseek(fd, high * size * sizeof(char), SEEK_SET);
             read(fd, pivot, size);
         }
     }
     lseek(fd, i * size * sizeof(char), SEEK_SET);
     read(fd, curr, size);
-    swap_sys(fd, curr, pivot, i, end, size);
+    sys_swap(fd, curr, pivot, i, high, size);
     free(pivot);
     free(curr);
-    sort_sys_body(fd, size, start, i - 1);
-    sort_sys_body(fd, size, i + 1, end);
+    return i;
+}
+void sys_qsort(int fd, size_t size, int start, int end){
+    if (start < end) {
+        int pi = sys_partition(fd, size, start, end);
+        sys_qsort(fd, size, start, pi - 1);
+        sys_qsort(fd, size, pi + 1, end);
+    }
 }
 
-int sort_sys(char *file_path, int lines, size_t size){
+int sort_sys(char *file_path, int record_no, size_t size){
     int fd = open(file_path, O_RDWR);
-    sort_sys_body(fd, size, 0, lines - 1);
+    sys_qsort(fd, size, 0, record_no - 1);
     close(fd);
     return 0;
 }
