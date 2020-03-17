@@ -3,15 +3,13 @@
 #include <string.h>
 #include <stdbool.h>
 #include <linux/limits.h>
-#include <sys/resource.h>
 #include <time.h>
-#include <string.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/stat.h>
-#include <linux/times.h>
 #include <values.h>
 #include <dirent.h>
+#define __USE_XOPEN_EXTENDED 1
+#include <ftw.h>
 const char* commands[]= {"-mtime", "-atime", "-maxdepth"};
 static struct timespec initialization_time;
 char * type_to_string(int d_type);
@@ -27,9 +25,11 @@ struct settings{
     struct filter *atime_fltr;
     long max_depth;
 };
-struct filter* new_filter();
 void set_filter(struct filter *fltr, char *val);
-struct settings* new_settings();
+struct filter mfilter = {false, ' ', 0};
+struct filter afilter = {false, ' ', 0};
+struct settings sett = {&mfilter, &afilter, LONG_MAX};
+
 bool filter_by_time(time_t time, struct filter *flter){
     if(!flter->on) {return true;}
     int diff = (int) ((initialization_time.tv_sec - time) / 86400);
@@ -42,77 +42,46 @@ bool filter_by_time(time_t time, struct filter *flter){
             return diff == flter->value;
     }
 }
-void find(char *path, struct settings *sett, long depth){
-    if (sett->max_depth<= depth) return;
+int summarize(const char *fpath, const struct stat *stats, int typeflag, struct FTW *ftwbuf){
+    if (sett.max_depth < ftwbuf->level) return 0;
 
-    DIR* dir = opendir(path);
-    char *next_path = calloc(PATH_MAX, sizeof(char));
-    struct stat *stats = calloc(1, sizeof *stats);
-    struct dirent *d;
-
-    while ((d = readdir(dir)) != NULL) {
-        snprintf(next_path, PATH_MAX, "%s/%s", path, d->d_name);
-        stat(next_path, stats); // get file attributes
-        time_t mtime = stats->st_mtim.tv_sec;
-        time_t atime = stats->st_atim.tv_sec;
-
-        if (strcmp(d->d_name, ".") == 0 || strcmp(d->d_name, "..") == 0
-        || !filter_by_time(mtime, sett->mtime_fltr)
-        || !filter_by_time(atime, sett->atime_fltr)){
-            continue;
-        }
-        printf("%s/%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
-                path, d->d_name, type_to_string(d->d_type), stats->st_nlink, stats->st_size,
-               time_to_string(atime), time_to_string(mtime));
-
-        if (d->d_type == DT_DIR)
-            find(next_path, sett, depth+1);
+    time_t mtime = stats->st_mtim.tv_sec;
+    time_t atime = stats->st_atim.tv_sec;
+    if( !filter_by_time(atime, sett.atime_fltr) ||
+        !filter_by_time(mtime, sett.mtime_fltr)){
+        return 0;
     }
-    free(next_path);
-    closedir(dir);
+    printf("%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
+                fpath, type_to_string(typeflag), stats->st_nlink, stats->st_size,
+               time_to_string(atime), time_to_string(mtime));
+    return 0;
 }
 int main(int argc, char **argv) {
     clock_gettime(CLOCK_REALTIME, &initialization_time);
     char *path = dir();
-    struct settings *sett = new_settings();
 
     for (int nr=1; nr < argc; nr++) {
         if (strcmp(argv[nr], commands[0]) == 0) { // mtime
             char *val = argv[++nr];
-            set_filter(sett->mtime_fltr, val);
+            set_filter(sett.mtime_fltr, val);
         }else
             if (strcmp(argv[nr], commands[1]) == 0) { // atime
             char *val = argv[++nr];
-            set_filter(sett->atime_fltr, val);
+            set_filter(sett.atime_fltr, val);
         }else
             if (strcmp(argv[nr], commands[2]) == 0) { // max depth
-            sett->max_depth = strtol(argv[++nr], NULL, 10);
+            sett.max_depth = strtol(argv[++nr], NULL, 10);
         }else {
             strcpy(path, argv[nr]);
         }
     }
-
-    find(path, sett, 0);
+    nftw(path, summarize, 0, 0);
     return 0;
 }
 char *dir() {
     char *cwd = calloc(PATH_MAX, sizeof(char));
     getcwd(cwd, PATH_MAX);
     return cwd;
-}
-struct settings* new_settings(){
-    struct settings *sett = malloc(sizeof(struct settings));
-    sett->mtime_fltr = new_filter();
-    sett->atime_fltr= new_filter();
-    sett->max_depth = LONG_MAX;
-    return sett;
-}
-struct filter* new_filter(){
-    struct filter *fltr = malloc(sizeof(struct filter));
-    fltr->on = false;
-    fltr->modifier = ' ';
-    fltr->value =0;
-    return fltr;
 }
 void set_filter(struct filter *fltr, char* val) {
     fltr->on = true;
