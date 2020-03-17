@@ -12,7 +12,6 @@
 #include <linux/times.h>
 #include <values.h>
 #include <dirent.h>
-const int N=5;
 const char* commands[]= {"-mtime", "-atime", "-maxdepth"};
 static struct timespec initialization_time;
 char * type_to_string(int d_type);
@@ -20,11 +19,10 @@ char * time_to_string(time_t time);
 char *dir();
 struct filter{
     bool on;
-    char type;
     char modifier;
     long value;
 };
-struct filter* new_filter(char type);
+struct filter* new_filter();
 void set_filter(struct filter *fltr, char *val);
 struct settings{
     struct filter *mtime_fltr;
@@ -55,15 +53,14 @@ void find(char *path, struct settings *sett, long depth){
     while ((d = readdir(dir)) != NULL) {
         snprintf(next_path, PATH_MAX, "%s/%s", path, d->d_name);
         stat(next_path, stats); // get file attributes
-        if (strcmp(d->d_name, ".") == 0 || strcmp(d->d_name, "..") == 0
-        || !filter_by_time(stats->st_mtim.tv_sec, sett->mtime_fltr)
-        || !filter_by_time(stats->st_atim.tv_sec, sett->atime_fltr)){
-            continue;
-        }
-
         time_t mtime = stats->st_mtim.tv_sec;
         time_t atime = stats->st_atim.tv_sec;
 
+        if (strcmp(d->d_name, ".") == 0 || strcmp(d->d_name, "..") == 0
+        || !filter_by_time(mtime, sett->mtime_fltr)
+        || !filter_by_time(atime, sett->atime_fltr)){
+            continue;
+        }
         printf("%s/%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
                 path, d->d_name, type_to_string(d->d_type), stats->st_nlink, stats->st_size,
                time_to_string(atime), time_to_string(mtime));
@@ -105,17 +102,16 @@ char *dir() {
 }
 struct settings* new_settings(){
     struct settings *sett = malloc(sizeof(struct settings));
-    sett->mtime_fltr = new_filter('m');
-    sett->atime_fltr= new_filter('a');
+    sett->mtime_fltr = new_filter();
+    sett->atime_fltr= new_filter();
     sett->max_depth = LONG_MAX;
     return sett;
 }
-struct filter* new_filter(char type){
+struct filter* new_filter(){
     struct filter *fltr = malloc(sizeof(struct filter));
     fltr->on = false;
     fltr->modifier = ' ';
     fltr->value =0;
-    fltr->type = type;
     return fltr;
 }
 void set_filter(struct filter *fltr, char* val) {
