@@ -44,7 +44,6 @@ bool filter_by_time(time_t time, struct filter *flter){
 }
 void find(char *path, struct settings *sett, long depth){
     if (sett->max_depth<= depth) return;
-
     DIR* dir = opendir(path);
     char *next_path = calloc(PATH_MAX, sizeof(char));
     struct stat *stats = calloc(1, sizeof *stats);
@@ -64,7 +63,6 @@ void find(char *path, struct settings *sett, long depth){
         printf("%s/%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
                 path, d->d_name, type_to_string(d->d_type), stats->st_nlink, stats->st_size,
                time_to_string(atime), time_to_string(mtime));
-
         if (d->d_type == DT_DIR)
             find(next_path, sett, depth+1);
     }
@@ -91,7 +89,6 @@ int main(int argc, char **argv) {
             strcpy(path, argv[nr]);
         }
     }
-
     find(path, sett, 0);
     return 0;
 }

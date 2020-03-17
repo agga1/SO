@@ -12,7 +12,7 @@
 #include <ftw.h>
 const char* commands[]= {"-mtime", "-atime", "-maxdepth"};
 static struct timespec initialization_time;
-char * type_to_string(int d_type);
+char * type_to_string(int f_type);
 char * time_to_string(time_t time);
 char *dir();
 struct filter{
@@ -29,7 +29,6 @@ void set_filter(struct filter *fltr, char *val);
 struct filter mfilter = {false, ' ', 0};
 struct filter afilter = {false, ' ', 0};
 struct settings sett = {&mfilter, &afilter, LONG_MAX};
-
 bool filter_by_time(time_t time, struct filter *flter){
     if(!flter->on) {return true;}
     int diff = (int) ((initialization_time.tv_sec - time) / 86400);
@@ -88,23 +87,18 @@ void set_filter(struct filter *fltr, char* val) {
     fltr->modifier = val[0];
     fltr->value = abs((int) strtol(val, NULL, 10));
 }
-char * type_to_string(int d_type){
-    switch (d_type) {
-        case DT_BLK:
-            return  "block dev";
-        case DT_CHR:
-            return  "char dev";
-        case DT_DIR:
+char * type_to_string(int f_type){
+    switch (f_type) {
+        case FTW_D :
             return  "dir";
-        case DT_FIFO:
-            return  "fifo";
-        case DT_LNK:
+        case FTW_DNR:
+            return "unread dir";
+        case FTW_SL:
             return  "slink";
-        case DT_REG:
+        case FTW_NS:
+            return  "unstable file";
+        case FTW_F:
             return  "file";
-        case DT_SOCK:
-            return  "sock";
-        case DT_UNKNOWN:
         default:
             return "unknown";
     }
