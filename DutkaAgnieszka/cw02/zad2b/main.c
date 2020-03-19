@@ -15,6 +15,8 @@ static struct timespec initialization_time;
 char * type_to_string(int f_type);
 char * time_to_string(time_t time);
 char *dir();
+
+int count=0;
 struct filter{
     bool on;
     char modifier;
@@ -42,8 +44,7 @@ bool filter_by_time(time_t time, struct filter *flter){
     }
 }
 int summarize(const char *fpath, const struct stat *stats, int typeflag, struct FTW *ftwbuf){
-    if (sett.max_depth < ftwbuf->level) return 0;
-
+    if (sett.max_depth < ftwbuf->level || fpath[sizeof(fpath)-1]=='.') return 0;
     time_t mtime = stats->st_mtim.tv_sec;
     time_t atime = stats->st_atim.tv_sec;
     if( !filter_by_time(atime, sett.atime_fltr) ||
@@ -53,6 +54,7 @@ int summarize(const char *fpath, const struct stat *stats, int typeflag, struct 
     printf("%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
                 fpath, type_to_string(typeflag), stats->st_nlink, stats->st_size,
                time_to_string(atime), time_to_string(mtime));
+    count++;
     return 0;
 }
 int main(int argc, char **argv) {
@@ -75,6 +77,7 @@ int main(int argc, char **argv) {
         }
     }
     nftw(path, summarize, 0, 0);
+
     return 0;
 }
 char *dir() {

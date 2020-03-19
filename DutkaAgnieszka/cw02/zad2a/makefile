@@ -1,5 +1,4 @@
 CC = gcc -Wall -std=gnu99 -ggdb
-Opt ?= 0
 all: clean compile
 
 compile:
@@ -11,7 +10,6 @@ clean:
 	mkdir out/
 
 tests:
-#	./out/main .
-	./out/main . -mtime +30
 	./out/main . -mtime -30
-	./out/main . -mtime 30 -atime 30
+	./out/main /usr -atime -7 -maxdepth 2
+	./out/main /etc -atime -7 -maxdepth 3

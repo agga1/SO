@@ -17,6 +17,8 @@ static struct timespec initialization_time;
 char * type_to_string(int d_type);
 char * time_to_string(time_t time);
 char *dir();
+
+int count=0;
 struct filter{
     bool on;
     char modifier;
@@ -55,14 +57,15 @@ void find(char *path, struct settings *sett, long depth){
         time_t mtime = stats->st_mtim.tv_sec;
         time_t atime = stats->st_atim.tv_sec;
 
-        if (strcmp(d->d_name, ".") == 0 || strcmp(d->d_name, "..") == 0
-        || !filter_by_time(mtime, sett->mtime_fltr)
+        if (strcmp(d->d_name, ".") == 0 || strcmp(d->d_name, "..") == 0 ||
+        !filter_by_time(mtime, sett->mtime_fltr)
         || !filter_by_time(atime, sett->atime_fltr)){
             continue;
         }
         printf("%s/%s | type: %s | total_links: %lu  | size: %ld bytes | atime: %s | mtime: %s\n",
                 path, d->d_name, type_to_string(d->d_type), stats->st_nlink, stats->st_size,
                time_to_string(atime), time_to_string(mtime));
+        count++;
         if (d->d_type == DT_DIR)
             find(next_path, sett, depth+1);
     }
