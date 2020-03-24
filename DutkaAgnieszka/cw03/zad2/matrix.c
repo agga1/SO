@@ -1,6 +1,4 @@
 #define _XOPEN_SOURCE 500
-#define MAX_COLS_NUMBER 1000
-#define MAX_LINE_LENGTH (MAX_COLS_NR * 5)
 #define MODE_JOINT 1
 #define MODE_DISJOINT 2
 #include <linux/limits.h>
@@ -11,11 +9,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "matrix_func.c"
+#include "matrix_manage.c"
 #include <time.h>
 #include <unistd.h>
-
-
 int pair_number = 0;
 
 struct Task{
@@ -184,8 +180,6 @@ int main(int argc, char* argv[]) {
     }
     pair_number = pairs_nr;
 
-
-
     pid_t* processes = calloc(workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
@@ -204,7 +198,6 @@ int main(int argc, char* argv[]) {
     }
     free(processes);
 
-
     if(mode == MODE_DISJOINT){
         for(int i=0; i<pairs_nr; i++){
             char *buffer = calloc(1000, sizeof(char));
@@ -213,6 +206,5 @@ int main(int argc, char* argv[]) {
         }
 
     }
-
     return 0;
 }

@@ -1,25 +1,26 @@
 #define _XOPEN_SOURCE 500
 #define LINE_BUFF 4096
 #include <linux/limits.h>
+#include <string.h>
+#include <stdbool.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/file.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
-#include <stdbool.h>
 
 struct matrix {
     int** mx;
     int row_nr;
     int col_nr;
 };
-struct matrix *new_matrix(int ** val, int rows, int cols){
+struct matrix *new_matrix(int rows, int cols){
     struct matrix *m = malloc(sizeof(struct matrix));
     m->row_nr = rows;
     m->col_nr = cols;
-    m->mx = val;
+    m->mx = calloc((size_t) rows, sizeof(int*));
+    for (int y = 0; y < rows; y++) m->mx[y] = calloc((size_t) cols, sizeof(int));;
     return m;
 }
 int get_col_nr(char *row) { // count nr of columns based on one row
@@ -46,33 +47,27 @@ struct matrix *load_mx(char *path) {
     }
 
     fseek(file, 0, SEEK_SET); // rewind to the beginning
-    int** values = calloc(rows, sizeof(int*));
-    for (int y = 0; y < rows; y++) values[y] = calloc(cols, sizeof(int));
-
-    int x_curr, y_curr = 0;
+    // read matrix
+    struct matrix* m = new_matrix(rows, cols);
+    int c, r = 0;
     while (fgets(line, LINE_BUFF, file) != NULL) {
-        x_curr = 0;
-        char* number = strtok(line, " ");
-        while (number != NULL) {
-            values[y_curr][x_curr++] = atoi(number);
-            number = strtok(NULL, " ");
+        c = 0;
+        char* val = strtok(line, " ");
+        while (val != NULL) {
+            m->mx[r][c++] = atoi(val);
+            val = strtok(NULL, " ");
         }
-        y_curr++;
+        r++;
     }
     fclose(file);
-    return new_matrix(values, rows, cols);
+    return m;
 }
-
 void free_mx(struct matrix *m) {
     for (int y = 0; y < m->row_nr; y++) free(m->mx[y]);
     free(m->mx);
 }
-
 struct matrix* dot(struct matrix *a, struct matrix *b){
-
-//    struct matrix *matrix1 = new_matrix(a->row_nr)
-    int** matrix = calloc((size_t) a->row_nr, sizeof(int*));
-    for (int y = 0; y < a->row_nr; y++) matrix[y] = calloc((size_t) b->col_nr, sizeof(int));
+    struct matrix *m = new_matrix(a->row_nr, b->col_nr);
 
     for (int i = 0; i < a->row_nr; i++) {
         for (int j = 0; j < b->col_nr; j++) {
@@ -80,10 +75,10 @@ struct matrix* dot(struct matrix *a, struct matrix *b){
             for(int k=0; k< a->col_nr; k++){
                 result += (a->mx[i][k]*b->mx[k][j]);
             }
-            matrix[i][j] = result;
+            m->mx[i][j] = result;
         }
     }
-    return new_matrix(matrix, a->row_nr, b->col_nr);
+    return m;
 }
 int get_random(int min, int max){
     return rand() % (max - min + 1) + min;
@@ -100,16 +95,13 @@ void generate_matrix(int rows, int cols, char* filename) {
     }
     fclose(file);
 }
-
 void write_mx_to_file(FILE *file, struct matrix *a){
     fseek(file, 0, SEEK_SET);
     for (int y = 0; y < a->row_nr; y++) {
         for (int x = 0; x < a->col_nr; x++) {
-            if (x > 0) {
-                fprintf(file, " ");
-            }
+            if (x > 0) fprintf(file, " ");
             fprintf(file, "%d", a->mx[y][x]);
-        };
+        }
         fprintf(file, "\n");
     }
 }
