@@ -93,6 +93,7 @@ int main(int argc, char **argv) {
         }
     }
     find(path, sett, 0);
+
     return 0;
 }
 char *dir() {

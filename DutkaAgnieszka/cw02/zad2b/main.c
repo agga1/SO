@@ -76,8 +76,7 @@ int main(int argc, char **argv) {
             strcpy(path, argv[nr]);
         }
     }
-    nftw(path, summarize, 0, 0);
-
+    nftw(path, summarize, 0, FTW_PHYS);
     return 0;
 }
 char *dir() {

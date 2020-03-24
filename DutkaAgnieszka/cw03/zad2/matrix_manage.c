@@ -68,13 +68,11 @@ void free_mx(struct matrix *m) {
 }
 struct matrix* dot(struct matrix *a, struct matrix *b){
     struct matrix *m = new_matrix(a->row_nr, b->col_nr);
-
     for (int i = 0; i < a->row_nr; i++) {
         for (int j = 0; j < b->col_nr; j++) {
             int result = 0;
-            for(int k=0; k< a->col_nr; k++){
-                result += (a->mx[i][k]*b->mx[k][j]);
-            }
+            for(int k=0; k< a->col_nr; k++)
+                result += (a->mx[i][k])*(b->mx[k][j]);
             m->mx[i][j] = result;
         }
     }
@@ -83,25 +81,22 @@ struct matrix* dot(struct matrix *a, struct matrix *b){
 int get_random(int min, int max){
     return rand() % (max - min + 1) + min;
 }
-void generate_matrix(int rows, int cols, char* filename) {
-    FILE* file = fopen(filename, "w+");
-
-    for (int y = 0; y < rows; y++) {
-        for (int x = 0; x < cols; x++) {
-            if (x > 0) fprintf(file, " ");
-            fprintf(file, "%d", get_random(-100, 100));
-        }
-        fprintf(file, "\n");
-    }
-    fclose(file);
-}
 void write_mx_to_file(FILE *file, struct matrix *a){
     fseek(file, 0, SEEK_SET);
-    for (int y = 0; y < a->row_nr; y++) {
-        for (int x = 0; x < a->col_nr; x++) {
-            if (x > 0) fprintf(file, " ");
-            fprintf(file, "%d", a->mx[y][x]);
+    for (int r = 0; r < a->row_nr; r++) {
+        for (int c = 0; c < a->col_nr; c++) {
+            if (c > 0) fprintf(file, " ");
+            fprintf(file, "%d", a->mx[r][c]);
         }
         fprintf(file, "\n");
     }
+}
+void get_random_mx(int rows, int cols, char *filename) {
+    FILE* file = fopen(filename, "w+");
+    struct matrix *m = new_matrix(rows, cols);
+    for (int r = 0; r < rows; r++)
+        for (int c = 0; c < cols; c++)
+            m->mx[r][c] = get_random(-100, 100);
+    write_mx_to_file(file, m);
+    fclose(file);
 }
