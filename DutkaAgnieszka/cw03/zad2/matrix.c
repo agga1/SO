@@ -14,6 +14,9 @@
 #include <time.h>
 #include "matrix_manage.c"
 const char* out_folder = "tmp";
+
+void join_res(int pairs, char **pString);
+
 // calculating column nr @col of output matrix to separate file
 void calc_separate_col(char *a_filename, char *b_filename, int col, int pair_index) {
     struct matrix *a = load_mx(a_filename);
@@ -164,34 +167,43 @@ int main(int argc, char* argv[]) {
     }
     int total_pairs = pairs_nr;
 
-    pid_t* processes = calloc(workers_nr, sizeof(int));
+    pid_t* workers = calloc(workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
         if (worker == 0) { // child process
             return worker_function(a_files, b_files, max_time, mode, c_files, total_pairs);
         } else {
-            processes[i] = worker;
+            workers[i] = worker;
         }
     }
 
     for (int i = 0; i < workers_nr; i++) {
         int res;
-        waitpid(processes[i], &res, 0);
-        printf("Process nr %d executed %d matrix multiplications\n", processes[i],
-               WEXITSTATUS(res));
+        waitpid(workers[i], &res, 0);
+        printf("Process nr %d executed %d matrix multiplications\n", workers[i], WEXITSTATUS(res));
     }
-    free(processes);
+    free(workers);
 
     // join result
+//    if(mode == MODE_DISJOINT) join_res(total_pairs, c_files);
     if(mode == MODE_DISJOINT){
         for(int i=0; i<pairs_nr; i++){
             char *buffer = calloc(1000, sizeof(char));
             sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
-            char name[400];
-            snprintf(name, 400, "%s/part%d*", out_folder, i);
-//            execlp("paste", "paste", name, ">", c_files[i], NULL);
             system(buffer);
         }
     }
     return 0;
+}
+
+void join_res(int pairs, char **out_filenames) {
+    for(int i=0; i<pairs; i++){
+//        char *buffer = calloc(LINE_BUFF, sizeof(char));
+//        sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
+//        char names[4000];
+//        snprintf(name, 400, "%s/part%d*", out_folder, i);
+//            execlp("paste", "paste", names, "-d' '" , ">", out_filenames[i], NULL);
+//        system(buffer);
+    }
+
 }
