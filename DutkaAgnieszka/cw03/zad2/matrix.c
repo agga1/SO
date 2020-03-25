@@ -1,6 +1,7 @@
 #define _XOPEN_SOURCE 500
 #define MODE_JOINT 1
 #define MODE_DISJOINT 2
+#define MAX_COL 1000 // maximum nr of columns in any result matrix
 #include <linux/limits.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -12,39 +13,7 @@
 #include <sys/wait.h>
 #include <time.h>
 #include "matrix_manage.c"
-int total_pairs = 0;
 const char* out_folder = "tmp";
-int* get_task() {
-    static int pair_and_col[2] = {-1, -1};
-    for(int pair_idx=0; pair_idx< total_pairs; pair_idx++){
-
-        char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%d",out_folder, pair_idx);
-        FILE* tasks_file = fopen(task_filename, "r+");
-        int fd = fileno(tasks_file);
-        flock(fd, LOCK_EX);
-        char* tasks = calloc(1000, sizeof(char));
-        fseek(tasks_file, 0, SEEK_SET);
-        fread(tasks, 1, 1000, tasks_file);
-        char* task_first_zero = strchr(tasks, '0');
-
-        if (task_first_zero != NULL) {
-            int task_idx = (int) (task_first_zero - tasks);
-            size_t total_tasks = (strchr(tasks, '\0') - tasks);
-            tasks[task_idx] = '1';
-            fseek(tasks_file, 0, SEEK_SET);
-            fwrite(tasks, 1, total_tasks, tasks_file);
-            pair_and_col[0] = pair_idx;
-            pair_and_col[1] = task_idx;
-            flock(fd, LOCK_UN);
-            fclose(tasks_file);
-            break;
-        }
-        flock(fd, LOCK_UN);
-        fclose(tasks_file);
-    }
-    return pair_and_col;
-}
 // calculating column nr @col of output matrix to separate file
 void calc_separate_col(char *a_filename, char *b_filename, int col, int pair_index) {
     struct matrix *a = load_mx(a_filename);
@@ -82,7 +51,43 @@ void calc_col_in_mx(char *a_file, char *b_file, int col, char *c_file) {
     flock(fd, LOCK_UN);
     fclose(file);
 }
-int worker_function(char** a, char** b, int max_time, int mode, char **out_file) {
+int* get_task(int total_pairs) {
+    int *pair_and_col = calloc(2, sizeof(int));
+    pair_and_col[0]=pair_and_col[1]=-1;
+
+    for(int pair_idx=0; pair_idx < total_pairs; pair_idx++){
+        char* filename = calloc(100, sizeof(char));
+        sprintf(filename, "%s/tasks%03d",out_folder, pair_idx);
+        FILE* tasksF = fopen(filename, "r+");
+        // get file descr and lock file
+        int fd = fileno(tasksF);
+        flock(fd, LOCK_EX);
+
+        char* tasks = calloc(MAX_COL, sizeof(char));
+        fseek(tasksF, 0, SEEK_SET);
+        fread(tasks, 1, MAX_COL, tasksF);
+        char* get_undone = strchr(tasks, '0');
+
+        if (get_undone != NULL) {
+            int to_do_idx = (int) (get_undone - tasks);
+            size_t total_tasks = (strchr(tasks, '\0') - tasks);
+            tasks[to_do_idx] = '1';
+            // update done tasks
+            fseek(tasksF, 0, SEEK_SET);
+            fwrite(tasks, 1, total_tasks, tasksF);
+            pair_and_col[0] = pair_idx;
+            pair_and_col[1] = to_do_idx;
+
+            flock(fd, LOCK_UN);
+            fclose(tasksF);
+            return pair_and_col;
+        }
+        flock(fd, LOCK_UN);
+        fclose(tasksF);
+    }
+    return pair_and_col;
+}
+int worker_function(char** a, char** b, int max_time, int mode, char **out_file, int total_pairs) {
     time_t start_time = time(NULL);
     int task_nr = 0;
     while (1) {
@@ -90,8 +95,9 @@ int worker_function(char** a, char** b, int max_time, int mode, char **out_file)
             printf("max_time reached\n");
             break;
         }
-        int *pair_col = get_task();
-        if (pair_col[0] == -1) {
+        int *pair_col = get_task(total_pairs);
+//        printf("solving pair nr %d, col nr %d\n", pair_col[0], pair_col[1]);
+        if (pair_col[1] == -1) {
             printf("all tasks executed\n");
             break;
         }
@@ -143,25 +149,26 @@ int main(int argc, char* argv[]) {
         if(mode == MODE_JOINT) get_random_mx(a->row_nr, b->col_nr, c_files[pairs_nr]);
 
         char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%d", out_folder, pairs_nr);
+        sprintf(task_filename, "%s/tasks%03d", out_folder, pairs_nr);
         FILE* tasks_file = fopen(task_filename, "w+");
 
         char* tasks = calloc(b->col_nr + 1, sizeof(char));
         sprintf(tasks, "%0*d", b->col_nr, 0);
         fwrite(tasks, 1, b->col_nr, tasks_file);
+//        printf("new tasks %s", tasks);
         free(tasks);
         free(task_filename);
         fclose(tasks_file);
 
         pairs_nr++;
     }
-    total_pairs = pairs_nr;
+    int total_pairs = pairs_nr;
 
     pid_t* processes = calloc(workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
         if (worker == 0) { // child process
-            return worker_function(a_files, b_files, max_time, mode, c_files);
+            return worker_function(a_files, b_files, max_time, mode, c_files, total_pairs);
         } else {
             processes[i] = worker;
         }
