@@ -15,14 +15,14 @@
 #include "matrix_manage.c"
 const char* out_folder = "tmp";
 
-void join_res(int pairs, char **pString);
+void join_res(int pairs, int *parts, char **pString);
 
 // calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
 //    struct matrix *a = load_mx(aF);
 //    struct matrix *b = load_mx(bF);
     char* filename = calloc(20, sizeof(char));
-    sprintf(filename, "%s/part%d%04d", out_folder, pair_index, col);
+    sprintf(filename, "%s/part%02d%04d", out_folder, pair_index, col);
     FILE* part_file = fopen(filename, "w+");
 
     for (int a_row = 0; a_row < a->row_nr; a_row++) {
@@ -192,8 +192,12 @@ int main(int argc, char* argv[]) {
     }
     free(workers);
 
-    // join result
-//    if(mode == MODE_DISJOINT) join_res(total_pairs, c_files);
+//    // join result
+//    if(mode == MODE_DISJOINT) {
+//        int *parts = calloc((size_t) total_pairs, sizeof(int));
+//        for(int i=0;i<total_pairs;i++) parts[i]=bs[i]->col_nr;
+//        join_res(total_pairs, parts, c_files);
+//    }
     if(mode == MODE_DISJOINT){
         for(int i=0; i<pair_idx; i++){
             char *buffer = calloc(1000, sizeof(char));
@@ -203,14 +207,25 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-void join_res(int pairs, char **out_filenames) {
+void join_res(int pairs, int* parts, char **out_filenames) {
+
     for(int i=0; i<pairs; i++){
-//        char *buffer = calloc(LINE_BUFF, sizeof(char));
-//        sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
-//        char names[4000];
-//        snprintf(name, 400, "%s/part%d*", out_folder, i);
-//            execlp("paste", "paste", names, "-d' '" , ">", out_filenames[i], NULL);
-//        system(buffer);
+        char **args = calloc(parts[i]+3, sizeof(char*));
+        args[0] = "paste";
+        for(int partNr=0; partNr<parts[i];partNr++){
+            args[partNr+1] = calloc(LINE_BUFF, sizeof(char));
+            snprintf(args[partNr+1], LINE_BUFF, "%s/part%02d%04d", out_folder, i, partNr );
+        }
+        args[parts[i]] = "-d ";
+        args[parts[i]+1] = NULL;
+        if (fork() == 0)
+        {
+            int fd = open(out_filenames[i], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
+            dup2(fd, 1);   // make stdout go to file
+            close(fd);     // fd no longer needed - the dup'ed handles are sufficient
+            execvp("paste", args);
+        }
     }
 
 }

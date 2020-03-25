@@ -41,6 +41,7 @@ struct matrix *load_mx(char *path) {
     int rows=0, cols=0;
     if(fgets(line, LINE_BUFF, file) != NULL){
         cols = get_col_nr(line);
+        printf("check %d for path %s\n", cols, path);
         rows++;
         while (fgets(line, LINE_BUFF, file) != NULL)
             rows ++;
