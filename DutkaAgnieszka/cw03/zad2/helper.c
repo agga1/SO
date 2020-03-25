@@ -11,10 +11,13 @@ bool check_multiply_correctness(char *a_filename, char *b_filename, char *c_file
     struct matrix *actual = load_mx(c_filename);
     printf("%d\n", actual->col_nr);
     struct matrix *expected = dot(a, b);
-    if(expected->col_nr != actual->col_nr || expected->row_nr != actual->row_nr) return false;
-    for( int i=0; i<expected->row_nr; i++){
-        for(int j=0; j<expected->col_nr; j++){
-            if(expected->mx[i][j] != actual->mx[i][j]) return false;
+    if(expected->col_nr != actual->col_nr || expected->row_nr != actual->row_nr) {
+        printf("dims incorrect!\n");
+        return false;
+    }
+    for( int r=0; r<expected->row_nr; r++){
+        for(int c=0; c<expected->col_nr; c++){
+            if(expected->mx[r][c] != actual->mx[r][c]) return false;
         }
     }
     free_mx(a);

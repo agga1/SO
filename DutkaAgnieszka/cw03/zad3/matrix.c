@@ -13,7 +13,12 @@
 #include <sys/wait.h>
 #include <time.h>
 #include "matrix_manage.c"
+#include <sys/resource.h>
 const char* out_folder = "tmp";
+
+void create_out_folder();
+
+void print_stats(struct rusage *start_t, struct rusage *end_t);
 
 //// calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
@@ -84,7 +89,19 @@ int* get_task(int total_pairs) {
     }
     return pair_and_col;
 }
-int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode, char **out_file, int total_pairs) {
+rlim_t mb_to_bytes(int mb){
+    return (rlim_t) (mb) * 1000000;
+}
+void set_limits(int cpu_limit, int vm_limit_mb){
+    struct rlimit cpu = {(rlim_t) cpu_limit, (rlim_t) cpu_limit};
+    rlim_t as_limit = mb_to_bytes(vm_limit_mb);
+    struct rlimit as = {as_limit, as_limit};
+    setrlimit(RLIMIT_CPU, &cpu);
+    setrlimit(RLIMIT_AS, &as);
+}
+int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode, char **out_file, int total_pairs,
+        int cpu_time_limit, int vm_limit) {
+    set_limits(cpu_time_limit, vm_limit);
     time_t start_time = time(NULL);
     int task_nr = 0;
     while (1) {
@@ -115,25 +132,24 @@ int number_of_lines(FILE* file) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 5) {
+    if (argc != 7) {
         printf("wrong argument number (expected 4, got %d)", argc-1);
         return 1;
     }
+    //// read arguments:
     FILE* list = fopen(argv[1], "r");
     int workers_nr = atoi(argv[2]);
     int max_time = atoi(argv[3]);
     int mode = strcmp(argv[4], "joint") == 0 ? MODE_JOINT : MODE_DISJOINT;
+    int pc_time_limit = atoi(argv[5]); // in s
+    int vm_limit = atoi(argv[6]); // in mb
 
     char **c_files = calloc(100, sizeof(char*));
-    int total_pairs= number_of_lines(list);
+    int total_pairs = number_of_lines(list);
     struct matrix** as = calloc((size_t) total_pairs, sizeof(struct matrix));
     struct matrix** bs = calloc((size_t) total_pairs, sizeof(struct matrix));
 
-    char cmd[500];
-    snprintf(cmd, 500, "rm -rf %s", out_folder);
-    system(cmd);
-    snprintf(cmd, 500, "mkdir -p %s", out_folder);
-    system(cmd);
+    create_out_folder();
 
     char line[PATH_MAX * 3 + 3];
     int pair_idx = 0;
@@ -166,21 +182,26 @@ int main(int argc, char* argv[]) {
     pid_t* workers = calloc((size_t) workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
-        if (worker == 0) return worker_function(as, bs, max_time, mode, c_files, total_pairs);
+        if (worker == 0) return worker_function(as, bs, max_time, mode, c_files, total_pairs, pc_time_limit, vm_limit);
         else workers[i] = worker;
     }
-
+    struct rusage start_time;
+    struct rusage end_time;
     for (int i = 0; i < workers_nr; i++) {
         int res;
+        getrusage(RUSAGE_CHILDREN, &start_time);
         waitpid(workers[i], &res, 0);
+        getrusage(RUSAGE_CHILDREN, &end_time);
         printf("Process nr %d executed %d matrix multiplications\n", workers[i], WEXITSTATUS(res));
+        print_stats(&start_time, &end_time);
+
     }
     free(workers);
 
     if(mode == MODE_DISJOINT){
         for(int i=0; i<pair_idx; i++){
             char *buffer = calloc(1000, sizeof(char));
-            sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
+            sprintf(buffer, "paste %s/part%02d* -d' '> %s", out_folder, i, c_files[i]);
             system(buffer);
         }
     }
@@ -194,4 +215,23 @@ int main(int argc, char* argv[]) {
     free(bs);
     free(c_files);
     return 0;
+}
+
+void print_stats(struct rusage *start_t, struct rusage *end_t) {
+    time_t user_sec = end_t->ru_utime.tv_sec - start_t->ru_utime.tv_sec;
+    time_t user_micro = abs(end_t->ru_utime.tv_usec - start_t->ru_utime.tv_usec);
+
+    time_t system_sec = end_t->ru_stime.tv_sec - start_t->ru_stime.tv_sec;
+    time_t system_micro = abs(end_t->ru_stime.tv_usec - start_t->ru_stime.tv_usec);
+
+    printf("user time: %ld.%06ld\n", user_sec, user_micro);
+    printf("system time: %ld.%06ld\n\n", system_sec, system_micro);
+}
+
+void create_out_folder() {
+    char cmd[500];
+    snprintf(cmd, 500, "rm -rf %s", out_folder);
+    system(cmd);
+    snprintf(cmd, 500, "mkdir -p %s", out_folder);
+    system(cmd);
 }

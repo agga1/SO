@@ -202,14 +202,15 @@ int main(int argc, char* argv[]) {
 void join_res(int pairs, int* parts, char **out_filenames) {
 
     for(int i=0; i<pairs; i++){
-        char **args = calloc(parts[i]+3, sizeof(char*));
+        char **args = calloc(parts[i]+4, sizeof(char*));
         args[0] = "paste";
         for(int partNr=0; partNr<parts[i];partNr++){
             args[partNr+1] = calloc(20, sizeof(char));
             snprintf(args[partNr+1], 20, "%s/part%02d%04d", out_folder, i, partNr );
         }
-        args[parts[i]+1] = "-d ";
-        args[parts[i]+2] = NULL;
+        args[parts[i]+1] = "-d";
+        args[parts[i]+2] = " ";
+        args[parts[i]+3] = NULL;
         if (fork() == 0)
         {
             int fd = open(out_filenames[i], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);

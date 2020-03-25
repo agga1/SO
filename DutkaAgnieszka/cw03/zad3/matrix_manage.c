@@ -23,7 +23,7 @@ struct matrix *new_matrix(int rows, int cols){
     for (int y = 0; y < rows; y++) m->mx[y] = calloc((size_t) cols, sizeof(int));;
     return m;
 }
-int get_col_nr(char *row) { // count nr of columns based on one row
+int get_col_nr(char *row) { //// count nr of columns based on one row
     int cols = 0;
     char* number = strtok(row, " ");
     while (number != NULL) {
@@ -32,12 +32,12 @@ int get_col_nr(char *row) { // count nr of columns based on one row
     }
     return cols;
 }
-// load matrix from file
+//// load matrix from file
 struct matrix *load_mx(char *path) {
     FILE *file = fopen(path, "r");
     if(file == NULL) perror("error loading matrix");
     char line[LINE_BUFF];
-    // get row and col nr
+    //// get row and col nr
     int rows=0, cols=0;
     if(fgets(line, LINE_BUFF, file) != NULL){
         cols = get_col_nr(line);
@@ -47,7 +47,7 @@ struct matrix *load_mx(char *path) {
     }
 
     fseek(file, 0, SEEK_SET); // rewind to the beginning
-    // read matrix
+    ///// read matrix
     struct matrix* m = new_matrix(rows, cols);
     int c, r = 0;
     while (fgets(line, LINE_BUFF, file) != NULL) {
