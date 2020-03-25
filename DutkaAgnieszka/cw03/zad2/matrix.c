@@ -18,9 +18,9 @@ const char* out_folder = "tmp";
 void join_res(int pairs, char **pString);
 
 // calculating column nr @col of output matrix to separate file
-void calc_separate_col(char *a_filename, char *b_filename, int col, int pair_index) {
-    struct matrix *a = load_mx(a_filename);
-    struct matrix *b = load_mx(b_filename);
+void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
+//    struct matrix *a = load_mx(aF);
+//    struct matrix *b = load_mx(bF);
     char* filename = calloc(20, sizeof(char));
     sprintf(filename, "%s/part%d%04d", out_folder, pair_index, col);
     FILE* part_file = fopen(filename, "w+");
@@ -35,9 +35,9 @@ void calc_separate_col(char *a_filename, char *b_filename, int col, int pair_ind
     fclose(part_file);
 }
 // calculating column nr @col in output matrix
-void calc_col_in_mx(char *a_file, char *b_file, int col, char *c_file) {
-    struct matrix *a = load_mx(a_file);
-    struct matrix *b = load_mx(b_file);
+void calc_col_in_mx(struct matrix *a, struct matrix *b, int col, char *c_file) {
+//    struct matrix *a = load_mx(aF);
+//    struct matrix *b = load_mx(bF);
     FILE* file = fopen(c_file, "r+");
     int fd = fileno(file);
     flock(fd, LOCK_EX);
@@ -90,7 +90,7 @@ int* get_task(int total_pairs) {
     }
     return pair_and_col;
 }
-int worker_function(char** a, char** b, int max_time, int mode, char **out_file, int total_pairs) {
+int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode, char **out_file, int total_pairs) {
     time_t start_time = time(NULL);
     int task_nr = 0;
     while (1) {
@@ -137,13 +137,10 @@ int main(int argc, char* argv[]) {
     int max_time = atoi(argv[3]);
     int mode = strcmp(argv[4], "joint") == 0 ? MODE_JOINT : MODE_DISJOINT;
 
-    char **a_files = calloc(100, sizeof(char*));
-    char **b_files = calloc(100, sizeof(char*));
     char **c_files = calloc(100, sizeof(char*));
     int total_pairs= number_of_lines(list);
-    struct matrix** as = calloc(total_pairs, sizeof(struct matrix));
-    struct matrix** bs = calloc(total_pairs, sizeof(struct matrix));
-    struct matrix** cs = calloc(total_pairs, sizeof(struct matrix));
+    struct matrix** as = calloc((size_t) total_pairs, sizeof(struct matrix));
+    struct matrix** bs = calloc((size_t) total_pairs, sizeof(struct matrix));
 
     char cmd[500];
     snprintf(cmd, 500, "rm -rf %s", out_folder);
@@ -154,39 +151,35 @@ int main(int argc, char* argv[]) {
     char line[PATH_MAX * 3 + 3];
     int pair_idx = 0;
     while (fgets(line, PATH_MAX*3 + 3, list) != NULL) {
-        a_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
-        b_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
         c_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
-
-        strcpy(a_files[pair_idx], strtok(line, " "));
-        strcpy(b_files[pair_idx], strtok(NULL, " "));
+        char* aF = strtok(line, " ");
+        char* bF = strtok(NULL, " ");
         strcpy(c_files[pair_idx], strtok(NULL, " "));
         // trimming \n from c filename
         size_t len = strlen(c_files[pair_idx]);
         c_files[pair_idx][len-1] = 0;
-        as[pair_idx] = load_mx(a_files[pair_idx]);
-        bs[pair_idx] = load_mx(b_files[pair_idx]);
+        as[pair_idx] = load_mx(aF);
+        bs[pair_idx] = load_mx(bF);
         if(mode == MODE_JOINT) get_random_mx(as[pair_idx]->row_nr, bs[pair_idx]->col_nr, c_files[pair_idx]);
 
         char* task_filename = calloc(100, sizeof(char));
         sprintf(task_filename, "%s/tasks%03d", out_folder, pair_idx);
         FILE* tasks_file = fopen(task_filename, "w+");
 
-        char* tasks = calloc(bs[pair_idx]->col_nr + 1, sizeof(char));
+        char* tasks = calloc((bs[pair_idx]->col_nr + 1), sizeof(char));
         sprintf(tasks, "%0*d", bs[pair_idx]->col_nr, 0);
         fwrite(tasks, 1, bs[pair_idx]->col_nr, tasks_file);
-//        printf("new tasks %s", tasks);
         free(tasks);
         free(task_filename);
         fclose(tasks_file);
 
         pair_idx++;
     }
-    pid_t* workers = calloc(workers_nr, sizeof(int));
+    pid_t* workers = calloc((size_t) workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
         if (worker == 0) { // child process
-            return worker_function(a_files, b_files, max_time, mode, c_files, total_pairs);
+            return worker_function(as, bs, max_time, mode, c_files, total_pairs);
         } else {
             workers[i] = worker;
         }
