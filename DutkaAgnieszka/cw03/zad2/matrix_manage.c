@@ -36,6 +36,7 @@ int get_col_nr(char *row) { // count nr of columns based on one row
 struct matrix *load_mx(char *path) {
     FILE *file = fopen(path, "r");
     if(file == NULL) perror("error loading matrix");
+    printf("for path %s\n",  path);
     char line[LINE_BUFF];
     // get row and col nr
     int rows=0, cols=0;

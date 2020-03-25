@@ -19,8 +19,6 @@ void join_res(int pairs, int *parts, char **pString);
 
 // calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
-//    struct matrix *a = load_mx(aF);
-//    struct matrix *b = load_mx(bF);
     char* filename = calloc(20, sizeof(char));
     sprintf(filename, "%s/part%02d%04d", out_folder, pair_index, col);
     FILE* part_file = fopen(filename, "w+");
@@ -36,8 +34,6 @@ void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_ind
 }
 // calculating column nr @col in output matrix
 void calc_col_in_mx(struct matrix *a, struct matrix *b, int col, char *c_file) {
-//    struct matrix *a = load_mx(aF);
-//    struct matrix *b = load_mx(bF);
     FILE* file = fopen(c_file, "r+");
     int fd = fileno(file);
     flock(fd, LOCK_EX);
@@ -99,7 +95,6 @@ int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode
             break;
         }
         int *pair_col = get_task(total_pairs);
-//        printf("solving pair nr %d, col nr %d\n", pair_col[0], pair_col[1]);
         if (pair_col[1] == -1) {
             printf("all tasks executed\n");
             break;
@@ -113,17 +108,12 @@ int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode
     return task_nr;
 }
 
-int number_of_lines(FILE* f) {
-    fseek(f, 0, SEEK_SET);
-
-    int retval = 0;
+int number_of_lines(FILE* file) {
+    fseek(file, 0, SEEK_SET);
     char buffer[LINE_BUFF];
-    while (fgets(buffer, LINE_BUFF, f) != NULL) {
-        retval++;
-    }
-
-    fseek(f, 0, SEEK_SET);
-    return retval;
+    int lines = 0;
+    while (fgets(buffer, LINE_BUFF, file) != NULL) lines++;
+    return lines;
 }
 
 int main(int argc, char* argv[]) {
@@ -131,7 +121,6 @@ int main(int argc, char* argv[]) {
         printf("wrong argument number (expected 4, got %d)", argc-1);
         return 1;
     }
-
     FILE* list = fopen(argv[1], "r");
     int workers_nr = atoi(argv[2]);
     int max_time = atoi(argv[3]);
@@ -150,6 +139,7 @@ int main(int argc, char* argv[]) {
 
     char line[PATH_MAX * 3 + 3];
     int pair_idx = 0;
+    fseek(list, 0, SEEK_SET);
     while (fgets(line, PATH_MAX*3 + 3, list) != NULL) {
         c_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
         char* aF = strtok(line, " ");
@@ -178,11 +168,8 @@ int main(int argc, char* argv[]) {
     pid_t* workers = calloc((size_t) workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
-        if (worker == 0) { // child process
-            return worker_function(as, bs, max_time, mode, c_files, total_pairs);
-        } else {
-            workers[i] = worker;
-        }
+        if (worker == 0) return worker_function(as, bs, max_time, mode, c_files, total_pairs);
+        else workers[i] = worker;
     }
 
     for (int i = 0; i < workers_nr; i++) {
@@ -192,18 +179,15 @@ int main(int argc, char* argv[]) {
     }
     free(workers);
 
-//    // join result
-//    if(mode == MODE_DISJOINT) {
-//        int *parts = calloc((size_t) total_pairs, sizeof(int));
-//        for(int i=0;i<total_pairs;i++) parts[i]=bs[i]->col_nr;
-//        join_res(total_pairs, parts, c_files);
-//    }
     if(mode == MODE_DISJOINT){
         for(int i=0; i<pair_idx; i++){
             char *buffer = calloc(1000, sizeof(char));
             sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
             system(buffer);
         }
+//        int *parts = calloc((size_t) total_pairs, sizeof(int));
+//        for(int i=0;i<total_pairs;i++) parts[i]=bs[i]->col_nr;
+//        join_res(total_pairs, parts, c_files);
     }
     return 0;
 }
@@ -213,15 +197,14 @@ void join_res(int pairs, int* parts, char **out_filenames) {
         char **args = calloc(parts[i]+3, sizeof(char*));
         args[0] = "paste";
         for(int partNr=0; partNr<parts[i];partNr++){
-            args[partNr+1] = calloc(LINE_BUFF, sizeof(char));
-            snprintf(args[partNr+1], LINE_BUFF, "%s/part%02d%04d", out_folder, i, partNr );
+            args[partNr+1] = calloc(20, sizeof(char));
+            snprintf(args[partNr+1], 20, "%s/part%02d%04d", out_folder, i, partNr );
         }
-        args[parts[i]] = "-d ";
-        args[parts[i]+1] = NULL;
+        args[parts[i]+1] = "-d ";
+        args[parts[i]+2] = NULL;
         if (fork() == 0)
         {
             int fd = open(out_filenames[i], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-
             dup2(fd, 1);   // make stdout go to file
             close(fd);     // fd no longer needed - the dup'ed handles are sufficient
             execvp("paste", args);
