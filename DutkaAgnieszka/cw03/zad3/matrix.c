@@ -20,6 +20,8 @@ void create_out_folder();
 
 void print_stats(struct rusage *start_t, struct rusage *end_t);
 
+void create_tasks( int cols, int idx);
+
 //// calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
     char* filename = calloc(20, sizeof(char));
@@ -166,16 +168,7 @@ int main(int argc, char* argv[]) {
         bs[pair_idx] = load_mx(bF);
         if(mode == MODE_JOINT) get_random_mx(as[pair_idx]->row_nr, bs[pair_idx]->col_nr, c_files[pair_idx]);
 
-        char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%03d", out_folder, pair_idx);
-        FILE* tasks_file = fopen(task_filename, "w+");
-
-        char* tasks = calloc((bs[pair_idx]->col_nr + 1), sizeof(char));
-        sprintf(tasks, "%0*d", bs[pair_idx]->col_nr, 0);
-        fwrite(tasks, 1, bs[pair_idx]->col_nr, tasks_file);
-        free(tasks);
-        free(task_filename);
-        fclose(tasks_file);
+        create_tasks(bs[pair_idx]->col_nr, pair_idx);
 
         pair_idx++;
     }
@@ -215,6 +208,18 @@ int main(int argc, char* argv[]) {
     free(bs);
     free(c_files);
     return 0;
+}
+
+void create_tasks(int cols, int idx) {
+    char* task_filename = calloc(100, sizeof(char));
+    sprintf(task_filename, "%s/tasks%03d", out_folder, idx);
+    FILE* tasks_file = fopen(task_filename, "w+");
+    char* tasks = calloc((cols + 1), sizeof(char));
+    sprintf(tasks, "%0*d", cols, 0);
+    fwrite(tasks, 1,cols, tasks_file);
+    free(tasks);
+    free(task_filename);
+    fclose(tasks_file);
 }
 
 void print_stats(struct rusage *start_t, struct rusage *end_t) {
