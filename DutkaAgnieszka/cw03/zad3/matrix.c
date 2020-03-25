@@ -218,14 +218,13 @@ int main(int argc, char* argv[]) {
 }
 
 void print_stats(struct rusage *start_t, struct rusage *end_t) {
-    time_t user_sec = end_t->ru_utime.tv_sec - start_t->ru_utime.tv_sec;
-    time_t user_micro = abs(end_t->ru_utime.tv_usec - start_t->ru_utime.tv_usec);
+    long user_u =   (end_t->ru_utime.tv_sec - start_t->ru_utime.tv_sec)*1000000 +
+                    (end_t->ru_utime.tv_usec - start_t->ru_utime.tv_usec);
+    long system_u = (end_t->ru_stime.tv_sec - start_t->ru_stime.tv_sec)*1000000 +
+                    (end_t->ru_stime.tv_usec - start_t->ru_stime.tv_usec);
 
-    time_t system_sec = end_t->ru_stime.tv_sec - start_t->ru_stime.tv_sec;
-    time_t system_micro = abs(end_t->ru_stime.tv_usec - start_t->ru_stime.tv_usec);
-
-    printf("user time: %ld.%06ld\n", user_sec, user_micro);
-    printf("system time: %ld.%06ld\n\n", system_sec, system_micro);
+    printf("user time: %ld.%06ld s\n", user_u/1000000, user_u%1000000);
+    printf("system time: %ld.%06ld s\n\n", system_u/1000000, system_u%1000000);
 }
 
 void create_out_folder() {
