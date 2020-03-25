@@ -14,91 +14,36 @@
 #include "matrix_manage.c"
 int total_pairs = 0;
 const char* out_folder = "tmp";
-struct Task{
-    int idx;
-    int col;
-};
-int task_for_pair(int pair_idx, int total_tasks){
-    char buffer[PATH_MAX + 1];
-    sprintf(buffer, ".tmp/tasks%03d", pair_idx);
-    FILE* tasks_file = fopen(buffer, "r+");
-    int fd = fileno(tasks_file);
-    flock(fd, LOCK_EX);
-
-    char* tasks = calloc(total_tasks + 1, sizeof(char));
-    fseek(tasks_file, 0, SEEK_SET);
-    fread(tasks, 1, total_tasks, tasks_file);
-
-    char* task_ptr_offset = strchr(tasks, '0');
-    int task_index = task_ptr_offset != NULL ? task_ptr_offset - tasks : -1;
-
-    if (task_index >= 0) {
-        tasks[task_index] = '1';
-        fseek(tasks_file, 0, SEEK_SET);
-        fwrite(tasks, 1, total_tasks, tasks_file);
-        fflush(tasks_file);
-    }
-
-    free(tasks);
-
-    flock(fd, LOCK_UN);
-    fclose(tasks_file);
-
-    return task_index;
-}
-struct Task get_task() {
-
-    struct Task task;
-    task.col = -1;
-    task.idx = -1;
-    for(int i=0; i< total_pairs; i++){
+int* get_task() {
+    static int pair_and_col[2] = {-1, -1};
+    for(int pair_idx=0; pair_idx< total_pairs; pair_idx++){
 
         char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%d",out_folder, i);
+        sprintf(task_filename, "%s/tasks%d",out_folder, pair_idx);
         FILE* tasks_file = fopen(task_filename, "r+");
         int fd = fileno(tasks_file);
         flock(fd, LOCK_EX);
         char* tasks = calloc(1000, sizeof(char));
         fseek(tasks_file, 0, SEEK_SET);
         fread(tasks, 1, 1000, tasks_file);
-
-//        char* task_ptr_offset = strchr(tasks, '0');
-//        int task_index = task_ptr_offset != NULL ? task_ptr_offset - tasks : -1;
-//
-//        if (task_index >= 0) {
-//            tasks[task_index] = '1';
-//            fseek(tasks_file, 0, SEEK_SET);
-//            fwrite(tasks, 1, tasks_count, tasks_file);
-//            fflush(tasks_file);
-//        }
-//
-//        free(tasks);
-
         char* task_first_zero = strchr(tasks, '0');
-        int task_index = task_first_zero != NULL ? task_first_zero - tasks : -1;
 
-        if (task_index >= 0) {
-            int size = (int) (strchr(tasks, '\0') - tasks);
-
-            char* tasks_with_good_size = calloc(size +1, sizeof(char));
-            for(int j=0; j<size; j++){
-                tasks_with_good_size[j] = tasks[j];
-            }
-            tasks_with_good_size[task_index] = '1';
+        if (task_first_zero != NULL) {
+            int task_idx = (int) (task_first_zero - tasks);
+            size_t total_tasks = (strchr(tasks, '\0') - tasks);
+            tasks[task_idx] = '1';
             fseek(tasks_file, 0, SEEK_SET);
-            fwrite(tasks_with_good_size, 1, size, tasks_file);
-            task.idx = i;
-            task.col = task_index;
+            fwrite(tasks, 1, total_tasks, tasks_file);
+            pair_and_col[0] = pair_idx;
+            pair_and_col[1] = task_idx;
             flock(fd, LOCK_UN);
             fclose(tasks_file);
             break;
         }
-
         flock(fd, LOCK_UN);
         fclose(tasks_file);
-
     }
-    return task;
+    return pair_and_col;
 }
 // calculating column nr @col of output matrix to separate file
 void calc_separate_col(char *a_filename, char *b_filename, int col, int pair_index) {
@@ -140,33 +85,20 @@ void calc_col_in_mx(char *a_file, char *b_file, int col, char *c_file) {
 int worker_function(char** a, char** b, int max_time, int mode, char **out_file) {
     time_t start_time = time(NULL);
     int task_nr = 0;
-    int pair_idx =0;
-//    while (pair_idx<total_pairs) {
-//        if ((time(NULL) - start_time) >= max_time) {
-//            printf("max_time reached\n");
-//            break;
-//        }
-//        int col = task_for_pair(pair_idx, b[pair_idx]->col);
-//        if(mode == MODE_JOINT)
-//            calc_col_in_mx(a[task.idx], b[task.idx], task.col, out_file[task.idx]);
-//        else
-//            calc_separate_col(a[task.idx], b[task.idx], task.col, task.idx);
-//        task_nr++;
-//    }
     while (1) {
         if ((time(NULL) - start_time) >= max_time) {
             printf("max_time reached\n");
             break;
         }
-        struct Task task = get_task();
-        if (task.col == -1) {
+        int *pair_col = get_task();
+        if (pair_col[0] == -1) {
             printf("all tasks executed\n");
             break;
         }
         if(mode == MODE_JOINT)
-            calc_col_in_mx(a[task.idx], b[task.idx], task.col, out_file[task.idx]);
+            calc_col_in_mx(a[pair_col[0]], b[pair_col[0]], pair_col[1], out_file[pair_col[0]]);
         else
-            calc_separate_col(a[task.idx], b[task.idx], task.col, task.idx);
+            calc_separate_col(a[pair_col[0]], b[pair_col[0]], pair_col[1], pair_col[0]);
         task_nr++;
     }
     return task_nr;
@@ -253,7 +185,6 @@ int main(int argc, char* argv[]) {
 //            execlp("paste", "paste", name, ">", c_files[i], NULL);
             system(buffer);
         }
-
     }
     return 0;
 }

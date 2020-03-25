@@ -1,6 +1,6 @@
 CC = gcc -Wall -std=c11 -ggdb
-Min ?= 1
-Max ?= 10
+Min ?= 4
+Max ?= 12
 Nr ?= 5
 clean:
 	rm -f -r tmp matrixes out lista
@@ -16,6 +16,6 @@ create_mx: helper
 	./out/helper create $(Min) $(Max) $(Nr)
 
 test: clean matrix create_mx
-#	./out/matrix lista 3 1 joint
-	./out/matrix lista 3 1 disjoint
+	./out/matrix lista 3 1 joint
+#	./out/matrix lista 3 1 disjoint
 	./out/helper check matrixes/a0.txt matrixes/b0.txt matrixes/c0.txt
