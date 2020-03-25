@@ -189,6 +189,14 @@ int main(int argc, char* argv[]) {
 //        for(int i=0;i<total_pairs;i++) parts[i]=bs[i]->col_nr;
 //        join_res(total_pairs, parts, c_files);
     }
+    for(int i=0;i<total_pairs;i++){
+        free_mx(as[i]);
+        free_mx(bs[i]);
+        free(c_files[i]);
+    }
+    free(as);
+    free(bs);
+    free(c_files);
     return 0;
 }
 void join_res(int pairs, int* parts, char **out_filenames) {

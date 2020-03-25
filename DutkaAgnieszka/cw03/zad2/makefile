@@ -16,6 +16,6 @@ create_mx: helper
 	./out/helper create $(Min) $(Max) $(Nr)
 
 test: clean matrix create_mx
-	./out/matrix lista 13 1/ joint
+	./out/matrix lista 13 2 joint
 #	./out/matrix lista 13 1 disjoint
 	./out/helper check matrixes/a0.txt matrixes/b0.txt matrixes/c0.txt

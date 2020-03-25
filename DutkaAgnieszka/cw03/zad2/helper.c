@@ -8,19 +8,19 @@
 bool check_multiply_correctness(char *a_filename, char *b_filename, char *c_filename){
     struct matrix *a = load_mx(a_filename);
     struct matrix *b = load_mx(b_filename);
-    struct matrix *c = load_mx(c_filename);
-    printf("%d\n", c->col_nr);
-    struct matrix *correct_matrix = dot(a, b);
-    if(correct_matrix->col_nr != c->col_nr || correct_matrix->row_nr != c->row_nr) return false;
-    for( int i=0; i<correct_matrix->row_nr; i++){
-        for(int j=0; j<correct_matrix->col_nr; j++){
-            if(correct_matrix->mx[i][j] != c->mx[i][j]) return false;
+    struct matrix *actual = load_mx(c_filename);
+    printf("%d\n", actual->col_nr);
+    struct matrix *expected = dot(a, b);
+    if(expected->col_nr != actual->col_nr || expected->row_nr != actual->row_nr) return false;
+    for( int i=0; i<expected->row_nr; i++){
+        for(int j=0; j<expected->col_nr; j++){
+            if(expected->mx[i][j] != actual->mx[i][j]) return false;
         }
     }
     free_mx(a);
     free_mx(b);
-    free_mx(c);
-    free_mx(correct_matrix);
+    free_mx(actual);
+    free_mx(expected);
     return true;
 }
 char *create_name(char* folder, char name, int nr){
