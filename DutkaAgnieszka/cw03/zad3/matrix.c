@@ -15,11 +15,8 @@
 #include "matrix_manage.c"
 #include <sys/resource.h>
 const char* out_folder = "tmp";
-
 void create_out_folder();
-
 void print_stats(struct rusage *start_t, struct rusage *end_t);
-
 void create_tasks( int cols, int idx);
 
 //// calculating column nr @col of output matrix to separate file
@@ -169,7 +166,6 @@ int main(int argc, char* argv[]) {
         if(mode == MODE_JOINT) get_random_mx(as[pair_idx]->row_nr, bs[pair_idx]->col_nr, c_files[pair_idx]);
 
         create_tasks(bs[pair_idx]->col_nr, pair_idx);
-
         pair_idx++;
     }
     pid_t* workers = calloc((size_t) workers_nr, sizeof(int));
@@ -209,7 +205,6 @@ int main(int argc, char* argv[]) {
     free(c_files);
     return 0;
 }
-
 void create_tasks(int cols, int idx) {
     char* task_filename = calloc(100, sizeof(char));
     sprintf(task_filename, "%s/tasks%03d", out_folder, idx);
@@ -221,7 +216,6 @@ void create_tasks(int cols, int idx) {
     free(task_filename);
     fclose(tasks_file);
 }
-
 void print_stats(struct rusage *start_t, struct rusage *end_t) {
     long user_u =   (end_t->ru_utime.tv_sec - start_t->ru_utime.tv_sec)*1000000 +
                     (end_t->ru_utime.tv_usec - start_t->ru_utime.tv_usec);

@@ -15,7 +15,8 @@
 #include "matrix_manage.c"
 const char* out_folder = "tmp";
 void join_res(int pairs, int *parts, char **pString);
-
+void create_tasks(int cols, int idx);
+void create_out_folder();
 //// calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
     char* filename = calloc(20, sizeof(char));
@@ -120,6 +121,7 @@ int main(int argc, char* argv[]) {
         printf("wrong argument number (expected 4, got %d)", argc-1);
         return 1;
     }
+    //// read arguments:
     FILE* list = fopen(argv[1], "r");
     int workers_nr = atoi(argv[2]);
     int max_time = atoi(argv[3]);
@@ -130,11 +132,7 @@ int main(int argc, char* argv[]) {
     struct matrix** as = calloc((size_t) total_pairs, sizeof(struct matrix));
     struct matrix** bs = calloc((size_t) total_pairs, sizeof(struct matrix));
 
-    char cmd[500];
-    snprintf(cmd, 500, "rm -rf %s", out_folder);
-    system(cmd);
-    snprintf(cmd, 500, "mkdir -p %s", out_folder);
-    system(cmd);
+    create_out_folder();
 
     char line[PATH_MAX * 3 + 3];
     int pair_idx = 0;
@@ -147,21 +145,12 @@ int main(int argc, char* argv[]) {
         //// trimming \n from c filename
         size_t len = strlen(c_files[pair_idx]);
         c_files[pair_idx][len-1] = 0;
+
         as[pair_idx] = load_mx(aF);
         bs[pair_idx] = load_mx(bF);
         if(mode == MODE_JOINT) get_random_mx(as[pair_idx]->row_nr, bs[pair_idx]->col_nr, c_files[pair_idx]);
 
-        char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%03d", out_folder, pair_idx);
-        FILE* tasks_file = fopen(task_filename, "w+");
-
-        char* tasks = calloc((bs[pair_idx]->col_nr + 1), sizeof(char));
-        sprintf(tasks, "%0*d", bs[pair_idx]->col_nr, 0);
-        fwrite(tasks, 1, bs[pair_idx]->col_nr, tasks_file);
-        free(tasks);
-        free(task_filename);
-        fclose(tasks_file);
-
+        create_tasks(bs[pair_idx]->col_nr, pair_idx);
         pair_idx++;
     }
     pid_t* workers = calloc((size_t) workers_nr, sizeof(int));
@@ -188,6 +177,7 @@ int main(int argc, char* argv[]) {
 //        for(int i=0;i<total_pairs;i++) parts[i]=bs[i]->col_nr;
 //        join_res(total_pairs, parts, c_files);
     }
+    //// free memory
     for(int i=0;i<total_pairs;i++){
         free_mx(as[i]);
         free_mx(bs[i]);
@@ -197,6 +187,25 @@ int main(int argc, char* argv[]) {
     free(bs);
     free(c_files);
     return 0;
+}
+
+void create_tasks(int cols, int idx) {
+    char* task_filename = calloc(100, sizeof(char));
+    sprintf(task_filename, "%s/tasks%03d", out_folder, idx);
+    FILE* tasks_file = fopen(task_filename, "w+");
+    char* tasks = calloc((cols + 1), sizeof(char));
+    sprintf(tasks, "%0*d", cols, 0);
+    fwrite(tasks, 1,cols, tasks_file);
+    free(tasks);
+    free(task_filename);
+    fclose(tasks_file);
+}
+void create_out_folder() {
+    char cmd[500];
+    snprintf(cmd, 500, "rm -rf %s", out_folder);
+    system(cmd);
+    snprintf(cmd, 500, "mkdir -p %s", out_folder);
+    system(cmd);
 }
 void join_res(int pairs, int* parts, char **out_filenames) {
 
