@@ -123,7 +123,7 @@ int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode
     return task_nr;
 }
 
-int number_of_lines(FILE* file) {
+int count_lines(FILE *file) {
     fseek(file, 0, SEEK_SET);
     char buffer[LINE_BUFF];
     int lines = 0;
@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
     int vm_limit = atoi(argv[6]); // in mb
 
     char **c_files = calloc(100, sizeof(char*));
-    int total_pairs = number_of_lines(list);
+    int total_pairs = count_lines(list);
     struct matrix** as = calloc((size_t) total_pairs, sizeof(struct matrix));
     struct matrix** bs = calloc((size_t) total_pairs, sizeof(struct matrix));
 

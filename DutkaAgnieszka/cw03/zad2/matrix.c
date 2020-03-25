@@ -14,10 +14,9 @@
 #include <time.h>
 #include "matrix_manage.c"
 const char* out_folder = "tmp";
-
 void join_res(int pairs, int *parts, char **pString);
 
-// calculating column nr @col of output matrix to separate file
+//// calculating column nr @col of output matrix to separate file
 void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_index) {
     char* filename = calloc(20, sizeof(char));
     sprintf(filename, "%s/part%02d%04d", out_folder, pair_index, col);
@@ -32,7 +31,7 @@ void calc_separate_col(struct matrix *a, struct matrix *b, int col, int pair_ind
     }
     fclose(part_file);
 }
-// calculating column nr @col in output matrix
+//// calculating column nr @col in output matrix
 void calc_col_in_mx(struct matrix *a, struct matrix *b, int col, char *c_file) {
     FILE* file = fopen(c_file, "r+");
     int fd = fileno(file);
@@ -58,7 +57,7 @@ int* get_task(int total_pairs) {
         char* filename = calloc(100, sizeof(char));
         sprintf(filename, "%s/tasks%03d",out_folder, pair_idx);
         FILE* tasksF = fopen(filename, "r+");
-        // get file descr and lock file
+        //// get file descriptor and lock file
         int fd = fileno(tasksF);
         flock(fd, LOCK_EX);
 
@@ -71,7 +70,7 @@ int* get_task(int total_pairs) {
             int to_do_idx = (int) (get_undone - tasks);
             size_t total_tasks = (strchr(tasks, '\0') - tasks);
             tasks[to_do_idx] = '1';
-            // update done tasks
+            //// update done tasks
             fseek(tasksF, 0, SEEK_SET);
             fwrite(tasks, 1, total_tasks, tasksF);
             pair_and_col[0] = pair_idx;
@@ -108,7 +107,7 @@ int worker_function(struct matrix **a, struct matrix **b, int max_time, int mode
     return task_nr;
 }
 
-int number_of_lines(FILE* file) {
+int count_lines(FILE *file) {
     fseek(file, 0, SEEK_SET);
     char buffer[LINE_BUFF];
     int lines = 0;
@@ -127,7 +126,7 @@ int main(int argc, char* argv[]) {
     int mode = strcmp(argv[4], "joint") == 0 ? MODE_JOINT : MODE_DISJOINT;
 
     char **c_files = calloc(100, sizeof(char*));
-    int total_pairs= number_of_lines(list);
+    int total_pairs= count_lines(list);
     struct matrix** as = calloc((size_t) total_pairs, sizeof(struct matrix));
     struct matrix** bs = calloc((size_t) total_pairs, sizeof(struct matrix));
 
@@ -145,7 +144,7 @@ int main(int argc, char* argv[]) {
         char* aF = strtok(line, " ");
         char* bF = strtok(NULL, " ");
         strcpy(c_files[pair_idx], strtok(NULL, " "));
-        // trimming \n from c filename
+        //// trimming \n from c filename
         size_t len = strlen(c_files[pair_idx]);
         c_files[pair_idx][len-1] = 0;
         as[pair_idx] = load_mx(aF);
@@ -215,7 +214,7 @@ void join_res(int pairs, int* parts, char **out_filenames) {
         {
             int fd = open(out_filenames[i], O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
             dup2(fd, 1);   // make stdout go to file
-            close(fd);     // fd no longer needed - the dup'ed handles are sufficient
+            close(fd);
             execvp("paste", args);
         }
     }
