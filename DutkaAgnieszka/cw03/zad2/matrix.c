@@ -113,6 +113,19 @@ int worker_function(char** a, char** b, int max_time, int mode, char **out_file,
     return task_nr;
 }
 
+int number_of_lines(FILE* f) {
+    fseek(f, 0, SEEK_SET);
+
+    int retval = 0;
+    char buffer[LINE_BUFF];
+    while (fgets(buffer, LINE_BUFF, f) != NULL) {
+        retval++;
+    }
+
+    fseek(f, 0, SEEK_SET);
+    return retval;
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 5) {
         printf("wrong argument number (expected 4, got %d)", argc-1);
@@ -127,6 +140,10 @@ int main(int argc, char* argv[]) {
     char **a_files = calloc(100, sizeof(char*));
     char **b_files = calloc(100, sizeof(char*));
     char **c_files = calloc(100, sizeof(char*));
+    int total_pairs= number_of_lines(list);
+    struct matrix** as = calloc(total_pairs, sizeof(struct matrix));
+    struct matrix** bs = calloc(total_pairs, sizeof(struct matrix));
+    struct matrix** cs = calloc(total_pairs, sizeof(struct matrix));
 
     char cmd[500];
     snprintf(cmd, 500, "rm -rf %s", out_folder);
@@ -135,38 +152,36 @@ int main(int argc, char* argv[]) {
     system(cmd);
 
     char line[PATH_MAX * 3 + 3];
-    int pairs_nr = 0;
+    int pair_idx = 0;
     while (fgets(line, PATH_MAX*3 + 3, list) != NULL) {
-        a_files[pairs_nr] = calloc(PATH_MAX, sizeof(char));
-        b_files[pairs_nr] = calloc(PATH_MAX, sizeof(char));
-        c_files[pairs_nr] = calloc(PATH_MAX, sizeof(char));
+        a_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
+        b_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
+        c_files[pair_idx] = calloc(PATH_MAX, sizeof(char));
 
-        strcpy(a_files[pairs_nr], strtok(line, " "));
-        strcpy(b_files[pairs_nr], strtok(NULL, " "));
-        strcpy(c_files[pairs_nr], strtok(NULL, " "));
+        strcpy(a_files[pair_idx], strtok(line, " "));
+        strcpy(b_files[pair_idx], strtok(NULL, " "));
+        strcpy(c_files[pair_idx], strtok(NULL, " "));
         // trimming \n from c filename
-        size_t len = strlen(c_files[pairs_nr]);
-        c_files[pairs_nr][len-1] = 0;
-        struct matrix *a = load_mx(a_files[pairs_nr]);
-        struct matrix *b = load_mx(b_files[pairs_nr]);
-        if(mode == MODE_JOINT) get_random_mx(a->row_nr, b->col_nr, c_files[pairs_nr]);
+        size_t len = strlen(c_files[pair_idx]);
+        c_files[pair_idx][len-1] = 0;
+        as[pair_idx] = load_mx(a_files[pair_idx]);
+        bs[pair_idx] = load_mx(b_files[pair_idx]);
+        if(mode == MODE_JOINT) get_random_mx(as[pair_idx]->row_nr, bs[pair_idx]->col_nr, c_files[pair_idx]);
 
         char* task_filename = calloc(100, sizeof(char));
-        sprintf(task_filename, "%s/tasks%03d", out_folder, pairs_nr);
+        sprintf(task_filename, "%s/tasks%03d", out_folder, pair_idx);
         FILE* tasks_file = fopen(task_filename, "w+");
 
-        char* tasks = calloc(b->col_nr + 1, sizeof(char));
-        sprintf(tasks, "%0*d", b->col_nr, 0);
-        fwrite(tasks, 1, b->col_nr, tasks_file);
+        char* tasks = calloc(bs[pair_idx]->col_nr + 1, sizeof(char));
+        sprintf(tasks, "%0*d", bs[pair_idx]->col_nr, 0);
+        fwrite(tasks, 1, bs[pair_idx]->col_nr, tasks_file);
 //        printf("new tasks %s", tasks);
         free(tasks);
         free(task_filename);
         fclose(tasks_file);
 
-        pairs_nr++;
+        pair_idx++;
     }
-    int total_pairs = pairs_nr;
-
     pid_t* workers = calloc(workers_nr, sizeof(int));
     for (int i = 0; i < workers_nr; i++) {
         pid_t worker = fork();
@@ -187,7 +202,7 @@ int main(int argc, char* argv[]) {
     // join result
 //    if(mode == MODE_DISJOINT) join_res(total_pairs, c_files);
     if(mode == MODE_DISJOINT){
-        for(int i=0; i<pairs_nr; i++){
+        for(int i=0; i<pair_idx; i++){
             char *buffer = calloc(1000, sizeof(char));
             sprintf(buffer, "paste %s/part%d* -d' '> %s", out_folder, i, c_files[i]);
             system(buffer);
@@ -195,7 +210,6 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
 void join_res(int pairs, char **out_filenames) {
     for(int i=0; i<pairs; i++){
 //        char *buffer = calloc(LINE_BUFF, sizeof(char));
