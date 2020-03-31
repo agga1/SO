@@ -14,10 +14,8 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
     int sig_nr = atoi(argv[1]);
-    struct sigaction act;
-    act.sa_flags = SA_SIGINFO;
+    struct sigaction act = {.sa_flags = SA_SIGINFO, .sa_sigaction = handler};
     sigemptyset(&act.sa_mask);
-    act.sa_sigaction = handler;
 
     sigaction(sig_nr, &act, NULL);
     raise(sig_nr);
