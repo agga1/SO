@@ -16,18 +16,31 @@ int main(int argc, char const *argv[])
 {
     if(argc < 3){
         puts("not enough arguments, shoud be like:\n"
-             "fork|exec, ignore|mask|handler|pending");
+             "fork|exec, ignore|mask|handler|pending, only10| ");
     }
     signal(SIGUSR1, parentsig_handler);
     signal(SIGUSR2, childsig_handler);
     puts("SIG NR | CH |  P  |");
-    for (int sig = 1; sig < 23; sig++) {
-        printf("%7d|", sig);
+    if(argc == 4) // only SIGUSR1 = 10
+    {
+        printf("%7d|", 10);
         got_child = got_parent = false;
         if (fork() == 0) {
-            execl("./test", "./test", argv[1], itoa(sig), argv[2],  NULL);
+            execl("./test", "./test", argv[1], itoa(10), argv[2],  NULL);
         }
         waitpid(WAIT_ANY, NULL, WUNTRACED);
         printf("%4d|%5d|\n", got_child ? 1 : 0, got_parent ? 1 : 0);
     }
+    else { // test all signals
+        for (int sig = 1; sig < 23; sig++) {
+            printf("%7d|", sig);
+            got_child = got_parent = false;
+            if (fork() == 0) {
+                execl("./test", "./test", argv[1], itoa(sig), argv[2],  NULL);
+            }
+            waitpid(WAIT_ANY, NULL, WUNTRACED);
+            printf("%4d|%5d|\n", got_child ? 1 : 0, got_parent ? 1 : 0);
+        }
+    }
+
 }
