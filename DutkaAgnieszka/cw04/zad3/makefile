@@ -7,3 +7,9 @@ compile:
 
 clean:
 	rm -f main
+
+test: all
+	./main 10
+	./main 8
+	./main 2
+	./main 11
