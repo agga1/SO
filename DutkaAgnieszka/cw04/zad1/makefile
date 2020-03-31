@@ -1,9 +1,10 @@
 CC = gcc
 
-all: test clean
+all: clean main
 
-test:
-	$(CC) main.c -o main
+main:
+	$(CC) main.c -o out/main
 
 clean:
-	rm -f *.o
+	rm -rf out
+	mkdir out/
