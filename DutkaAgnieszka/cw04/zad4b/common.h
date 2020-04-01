@@ -3,7 +3,6 @@
 #define M_KILL 0
 #define M_SIGQUEUE  1
 #define M_SIGRT  2
-int k =5;
 char *itoa(int i) {
     static char str[12];
     sprintf(str, "%i", i);
@@ -29,6 +28,5 @@ void send_signal(int mode, int pid, int sig, int nr){
             union sigval sv = {.sival_int=nr};
             sigqueue(pid, sig, sv);
         }
-
     }
 }

@@ -14,9 +14,13 @@ int SIG1 = SIGUSR1;
 int SIG2 = SIGUSR2;
 int send_mode;
 
-void sig1_handler(int _, siginfo_t *siginfo, void *context){
+void confirm_handler(int _, siginfo_t *siginfo, void *context){
     puts("[S] conf received");
     wait_for_confirm = false;
+}
+void sig1_handler(int _, siginfo_t *siginfo, void *context){
+    int nr= (send_mode==M_SIGQUEUE) ? siginfo->si_value.sival_int : 0;
+    send_signal(send_mode, siginfo->si_pid, SIG1, nr);
     received ++;
 }
 void sig2_handler(int _, siginfo_t *siginfo, void *context){
@@ -41,7 +45,7 @@ int main(int argc, char const *argv[])
         SIG2 = SIGRTMIN+1;
     }
 
-    struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=sig1_handler};
+    struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=confirm_handler};
     sigaction(SIG1, &usr1_act, NULL);
 
     struct sigaction usr2_act= {.sa_flags = SA_SIGINFO, .sa_sigaction=sig2_handler};
@@ -53,6 +57,9 @@ int main(int argc, char const *argv[])
         send_signal(send_mode, cpid, SIG1, i);
         while(wait_for_confirm){};
     }
+    usr1_act.sa_sigaction=sig1_handler;
+    sigaction(SIG1, &usr1_act, NULL);
+    puts("handler changed");
     send_signal(send_mode, cpid, SIG2, sig_count);
     while(wait_for_end){}
     return 0;

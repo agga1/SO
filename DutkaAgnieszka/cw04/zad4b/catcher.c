@@ -7,22 +7,25 @@
 #include "common.h"
 
 bool wait_for_end = true;
+bool wait_for_confirm = false;
+int sender_pid;
 int received =0;
 int send_mode;
 int SIG1 = SIGUSR1;
 int SIG2 = SIGUSR2;
 
+void confirm_handler(int sig_nr, siginfo_t *siginfo, void *context){
+    puts("[C] conf received");
+    wait_for_confirm = false;
+}
 void sig1_handler(int sig_nr, siginfo_t *siginfo, void *context){
-    puts("[C] received, confirming...");
     int nr= (send_mode==M_SIGQUEUE) ? siginfo->si_value.sival_int : 0;
     send_signal(send_mode, siginfo->si_pid, SIG1, nr);
     received ++;
 }
 void sig2_handler(int sig_nr, siginfo_t *siginfo, void *context){
     printf("catcher:\n  received %d \n", received);
-    puts("ending program...");
-    int pid = siginfo->si_pid;
-    send_signal(send_mode, pid, SIG2, 0);
+    sender_pid = siginfo->si_pid;
     wait_for_end = false;
 }
 int main(int argc, char const *argv[]) {
@@ -51,7 +54,18 @@ int main(int argc, char const *argv[]) {
     sigdelset(&tmp_mask, SIG1);
     sigdelset(&tmp_mask, SIG2);
 
+    //// receive
     while (wait_for_end){
         sigsuspend(&tmp_mask);
     }
+    /// emit
+    usr1_act.sa_sigaction=confirm_handler;
+    sigaction(SIG1, &usr1_act, NULL);
+
+    for(int i=0;i<received;i++){
+        wait_for_confirm = true;
+        send_signal(send_mode, sender_pid, SIG1, i);
+        while(wait_for_confirm){};
+    }
+    send_signal(send_mode, sender_pid, SIG2, 0);
 }
