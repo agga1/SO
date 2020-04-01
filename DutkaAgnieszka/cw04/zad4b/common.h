@@ -18,3 +18,14 @@ int str_to_mode(const char *str){
         return M_SIGRT;
     return -1;
 }
+void send_signal(int mode, int pid, int sig, union sigval *sv){
+    switch (mode) {
+        case M_KILL:
+        case M_SIGRT:
+            kill(pid, sig);
+            break;
+        case M_SIGQUEUE:
+            sv->sival_int += 1;
+            sigqueue(pid, sig, *sv);
+    }
+}

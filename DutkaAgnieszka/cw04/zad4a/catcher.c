@@ -17,24 +17,13 @@ void sig1_handler(int sig_nr, siginfo_t *siginfo, void *context){
 }
 void sig2_handler(int sig_nr, siginfo_t *siginfo, void *context){
     wait = false;
-    puts("got it, resend");
     printf("catcher:\n  received %d \n", received);
     int pid = siginfo->si_pid;
-    union sigval nr;
-    nr.sival_int = 0;
-    for(int i=0;i<received;i++){
-        switch (send_mode) {
-            case M_KILL:
-            case M_SIGRT:
-                kill(pid, SIG1);
-                break;
-            case M_SIGQUEUE:
-                nr.sival_int = i;
-                sigqueue(pid, SIG1, nr);
-        }
-    }
-    if(send_mode != M_SIGQUEUE) kill(pid, SIG2);
-    else sigqueue(pid, SIG2, nr);
+    union sigval sv;
+    sv.sival_int = 0;
+    for(int i=0;i<received;i++)
+        send_signal(send_mode, pid, SIG1, &sv);
+    send_signal(send_mode, pid, SIG2, &sv);
 }
 int main(int argc, char const *argv[]) {
     if(argc < 3){
@@ -47,7 +36,8 @@ int main(int argc, char const *argv[]) {
         SIG2 = SIGRTMIN+1;
     }
     printf("catcher pid [ %d ]\n", getpid());
-    // TODO run not here
+
+    // TODO only for testing
     if(fork()==0) execlp("./sender", "./sender", itoa(getppid()), argv[1], argv[2], NULL);
 
     struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=sig1_handler};

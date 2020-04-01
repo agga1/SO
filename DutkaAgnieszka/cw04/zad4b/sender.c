@@ -46,18 +46,9 @@ int main(int argc, char const *argv[])
     union sigval nr;
     nr.sival_int = 0;
     for(int i=0;i<sig_count;i++){
-        switch (send_mode) {
-            case M_KILL:
-            case M_SIGRT:
-                kill(cpid, SIG1);
-                break;
-            case M_SIGQUEUE:
-                nr.sival_int = i;
-                sigqueue(cpid, SIG1, nr);
-        }
+        send_signal(send_mode, cpid, SIG1, &nr);
     }
-    if(send_mode != M_SIGQUEUE) kill(cpid, SIG2);
-    else sigqueue(cpid, SIG2, nr);
+    send_signal(send_mode, cpid, SIG2, &nr);
     while(wait){}
     return 0;
 }
