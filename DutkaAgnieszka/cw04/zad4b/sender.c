@@ -5,20 +5,25 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "common.h"
-bool wait = true;
+bool wait_for_end = true;
+bool wait_for_confirm=false;
+
 int received =0;
 int sig_count=0;
 int SIG1 = SIGUSR1;
 int SIG2 = SIGUSR2;
 int send_mode;
+
 void sig1_handler(int _, siginfo_t *siginfo, void *context){
+    puts("[S] conf received");
+    wait_for_confirm = false;
     received ++;
 }
 void sig2_handler(int _, siginfo_t *siginfo, void *context){
     printf("sender: \n  received: %d\n  expected: %d\n", received, sig_count);
     if(send_mode==M_SIGQUEUE)
         printf("[QueueOpt] catcher received %d", siginfo->si_value.sival_int);
-    wait = false;
+    wait_for_end = false;
 }
 int main(int argc, char const *argv[])
 {
@@ -43,12 +48,12 @@ int main(int argc, char const *argv[])
     sigaction(SIG2, &usr2_act, NULL);
 
     //// emit signals
-    union sigval nr;
-    nr.sival_int = 0;
     for(int i=0;i<sig_count;i++){
-        send_signal(send_mode, cpid, SIG1, &nr);
+        wait_for_confirm=true;
+        send_signal(send_mode, cpid, SIG1, i);
+        while(wait_for_confirm){};
     }
-    send_signal(send_mode, cpid, SIG2, &nr);
-    while(wait){}
+    send_signal(send_mode, cpid, SIG2, sig_count);
+    while(wait_for_end){}
     return 0;
 }

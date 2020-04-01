@@ -6,24 +6,24 @@
 #include <signal.h>
 #include "common.h"
 
-bool wait = true;
+bool wait_for_end = true;
 int received =0;
 int send_mode;
 int SIG1 = SIGUSR1;
 int SIG2 = SIGUSR2;
 
 void sig1_handler(int sig_nr, siginfo_t *siginfo, void *context){
+    puts("[C] received, confirming...");
+    int nr= (send_mode==M_SIGQUEUE) ? siginfo->si_value.sival_int : 0;
+    send_signal(send_mode, siginfo->si_pid, SIG1, nr);
     received ++;
 }
 void sig2_handler(int sig_nr, siginfo_t *siginfo, void *context){
-    wait = false;
     printf("catcher:\n  received %d \n", received);
+    puts("ending program...");
     int pid = siginfo->si_pid;
-    union sigval sv;
-    sv.sival_int = 0;
-    for(int i=0;i<received;i++)
-        send_signal(send_mode, pid, SIG1, &sv);
-    send_signal(send_mode, pid, SIG2, &sv);
+    send_signal(send_mode, pid, SIG2, 0);
+    wait_for_end = false;
 }
 int main(int argc, char const *argv[]) {
     if(argc < 3){
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]) {
     sigdelset(&tmp_mask, SIG1);
     sigdelset(&tmp_mask, SIG2);
 
-    while (wait){
+    while (wait_for_end){
         sigsuspend(&tmp_mask);
     }
 }
