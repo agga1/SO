@@ -12,4 +12,4 @@ clean:
 test: all
 	@./catcher 50 sigrt
 	@./catcher 50 kill
-#	@./catcher 5 sigqueue
+	@./catcher 5 sigqueue
