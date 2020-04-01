@@ -39,7 +39,7 @@ int main(int argc, char const *argv[]) {
     printf("catcher pid [ %d ]\n", getpid());
 
     // TODO only for testing
-    if(fork()==0) execlp("./sender", "./sender", itoa(getppid()), argv[1], argv[2], NULL);
+//    if(fork()==0) execlp("./sender", "./sender", itoa(getppid()), argv[1], argv[2], NULL);
 
     struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=sig1_handler};
     sigaction(SIG1, &usr1_act, NULL);
