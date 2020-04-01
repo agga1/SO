@@ -10,12 +10,12 @@ bool wait_for_confirm=false;
 
 int received =0;
 int sig_count=0;
-int SIG1 = SIGUSR1;
-int SIG2 = SIGUSR2;
+int SIG1;
+int SIG2;
 int send_mode;
 
 void confirm_handler(int _, siginfo_t *siginfo, void *context){
-    puts("[S] conf received");
+//    puts("[S] conf received");
     wait_for_confirm = false;
 }
 void sig1_handler(int _, siginfo_t *siginfo, void *context){
@@ -24,7 +24,7 @@ void sig1_handler(int _, siginfo_t *siginfo, void *context){
     received ++;
 }
 void sig2_handler(int _, siginfo_t *siginfo, void *context){
-    printf("sender: \n  received: %d\n  expected: %d\n", received, sig_count);
+    printf("sender \n  received: %d\n  expected: %d\n", received, sig_count);
     if(send_mode==M_SIGQUEUE)
         printf("[QueueOpt] catcher received %d", siginfo->si_value.sival_int);
     wait_for_end = false;
@@ -39,11 +39,7 @@ int main(int argc, char const *argv[])
     int cpid = atoi(argv[1]);
     sig_count = atoi(argv[2]);
     send_mode = str_to_mode(argv[3]);
-
-    if(send_mode==M_SIGRT) {
-        SIG1 = SIGRTMIN;
-        SIG2 = SIGRTMIN+1;
-    }
+    set_sigs(send_mode, &SIG1, &SIG2);
 
     struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=confirm_handler};
     sigaction(SIG1, &usr1_act, NULL);
@@ -59,7 +55,6 @@ int main(int argc, char const *argv[])
     }
     usr1_act.sa_sigaction=sig1_handler;
     sigaction(SIG1, &usr1_act, NULL);
-    puts("handler changed");
     send_signal(send_mode, cpid, SIG2, sig_count);
     while(wait_for_end){}
     return 0;

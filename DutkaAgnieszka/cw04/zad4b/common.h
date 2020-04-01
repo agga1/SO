@@ -30,3 +30,12 @@ void send_signal(int mode, int pid, int sig, int nr){
         }
     }
 }
+void set_sigs(int mode, int *SIG1, int *SIG2){
+    if(mode==M_SIGRT) {
+        *SIG1 = SIGRTMIN;
+        *SIG2 = SIGRTMIN+1;
+    }else{
+        *SIG1 = SIGUSR1;
+        *SIG2 = SIGUSR2;
+    }
+}
