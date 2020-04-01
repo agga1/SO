@@ -31,7 +31,7 @@ void sig2_handler(int sig_nr, siginfo_t *siginfo, void *context){
 int main(int argc, char const *argv[]) {
     if(argc < 3){
         puts("not enough arguments, shoud be like:\n"
-             "signal_count, send_mode");
+             "signal_count, send_mode (catcher automatically runs sender)");
     }
     int send_mode = str_to_mode(argv[2]);
     set_sigs(send_mode, &SIG1, &SIG2);
@@ -39,7 +39,7 @@ int main(int argc, char const *argv[]) {
     printf("catcher pid [ %d ]\n", getpid());
 
     // TODO only for testing
-//    if(fork()==0) execlp("./sender", "./sender", itoa(getppid()), argv[1], argv[2], NULL);
+    if(fork()==0) execlp("./sender", "./sender", itoa(getppid()), argv[1], argv[2], NULL);
 
     struct sigaction usr1_act = {.sa_flags = SA_SIGINFO, .sa_sigaction=sig1_handler};
     sigaction(SIG1, &usr1_act, NULL);
