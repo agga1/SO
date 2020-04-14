@@ -64,11 +64,11 @@ void process_line(char line[LINE_BUFF]) {
         }
 
         if (fork() == 0) { // CHILD
-            if (i != 0) {    // not first
+            if (i != 0) {    // change input to prev output
                 close(pipes[(i + 1) % 2][1]);
                 if (dup2(pipes[(i + 1) % 2][0], STDIN_FILENO) < 0) exit(1);
             }
-            if ( i  !=  cmd_cnt - 1) {  // not last
+            if ( i  !=  cmd_cnt - 1) {  // change output to console
                 close(pipes[i % 2][0]);
                 if (dup2(pipes[i % 2][1], STDOUT_FILENO) < 0) exit(1);
             }

@@ -9,4 +9,4 @@ clean:
 	rm -f main
 
 test: all
-
+	./main ex_files/a
