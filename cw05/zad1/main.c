@@ -11,32 +11,20 @@
 #define MAX_COMMANDS 10
 
 void process_line(char line[LINE_BUFF]);
-
 char * trim_spaces(char *str);
-
 char ** to_args(char *cmd_str);
-int get_lines(char* filename, char lines[MAX_COMMANDS][LINE_BUFF], int *cnt ){
-    *cnt = 0;
-    FILE* cmd_file = fopen(filename, "r");
-    if (cmd_file == NULL) return 1;
-    while(fgets(lines[*cnt], LINE_BUFF, cmd_file)){
-//        printf(" cnt: %d pid %d line: %s", *cnt, getpid(), lines[*cnt]);
-        *cnt = *cnt+1; // careful,  != *cnt ++
-    }
-    fclose(cmd_file);
-    return 0;
-}
+int get_lines(char* filename, char lines[MAX_COMMANDS][LINE_BUFF], int *cnt );
 int main(int argc, char** argv) {
     if (argc != 2) {
         fprintf(stderr, "provide file with commands");
-        return -1;
+        return 1;
     }
-
     //// preprocess to avoid opened files in child processes
     char lines[MAX_COMMANDS][LINE_BUFF];
     int cnt;
     if(get_lines(argv[1], lines, &cnt)>0){
         puts("error while reading file");
+        return 2;
     };
 
     for(int i=0;i<cnt;i++){
@@ -46,9 +34,9 @@ int main(int argc, char** argv) {
         }
         int status;
         wait(&status);
-        if (status) {
+        if (status > 0) {
             printf( "Error while executing line %d", i);
-            return 1;
+            return 3;
         }
     }
     return 0;
@@ -116,7 +104,6 @@ char* trim_spaces(char *str) {
     /*  trims all leading and trailing spaces  */
 
     while(isspace((unsigned char)*str)) str++;
-
     if(*str == 0)  return str; // all spaces
 
     char *end = str + strlen(str) - 1;
@@ -124,4 +111,14 @@ char* trim_spaces(char *str) {
     end[1] = '\0';
 
     return str;
+}
+int get_lines(char* filename, char lines[MAX_COMMANDS][LINE_BUFF], int *cnt ){
+    *cnt = 0;
+    FILE* cmd_file = fopen(filename, "r");
+    if (cmd_file == NULL) return 1;
+    while(fgets(lines[*cnt], LINE_BUFF, cmd_file)){
+        *cnt = *cnt+1; // careful,  != *cnt ++
+    }
+    fclose(cmd_file);
+    return 0;
 }
