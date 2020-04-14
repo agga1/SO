@@ -1,0 +1,5 @@
+W problemie producenta i konsumenta występują dwa rodzaje procesów, które dzielą wspólny bufor dla
+zwielokrotnienia towaru surowiec będzie pobierany z pliku przez Producenta i umieszczany w innym pliku
+umieszczenie go w buforze i rozpoczęcie pracy od nowa. Konsument pobiera surowiec z bufora i wyko
+Przy pomocy potoków nazwanych zaimplementować problem Producenta i Konsumenta. Napisać dwa niezal
+nazwany (kolejkę FIFO). Do potoku pisać będzie wiele procesów wykonujących program Producenta, a czytał będzie z ni
