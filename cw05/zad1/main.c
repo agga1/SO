@@ -13,32 +13,33 @@
 void process_line(char line[LINE_BUFF]);
 char * trim_spaces(char *str);
 char ** to_args(char *cmd_str);
-int get_lines(char* filename, char lines[MAX_COMMANDS][LINE_BUFF], int *cnt );
 int main(int argc, char** argv) {
     if (argc != 2) {
-        fprintf(stderr, "provide file with commands");
+        puts("provide file with commands");
         return 1;
     }
-    //// preprocess to avoid opened files in child processes
-    char lines[MAX_COMMANDS][LINE_BUFF];
-    int cnt;
-    if(get_lines(argv[1], lines, &cnt)>0){
+    FILE* cmd_file = fopen(argv[1], "r");
+    if (cmd_file == NULL){
         puts("error while reading file");
-        return 2;
-    };
-
-    for(int i=0;i<cnt;i++){
+        return 1;
+    }
+    int cnt =0;  // for error info
+    char line[LINE_BUFF];
+    while(fgets(line, LINE_BUFF, cmd_file)){
         if(fork() == 0) { // CHILD
-            process_line(lines[i]);
-            exit(EXIT_SUCCESS);
+            fclose(cmd_file);  // remember to close the file in child process!
+            process_line(line);
+            exit(0);
         }
         int status;
         wait(&status);
         if (status > 0) {
-            printf( "Error while executing line %d", i);
+            printf( "error while executing line %d", cnt);
             return 3;
         }
+        cnt++;
     }
+    fclose(cmd_file);
     return 0;
 }
 
@@ -59,7 +60,7 @@ void process_line(char line[LINE_BUFF]) {
 
         if(pipe(pipes[i % 2]) == -1) {
             puts("Error on pipe");
-            exit(EXIT_FAILURE);
+            exit(1);
         }
 
         if (fork() == 0) { // CHILD
@@ -68,24 +69,23 @@ void process_line(char line[LINE_BUFF]) {
             if ( i  !=  cmd_cnt - 1) {  // not last
                 close(pipes[i % 2][0]);
                 if (dup2(pipes[i % 2][1], STDOUT_FILENO) < 0) {
-                    exit(EXIT_FAILURE);
+                    exit(1);
                 };
             }
             if (i != 0) { // not first
                 close(pipes[(i + 1) % 2][1]);
                 if (dup2(pipes[(i + 1) % 2][0], STDIN_FILENO) < 0) {
-                    close(EXIT_FAILURE);
+                    close(1);
                 }
             }
             execvp(args[0], args);
 
-            exit(EXIT_SUCCESS);
+            exit(0);
         }
     }
     close(pipes[cmd_cnt % 2][0]);
     close(pipes[cmd_cnt % 2][1]);
     wait(NULL);
-    exit(0);
 }
 
 char ** to_args(char *cmd_str) {
@@ -111,14 +111,4 @@ char* trim_spaces(char *str) {
     end[1] = '\0';
 
     return str;
-}
-int get_lines(char* filename, char lines[MAX_COMMANDS][LINE_BUFF], int *cnt ){
-    *cnt = 0;
-    FILE* cmd_file = fopen(filename, "r");
-    if (cmd_file == NULL) return 1;
-    while(fgets(lines[*cnt], LINE_BUFF, cmd_file)){
-        *cnt = *cnt+1; // careful,  != *cnt ++
-    }
-    fclose(cmd_file);
-    return 0;
 }
