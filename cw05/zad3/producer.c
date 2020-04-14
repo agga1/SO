@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     char *stream_path = argv[1];
     char *res_file = argv[2];
     int N = atoi(argv[3]);
-    char *line = calloc(N, sizeof(char));
+    char *line = calloc((size_t) N, sizeof(char));
     FILE* stream = fopen(stream_path, "w");
     FILE* file = fopen(res_file, "r");
 

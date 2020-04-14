@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     char *stream_path = argv[1];
     char *consumer_out = argv[2];
     int N = atoi(argv[3]);
-    char *line = calloc(N, sizeof(char));
+    char *line = calloc((size_t) N, sizeof(char));
     FILE* stream = fopen(stream_path, "r");
     FILE* file = fopen(consumer_out, "w");
 
