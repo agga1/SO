@@ -59,25 +59,21 @@ void process_line(char line[LINE_BUFF]) {
         }
 
         if(pipe(pipes[i % 2]) == -1) {
-            puts("Error on pipe");
+            puts("error on pipe");
             exit(1);
         }
 
         if (fork() == 0) { // CHILD
-            char **args = to_args(cmds[i]);
-
+            if (i != 0) {    // not first
+                close(pipes[(i + 1) % 2][1]);
+                if (dup2(pipes[(i + 1) % 2][0], STDIN_FILENO) < 0) exit(1);
+            }
             if ( i  !=  cmd_cnt - 1) {  // not last
                 close(pipes[i % 2][0]);
-                if (dup2(pipes[i % 2][1], STDOUT_FILENO) < 0) {
-                    exit(1);
-                };
+                if (dup2(pipes[i % 2][1], STDOUT_FILENO) < 0) exit(1);
             }
-            if (i != 0) { // not first
-                close(pipes[(i + 1) % 2][1]);
-                if (dup2(pipes[(i + 1) % 2][0], STDIN_FILENO) < 0) {
-                    close(1);
-                }
-            }
+
+            char **args = to_args(cmds[i]);
             execvp(args[0], args);
 
             exit(0);
@@ -86,6 +82,7 @@ void process_line(char line[LINE_BUFF]) {
     close(pipes[cmd_cnt % 2][0]);
     close(pipes[cmd_cnt % 2][1]);
     wait(NULL);
+    exit(0);
 }
 
 char ** to_args(char *cmd_str) {
