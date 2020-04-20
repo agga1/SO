@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     if(argc < 4){
-        puts("expecetd arguments: \n"
+        puts("expected arguments: \n"
              "stream_path, res_file, N");
         return 1;
     }
