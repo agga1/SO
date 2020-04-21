@@ -23,8 +23,10 @@ int nextIdx = 1;
 int connectedClients = 0;
 
 void handleQueue(struct Message *msg);
-void handleStop(Message *msg);
 void handleNewClient(struct Message *msg);
+void handleStop(Message *msg);
+void handleList(Message *_);
+void handleConnect(Message *msg);
 static void sigintHandler(int sig);
 
 int main()
@@ -80,6 +82,10 @@ void handleQueue(struct Message* msg){
         case DISCONNECT:
             break;
         case LIST:
+            handleList(msg);
+            break;
+        case CONNECT:
+            handleConnect(msg);
             break;
         case INIT:
             handleNewClient(msg);
@@ -96,7 +102,7 @@ void send(mtype type, int clientID, char *msg ) {
     if (msgsnd(clients[clientID].queueId, &message, MSGSIZE, 0) == -1)
         printf("Message \"%s\" could not be send.\n", msg);
     else
-        puts("message sent");
+        puts("--sent");
 }
 void handleStop(Message *msg){
     clients[msg->clientId].pid = 0;
@@ -105,7 +111,6 @@ void handleStop(Message *msg){
     connectedClients -=1;
     puts("client removed");
 }
-
 void handleNewClient(struct Message *msg){
     printf("data %s", msg->msg);
     if(nextIdx > MAX_CLIENTS){
@@ -122,13 +127,47 @@ void handleNewClient(struct Message *msg){
 
     send(NEW_CLIENT, nextIdx-1, "");
 }
+
+void handleList(Message *_) {
+    puts("active clients:");
+    for(int i=0;i<MAX_CLIENTS+1;i++){
+        if(clients[i].pid>0) printf("clientId %d, available: %d\n", i, clients[i].available);
+    }
+}
+bool available(int id){
+    if(id<0 || id> MAX_CLIENTS || clients[id].pid ==0 || clients[id].available == false)
+        return false;
+    return true;
+}
+void handleConnect(Message *msg) {
+    int id1 = msg->clientId;
+    int id2 = atoi(msg->msg);
+    if(!available(id1)) {printf("client nr %d is unavailable", id1);
+        return;}
+    if(!available(id2)) {printf("client nr %d is unavailable", id2);
+        return;}
+
+    printf("connecting [%d] and[%d] ", id1, id2);
+    char msg1[MSG_LEN];
+    char msg2[MSG_LEN];
+    sprintf(msg1, "%d", clients[id2].queueId);
+    sprintf(msg2, "%d", clients[id1].queueId);
+
+    send(CONNECT, id1, msg1);
+    send(CONNECT, id2, msg2);
+
+    clients[id1].available = false;
+    clients[id2].available = false;
+}
+
 static void sigintHandler (int signum){
     for (int i = 0; i < MAX_CLIENTS + 1; ++i) {
         if(clients[i].pid > 0){
             kill(clients[i].pid, SIGINT);  // shut down all the clients and wait for confirmation
             Message request;
-            msgrcv(serverQueID, &request, MSGSIZE, STOP, 0);
-            handleStop(&request);
+            sleep(1); // give 1 sec and if no anwser, dont block closing down
+            if(msgrcv(serverQueID, &request, MSGSIZE, STOP, IPC_NOWAIT)!= -1)
+                handleStop(&request);
         }
     }
     if(connectedClients != 0)

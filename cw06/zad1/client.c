@@ -92,21 +92,31 @@ void awaitClientId(){
     printf("client received id %d\n", clientID);
 }
 void handleInput(char *input){
-    int type = strToType(strtok(input, " "));
+    char *cmd = strtok(input, " ");
+    char *msg = strtok(NULL, "\n");
+    if(msg == NULL){
+        cmd[strlen(cmd)-1] = 0;
+        msg = "";
+    }
+    int type = strToType(cmd);
     if (type == -1){ // chat mode
         puts("command pattern: COMMAND some message (i.e CONNECT 2)\n");
     }
-    char *msg = strtok(NULL, "\0");
     switch (type){
         case CONNECT:
+            send(serverQueId, CONNECT, msg);
+            // wait for return
             break;
         case DISCONNECT:
+            send(serverQueId, DISCONNECT, msg);
             break;
         case STOP:
             send(serverQueId, STOP, msg);
             closeAndQuit(clientQueId);
             break;
         case LIST:
+            send(serverQueId, LIST, msg);
+            // or list here?
             break;
         default:
             puts("unknown command");
