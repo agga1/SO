@@ -13,6 +13,7 @@
 #include <unistd.h>
 bool running = true;
 int serverQueID = -1;
+
 typedef struct Client{
     int queueId;
     pid_t pid;
@@ -163,7 +164,8 @@ void handleConnect(Message *msg) {
 static void sigintHandler (int signum){
     for (int i = 0; i < MAX_CLIENTS + 1; ++i) {
         if(clients[i].pid > 0){
-            kill(clients[i].pid, SIGINT);  // shut down all the clients and wait for confirmation
+//            kill(clients[i].pid, SIGINT);  // shut down all the clients and wait for confirmation
+            send(STOP, i, "");
             Message request;
             sleep(1); // give 1 sec and if no anwser, dont block closing down
             if(msgrcv(serverQueID, &request, MSGSIZE, STOP, IPC_NOWAIT)!= -1)

@@ -20,6 +20,7 @@ typedef enum mtype
     DISCONNECT = 4,
     STOP = 5,
     NEW_CLIENT = 6,
+    MESSAGE = 7
 } mtype;  // TODO rename
 
 

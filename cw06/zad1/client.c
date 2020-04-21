@@ -15,14 +15,17 @@
 
 int running = true;
 int clientID = 0;  // 0 means unregistered client
+int peerQueue = -1;  // id of connected other client, if present
 int serverQueId = -1;
 int clientQueId;
-
+int inputProcess = -1;
 void registerSelf();
 void send(int to, mtype type, char *text);
 void awaitClientId();
 void handleInput(char *input);
 static void sigintHandler(int sig);
+void handleQueue(struct Message* msg);
+
 
 int main(){
     // turn off stdout buffering so messages are visible immediately
@@ -37,26 +40,34 @@ int main(){
     if (clientQueId == -1) perrorAndQuit("ClientQueId problem");
     printf("Created client queue with id %d.\n", clientQueId);
 
-    catchSignal(SIGINT, sigintHandler);  // handle CTRL + C
 
     registerSelf();
     awaitClientId(clientQueId);
+    inputProcess = fork();
+    if(inputProcess == 0){
+        catchSignal(SIGINT, sigintHandler);  // handle CTRL + C
+        char input[MSG_LEN + 16]; // command + message text; read from terminal
+        while (running){
+            memset(input, '\0', MSG_LEN + 16);
+            if(peerQueue != -1) puts("some peer!");
+            fgets(input, MSG_LEN+16, stdin);
 
-    char input[MSG_LEN + 16]; // command + message text; read from terminal
-    while (running){
-        memset(input, '\0', MSG_LEN + 16);
+            if (*input != '\0')
+                handleInput(input);
+        }
+    }else{ // handle messages
+        Message request;
+        while(running) {
+            if (msgrcv(clientQueId, &request, MSGSIZE, 0, 0) < 0)
+                perrorAndQuit("server: receiving message failed");
 
-        fgets(input, MSG_LEN+16, stdin);
+            handleQueue(&request);
+        }
 
-        if (!running)
-            break;
-
-        if (*input != '\0')
-            handleInput(input);
+        // destroy client queue
+        closeAndQuit(clientQueId);
     }
 
-    // destroy client queue
-    closeAndQuit(clientQueId);
 }
 ssize_t receive_command(int queue_ID, Message *message_buffer, long msgtype){
     ssize_t received = msgrcv(queue_ID, message_buffer, MSGSIZE, msgtype, 0);
@@ -91,6 +102,7 @@ void awaitClientId(){
     clientID = message.clientId;
     printf("client received id %d\n", clientID);
 }
+// inputProcess------------------
 void handleInput(char *input){
     char *cmd = strtok(input, " ");
     char *msg = strtok(NULL, "\n");
@@ -105,13 +117,14 @@ void handleInput(char *input){
     switch (type){
         case CONNECT:
             send(serverQueId, CONNECT, msg);
-            // wait for return
+            // start subprocess for receiving messages
             break;
         case DISCONNECT:
             send(serverQueId, DISCONNECT, msg);
             break;
         case STOP:
             send(serverQueId, STOP, msg);
+            kill(getppid(), SIGKILL);
             closeAndQuit(clientQueId);
             break;
         case LIST:
@@ -125,5 +138,27 @@ void handleInput(char *input){
 
 static void sigintHandler (int signum){
     send(serverQueId, STOP, "");
+    kill(getppid(), SIGINT);
     closeAndQuit(clientQueId);
+}
+// -------main process--------------------------
+void handleQueue(struct Message* msg){
+    if (msg == NULL) return;
+    switch(msg->mtype){
+        case STOP:
+            kill(inputProcess, SIGINT); // shut down from input process
+            break;
+        case DISCONNECT:
+            break;
+        case CONNECT:
+            puts("received queue!");
+            peerQueue = atoi(msg->msg);
+            break;
+        case MESSAGE:
+            puts("received message!");
+            printf("%s", msg->msg);
+            break;
+        default:
+            puts("unhandled signal");
+    }
 }
