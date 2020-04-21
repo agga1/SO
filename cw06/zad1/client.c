@@ -22,8 +22,7 @@ void registerSelf();
 void send(mtype type, char *msg);
 void awaitClientId();
 
-int main()
-{
+int main(){
     // turn off stdout buffering so messages are visible immediately
     if (setvbuf(stdout, NULL, _IONBF, 0) != 0) perrorAndQuit("cant change buffering mode");
     // get server queue
@@ -31,7 +30,7 @@ int main()
     if(serverKey==-1) perrorAndQuit("serverKey problem");
     serverQueId = msgget(serverKey, 0);
     if (serverQueId == -1) perrorAndQuit("cant open serverQueue, make sure servver running");
-
+    // get client queue
     clientQueId = msgget(IPC_PRIVATE, 0666);
     if (clientQueId == -1) perrorAndQuit("ClientQueId problem");
     printf("Created client queue with ID %d.\n", clientQueId);
@@ -39,15 +38,15 @@ int main()
     registerSelf();
     awaitClientId(clientQueId);
 
-    msgctl(clientQueId, IPC_RMID, NULL);  // destroy queue
+    // destroy client queue
+    msgctl(clientQueId, IPC_RMID, NULL);
     return 0;
 }
 ssize_t receive_command(int queue_ID, Message *message_buffer, long msgtype){
     ssize_t received = msgrcv(queue_ID, message_buffer, MSGSIZE, msgtype, 0);
     if (received == -1){
-        if (errno == EINTR) // During waiting for a message SIGINT occurred
-            return -1;
-        printf("Warning: message not received properly.\n");
+        if (errno == EINTR) return -1; // During waiting for a message SIGINT occurred
+        puts("message not received properly");
     }
     return received;
 }
@@ -63,7 +62,7 @@ void send(mtype type, char *msg) {
     message.mtype = type;
     snprintf(message.msg, MSG_LEN, "%s", msg);
     if (msgsnd(serverQueId, &message, MSGSIZE, 0) == -1)
-        printf("Warning: command \"%s\" could not be send.\n", msg);
+        printf("Message \"%s\" could not be send.\n", msg);
     else
         puts("command send");
 }

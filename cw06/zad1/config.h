@@ -1,7 +1,7 @@
 #ifndef ZAD1_CONFIG_H
 #define ZAD1_CONFIG_H
 
-#define FTOK_PATH  "file"
+#define FTOK_PATH  "file2"
 #define FTOK_ID  17
 #define MAX_CLIENTS 16
 #define MSG_LEN 256
