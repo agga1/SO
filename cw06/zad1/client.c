@@ -21,6 +21,7 @@ int clientQueId;
 void registerSelf();
 void send(mtype type, char *msg);
 void awaitClientId();
+void evaluate(char *input);
 
 int main(){
     // turn off stdout buffering so messages are visible immediately
@@ -33,10 +34,23 @@ int main(){
     // get client queue
     clientQueId = msgget(IPC_PRIVATE, 0666);
     if (clientQueId == -1) perrorAndQuit("ClientQueId problem");
-    printf("Created client queue with ID %d.\n", clientQueId);
+    printf("Created client queue with id %d.\n", clientQueId);
 
     registerSelf();
     awaitClientId(clientQueId);
+
+    char input[MSG_LEN + 16]; // command + message text; read from terminal
+    while (running){
+        memset(input, '\0', MSG_LEN + 16);
+
+        fgets(input, MSG_LEN+16, stdin);
+
+        if (!running)
+            break;
+
+        if (*input != '\0')
+            evaluate(input);
+    }
 
     // destroy client queue
     msgctl(clientQueId, IPC_RMID, NULL);
@@ -72,7 +86,26 @@ void awaitClientId(){
     receive_command(clientQueId, &message, NEW_CLIENT);
     if (running == false) // received SIGINT while waiting for NEW_CLIENT message
         return;
-    printf("Client ready for work.\n");
-    clientID = (int) strtol(message.msg, NULL, 10);
+    clientID = message.clientId;
+    printf("client received id %d\n", clientID);
+}
+void evaluate(char *input){
+    int type = strToType(strtok(input, " "));
+    if (type == -1){ // chat mode
+        puts("command pattern: COMMAND some message (i.e CONNECT 2)\n");
+    }
+    char *msg = strtok(NULL, "\0");
+    switch (type){
+        case CONNECT:
+            break;
+        case DISCONNECT:
+            break;
+        case STOP:
+            break;
+        case LIST:
+            break;
+        default:
+            puts("unknown command");
+    }
 }
 
