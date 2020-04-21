@@ -19,9 +19,10 @@ int serverQueId = -1;
 int clientQueId;
 
 void registerSelf();
-void send(mtype type, char *msg);
+void send(int to, mtype type, char *text);
 void awaitClientId();
-void evaluate(char *input);
+void handleInput(char *input);
+static void sigintHandler(int sig);
 
 int main(){
     // turn off stdout buffering so messages are visible immediately
@@ -36,6 +37,8 @@ int main(){
     if (clientQueId == -1) perrorAndQuit("ClientQueId problem");
     printf("Created client queue with id %d.\n", clientQueId);
 
+    catchSignal(SIGINT, sigintHandler);  // handle CTRL + C
+
     registerSelf();
     awaitClientId(clientQueId);
 
@@ -49,12 +52,11 @@ int main(){
             break;
 
         if (*input != '\0')
-            evaluate(input);
+            handleInput(input);
     }
 
     // destroy client queue
-    msgctl(clientQueId, IPC_RMID, NULL);
-    return 0;
+    closeAndQuit(clientQueId);
 }
 ssize_t receive_command(int queue_ID, Message *message_buffer, long msgtype){
     ssize_t received = msgrcv(queue_ID, message_buffer, MSGSIZE, msgtype, 0);
@@ -67,16 +69,16 @@ ssize_t receive_command(int queue_ID, Message *message_buffer, long msgtype){
 void registerSelf() {
     char message[MSG_LEN];
     snprintf(message, MSG_LEN, "%d %d",  getpid(), clientQueId);
-    send(INIT, message);
+    send(serverQueId, INIT, message);
 }
 
-void send(mtype type, char *msg) {
+void send(int to, mtype type, char *text) {
     Message message;
     message.clientId = clientID;
     message.mtype = type;
-    snprintf(message.msg, MSG_LEN, "%s", msg);
-    if (msgsnd(serverQueId, &message, MSGSIZE, 0) == -1)
-        printf("Message \"%s\" could not be send.\n", msg);
+    snprintf(message.msg, MSG_LEN, "%s", text);
+    if (msgsnd(to, &message, MSGSIZE, 0) == -1)
+        printf("Message \"%s\" could not be send.\n", text);
     else
         puts("command send");
 }
@@ -89,7 +91,7 @@ void awaitClientId(){
     clientID = message.clientId;
     printf("client received id %d\n", clientID);
 }
-void evaluate(char *input){
+void handleInput(char *input){
     int type = strToType(strtok(input, " "));
     if (type == -1){ // chat mode
         puts("command pattern: COMMAND some message (i.e CONNECT 2)\n");
@@ -101,6 +103,8 @@ void evaluate(char *input){
         case DISCONNECT:
             break;
         case STOP:
+            send(serverQueId, STOP, msg);
+            closeAndQuit(clientQueId);
             break;
         case LIST:
             break;
@@ -109,3 +113,7 @@ void evaluate(char *input){
     }
 }
 
+static void sigintHandler (int signum){
+    send(serverQueId, STOP, "");
+    closeAndQuit(clientQueId);
+}

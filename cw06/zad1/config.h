@@ -8,17 +8,16 @@
 # define MSGSIZE MSG_LEN+sizeof(int)
 
 #include <string.h>
-void perrorAndQuit(char *msg){
-    perror(msg);
-    exit(1);
-}
+#include <sys/msg.h>
+#include <signal.h>
+
 
 typedef enum mtype
 {
     INIT = 1,
     LIST = 2,
     CONNECT = 3,
-    DISCONNECT =4,
+    DISCONNECT = 4,
     STOP = 5,
     NEW_CLIENT = 6,
 } mtype;  // TODO rename
@@ -37,5 +36,22 @@ int strToType(char *str){ // converts commands (only those available for clients
     if(strcmp(str, "DISCONNECT")==0) return DISCONNECT;
     if(strcmp(str, "STOP")==0) return STOP;
     return -1;
+}
+void closeAndQuit(int queueID){
+    puts("closing queue and shutting down...");
+    msgctl(queueID, IPC_RMID, NULL);
+    exit(0);
+}
+void perrorAndQuit(char *msg){
+    perror(msg);
+    exit(1);
+}
+
+void catchSignal(int sig, void (*func)(int)){
+    struct sigaction act;
+    act.sa_handler = func;
+    sigemptyset(&act.sa_mask);
+    act.sa_flags = 0;
+    sigaction(sig, &act, NULL);
 }
 #endif //ZAD1_CONFIG_H
