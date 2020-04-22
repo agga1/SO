@@ -112,10 +112,8 @@ void handleInput(char *input){
     char *msg = parseTextOrCmd(input, &cmd);
     if (cmd == -1){ // chat mode
         if(peerQueue == -1)
-            puts("noone to send message to. try command pattern: COMMAND some message (i.e CONNECT 2)\n");
-        else{
-            send(peerQueue, MESSAGE, msg);
-        }
+            puts("noone to send message to. \nto send message to server try command pattern:\nCOMMAND some message (i.e CONNECT 2)\n");
+        else send(peerQueue, MESSAGE, msg);
         return;
     }
     switch (cmd){
@@ -123,7 +121,6 @@ void handleInput(char *input){
             send(serverQueId, CONNECT, msg);
             break;
         case DISCONNECT:
-            peerQueue = -1;
             send(serverQueId, DISCONNECT, msg);
             break;
         case STOP:
@@ -159,17 +156,18 @@ void handleQueue(struct Message* msg){
             kill(inputProcess, SIGINT); // shut down from input process
             break;
         case DISCONNECT:
+            peerQueue = -1;
+            write(fd[1], &peerQueue, sizeof(peerQueue));
+            kill(inputProcess, SIGUSR1);
             break;
         case CONNECT:
             puts("received queue!");
             peerQueue = atoi(msg->msg);
             write(fd[1], &peerQueue, sizeof(peerQueue));
             kill(inputProcess, SIGUSR1);
-            // somehow send it rto inputProcess
             break;
         case MESSAGE:
-            puts("got msg");
-            printf("%s", msg->msg);
+            printf("[friend]:%s", msg->msg);
             break;
         default:
             puts("unhandled signal");

@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 # include "config.h"
-#include <errno.h>
-#include <fcntl.h>
-#include <limits.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <string.h>
@@ -16,8 +13,7 @@ int serverQueID = -1;
 
 typedef struct Client{
     int queueId;
-    pid_t pid;
-    bool available;
+    int peerId;
 } client;
 client clients[MAX_CLIENTS + 1]; // client id begins from 1
 int nextIdx = 1;
@@ -28,6 +24,7 @@ void handleNewClient(struct Message *msg);
 void handleStop(Message *msg);
 void handleList(Message *_);
 void handleConnect(Message *msg);
+void handleDisconnect(Message *msg);
 static void sigintHandler(int sig);
 
 int main()
@@ -53,16 +50,15 @@ int main()
             continue;
         }
         if(msgrcv(serverQueID, &request, MSGSIZE, DISCONNECT, MSG_NOERROR | IPC_NOWAIT) != -1){
-//            disconnect();
+            handleDisconnect(&request);
             puts("DISCONNECT requested");
             continue;
         }
         if(msgrcv(serverQueID, &request, MSGSIZE, LIST, MSG_NOERROR | IPC_NOWAIT) != -1){
-//            list();
+            handleList(&request);
             puts("LIST requested");
             continue;
         }
-
         // waiting for any signal
         if (msgrcv(serverQueID, &request, MSGSIZE, 0, 0) < 0)
             perrorAndQuit("server: receiving message failed");
@@ -81,6 +77,7 @@ void handleQueue(struct Message* msg){
             handleStop(msg);
             break;
         case DISCONNECT:
+            handleDisconnect(msg);
             break;
         case LIST:
             handleList(msg);
@@ -106,9 +103,8 @@ void send(mtype type, int clientID, char *msg ) {
         puts("--sent");
 }
 void handleStop(Message *msg){
-    clients[msg->clientId].pid = 0;
     clients[msg->clientId].queueId = 0;
-    clients[msg->clientId].available = true;
+    clients[msg->clientId].peerId = 0;
     connectedClients -=1;
     puts("client removed");
 }
@@ -121,8 +117,7 @@ void handleNewClient(struct Message *msg){
     pid_t clientPid = (pid_t) strtol(strtok(msg->msg, " "), NULL, 10);
     int clientQueueId = (int) strtol(strtok(NULL, "\0"), NULL, 10);
     clients[nextIdx].queueId = clientQueueId;
-    clients[nextIdx].pid = clientPid;
-    clients[nextIdx].available = true;
+    clients[nextIdx].peerId = 0;
     connectedClients += 1;
     nextIdx++; // TODO search for new spot
 
@@ -132,11 +127,11 @@ void handleNewClient(struct Message *msg){
 void handleList(Message *_) {
     puts("active clients:");
     for(int i=0;i<MAX_CLIENTS+1;i++){
-        if(clients[i].pid>0) printf("clientId %d, available: %d\n", i, clients[i].available);
+        if(clients[i].queueId>0) printf("clientId %d, available: %d\n", i, clients[i].peerId == 0);
     }
 }
 bool available(int id){
-    if(id<0 || id> MAX_CLIENTS || clients[id].pid ==0 || clients[id].available == false)
+    if(id<0 || id> MAX_CLIENTS || clients[id].queueId ==0 || clients[id].peerId != 0)
         return false;
     return true;
 }
@@ -148,7 +143,7 @@ void handleConnect(Message *msg) {
     if(!available(id2)) {printf("client nr %d is unavailable\n", id2);
         return;}
 
-    printf("connecting [%d] and[%d]\n", id1, id2);
+    printf("connecting [%d] and [%d]\n", id1, id2);
     char msg1[MSG_LEN];
     char msg2[MSG_LEN];
     sprintf(msg1, "%d", clients[id2].queueId);
@@ -157,15 +152,23 @@ void handleConnect(Message *msg) {
     send(CONNECT, id1, msg1);
     send(CONNECT, id2, msg2);
 
-    clients[id1].available = false;
-    clients[id2].available = false;
+    clients[id1].peerId = id2;
+    clients[id2].peerId = id1;
 }
+void handleDisconnect(Message *msg) {
+    int id1 = msg->clientId;
+    int id2 = clients[id1].peerId;
+    printf("disconnecting [%d] and [%d]\n", id1, id2);
+    send(DISCONNECT, id1, "");
+    send(DISCONNECT, id2, "");
 
+    clients[id1].peerId = 0;
+    clients[id2].peerId = 0;
+}
 static void sigintHandler (int signum){
     for (int i = 0; i < MAX_CLIENTS + 1; ++i) {
-        if(clients[i].pid > 0){
-//            kill(clients[i].pid, SIGINT);  // shut down all the clients and wait for confirmation
-            send(STOP, i, "");
+        if(clients[i].queueId > 0){
+            send(STOP, i, "from server");
             Message request;
             sleep(1); // give 1 sec and if no anwser, dont block closing down
             if(msgrcv(serverQueID, &request, MSGSIZE, STOP, IPC_NOWAIT)!= -1)
