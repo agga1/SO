@@ -10,6 +10,7 @@
 #include <string.h>
 #include <sys/msg.h>
 #include <signal.h>
+#include <stdbool.h>
 
 
 typedef enum mtype
@@ -54,5 +55,23 @@ void catchSignal(int sig, void (*func)(int)){
     sigemptyset(&act.sa_mask);
     act.sa_flags = 0;
     sigaction(sig, &act, NULL);
+}
+char* parseTextOrCmd(char *input, int *cmd){
+    char *inputCp = calloc(MSG_LEN+16, sizeof(char));
+    strncpy(inputCp, input, MSG_LEN+16);
+    char *cmdstr = strtok(input, " ");
+    char *msg = strtok(NULL, "\0");
+    if(msg == NULL){ // one word only
+        cmdstr[strlen(cmdstr)-1] = 0; // cut \n
+        msg = "";               // empty msg
+    }
+    // more than 1 word
+    int type = strToType(cmdstr);
+    if (type == -1){
+        *cmd = -1;
+        return inputCp;
+    }
+    *cmd = type;
+    return msg;
 }
 #endif //ZAD1_CONFIG_H

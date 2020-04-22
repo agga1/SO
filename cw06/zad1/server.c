@@ -145,10 +145,10 @@ void handleConnect(Message *msg) {
     int id2 = atoi(msg->msg);
     if(!available(id1)) {printf("client nr %d is unavailable", id1);
         return;}
-    if(!available(id2)) {printf("client nr %d is unavailable", id2);
+    if(!available(id2)) {printf("client nr %d is unavailable\n", id2);
         return;}
 
-    printf("connecting [%d] and[%d] ", id1, id2);
+    printf("connecting [%d] and[%d]\n", id1, id2);
     char msg1[MSG_LEN];
     char msg2[MSG_LEN];
     sprintf(msg1, "%d", clients[id2].queueId);

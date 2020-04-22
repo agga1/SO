@@ -16,6 +16,8 @@
 int running = true;
 int clientID = 0;  // 0 means unregistered client
 int peerQueue = -1;  // id of connected other client, if present
+int fd[2];
+
 int serverQueId = -1;
 int clientQueId;
 int inputProcess = -1;
@@ -23,7 +25,7 @@ void registerSelf();
 void send(int to, mtype type, char *text);
 void awaitClientId();
 void handleInput(char *input);
-static void sigintHandler(int sig);
+static void sigHandler(int sig);
 void handleQueue(struct Message* msg);
 
 
@@ -43,19 +45,23 @@ int main(){
 
     registerSelf();
     awaitClientId(clientQueId);
+    pipe(fd);
     inputProcess = fork();
     if(inputProcess == 0){
-        catchSignal(SIGINT, sigintHandler);  // handle CTRL + C
+        close(fd[1]);
+        catchSignal(SIGINT, sigHandler);  // handle CTRL + C
+        catchSignal(SIGUSR1, sigHandler);  // handle info that peerId is waiting
         char input[MSG_LEN + 16]; // command + message text; read from terminal
         while (running){
             memset(input, '\0', MSG_LEN + 16);
-            if(peerQueue != -1) puts("some peer!");
             fgets(input, MSG_LEN+16, stdin);
 
             if (*input != '\0')
                 handleInput(input);
         }
     }else{ // handle messages
+        close(fd[0]);
+
         Message request;
         while(running) {
             if (msgrcv(clientQueId, &request, MSGSIZE, 0, 0) < 0)
@@ -90,8 +96,6 @@ void send(int to, mtype type, char *text) {
     snprintf(message.msg, MSG_LEN, "%s", text);
     if (msgsnd(to, &message, MSGSIZE, 0) == -1)
         printf("Message \"%s\" could not be send.\n", text);
-    else
-        puts("command send");
 }
 
 void awaitClientId(){
@@ -104,22 +108,22 @@ void awaitClientId(){
 }
 // inputProcess------------------
 void handleInput(char *input){
-    char *cmd = strtok(input, " ");
-    char *msg = strtok(NULL, "\n");
-    if(msg == NULL){
-        cmd[strlen(cmd)-1] = 0;
-        msg = "";
+    int cmd = -1;
+    char *msg = parseTextOrCmd(input, &cmd);
+    if (cmd == -1){ // chat mode
+        if(peerQueue == -1)
+            puts("noone to send message to. try command pattern: COMMAND some message (i.e CONNECT 2)\n");
+        else{
+            send(peerQueue, MESSAGE, msg);
+        }
+        return;
     }
-    int type = strToType(cmd);
-    if (type == -1){ // chat mode
-        puts("command pattern: COMMAND some message (i.e CONNECT 2)\n");
-    }
-    switch (type){
+    switch (cmd){
         case CONNECT:
             send(serverQueId, CONNECT, msg);
-            // start subprocess for receiving messages
             break;
         case DISCONNECT:
+            peerQueue = -1;
             send(serverQueId, DISCONNECT, msg);
             break;
         case STOP:
@@ -136,10 +140,16 @@ void handleInput(char *input){
     }
 }
 
-static void sigintHandler (int signum){
-    send(serverQueId, STOP, "");
-    kill(getppid(), SIGINT);
-    closeAndQuit(clientQueId);
+static void sigHandler (int signum){
+    if(signum==SIGINT){
+        send(serverQueId, STOP, "");
+        kill(getppid(), SIGINT);
+        closeAndQuit(clientQueId);
+    }
+    else if(signum == SIGUSR1){
+        read(fd[0], &peerQueue, sizeof(peerQueue));
+        printf("peer Queue: %d\n", peerQueue);
+    }
 }
 // -------main process--------------------------
 void handleQueue(struct Message* msg){
@@ -153,9 +163,12 @@ void handleQueue(struct Message* msg){
         case CONNECT:
             puts("received queue!");
             peerQueue = atoi(msg->msg);
+            write(fd[1], &peerQueue, sizeof(peerQueue));
+            kill(inputProcess, SIGUSR1);
+            // somehow send it rto inputProcess
             break;
         case MESSAGE:
-            puts("received message!");
+            puts("got msg");
             printf("%s", msg->msg);
             break;
         default:
