@@ -1,26 +1,27 @@
 #ifndef ZAD1_CONFIG_H
 #define ZAD1_CONFIG_H
 
-#define FTOK_PATH  getenv("HOME")
+#define SERVER_QUEUE  "/server_queue"
 #define FTOK_ID  17
 #define MAX_CLIENTS 16
 #define MSG_LEN 512
 # define MSGSIZE MSG_LEN+sizeof(int)
 
 #include <string.h>
-#include <sys/msg.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <mqueue.h>
+#include <errno.h>
 
-typedef enum mtype{
-    INIT = 1,
-    LIST = 2,
+typedef enum priority{
+    STOP = 7,
+    DISCONNECT = 6,
+    LIST = 5,
+    INIT = 4,
     CONNECT = 3,
-    DISCONNECT = 4,
-    STOP = 5,
-    NEW_CLIENT = 6,
-    MESSAGE = 7
-} mtype;  // TODO rename
+    NEW_CLIENT = 2,
+    MESSAGE = 1,
+} mtype;
 
 
 typedef struct Message {
@@ -37,13 +38,15 @@ int strToType(char *str){ // converts commands (only those available for clients
     if(strcmp(str, "STOP")==0) return STOP;
     return -1;
 }
-void closeAndQuit(int queueID){
-    puts("closing queue and shutting down...");
-    msgctl(queueID, IPC_RMID, NULL);
+void closeAndQuit(int queueID, char *NAME){
+    puts("closing and removing queue, and shutting down...");
+    mq_close(queueID);
+    mq_unlink(NAME);
     exit(0);
 }
 void perrorAndQuit(char *msg){
     perror(msg);
+    printf("%d",errno);
     exit(1);
 }
 
