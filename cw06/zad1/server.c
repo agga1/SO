@@ -22,7 +22,7 @@ int connectedClients = 0;
 void handleQueue(struct Message *msg);
 void handleNewClient(struct Message *msg);
 void handleStop(Message *msg);
-void handleList(Message *_);
+void handleList(Message *message);
 void handleConnect(Message *msg);
 void handleDisconnect(Message *msg);
 static void sigintHandler(int sig);
@@ -100,7 +100,7 @@ void send(mtype type, int clientID, char *msg ) {
     if (msgsnd(clients[clientID].queueId, &message, MSGSIZE, 0) == -1)
         printf("Message \"%s\" could not be send.\n", msg);
     else
-        puts("--sent");
+        puts("sent");
 }
 void handleStop(Message *msg){
     clients[msg->clientId].queueId = 0;
@@ -109,26 +109,32 @@ void handleStop(Message *msg){
     puts("client removed");
 }
 void handleNewClient(struct Message *msg){
-    printf("data %s", msg->msg);
     if(nextIdx > MAX_CLIENTS){
         puts("clients' list full");
         return;
     }
-    pid_t clientPid = (pid_t) strtol(strtok(msg->msg, " "), NULL, 10);
-    int clientQueueId = (int) strtol(strtok(NULL, "\0"), NULL, 10);
+    int clientQueueId = (int) strtol(strtok(msg->msg, "\0"), NULL, 10);
     clients[nextIdx].queueId = clientQueueId;
     clients[nextIdx].peerId = 0;
     connectedClients += 1;
-    nextIdx++; // TODO search for new spot
+    nextIdx++;
 
     send(NEW_CLIENT, nextIdx-1, "");
 }
 
-void handleList(Message *_) {
-    puts("active clients:");
+void handleList(Message *message) {
+    char text[MSG_LEN];
+    strcpy(text, "active clients:\n");
     for(int i=0;i<MAX_CLIENTS+1;i++){
-        if(clients[i].queueId>0) printf("clientId %d, available: %d\n", i, clients[i].peerId == 0);
+        if(clients[i].queueId>0) {
+            char line[32];
+            snprintf(line, 32, "clientId %d, available: %d", i, clients[i].peerId == 0);
+            strcat(text, line);
+            if(i == message->clientId) strcat(text, " [self]");
+            strcat(text, "\n");
+        }
     }
+    send(LIST, message->clientId, text);
 }
 bool available(int id){
     if(id<0 || id> MAX_CLIENTS || clients[id].queueId ==0 || clients[id].peerId != 0)

@@ -1,10 +1,10 @@
 #ifndef ZAD1_CONFIG_H
 #define ZAD1_CONFIG_H
 
-#define FTOK_PATH  "file2"
+#define FTOK_PATH  getenv("HOME")
 #define FTOK_ID  17
 #define MAX_CLIENTS 16
-#define MSG_LEN 256
+#define MSG_LEN 512
 # define MSGSIZE MSG_LEN+sizeof(int)
 
 #include <string.h>

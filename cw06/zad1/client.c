@@ -12,22 +12,21 @@
 #include <sys/msg.h>
 #include <unistd.h>
 
-
 int running = true;
-int clientID = 0;  // 0 means unregistered client
-int peerQueue = -1;  // id of connected other client, if present
-int fd[2];
-
+int clientID = -1;
 int serverQueId = -1;
-int clientQueId;
-int inputProcess = -1;
-void registerSelf();
-void send(int to, mtype type, char *text);
-void awaitClientId();
-void handleInput(char *input);
-static void sigHandler(int sig);
-void handleQueue(struct Message* msg);
+int clientQueId = -1;
 
+int peerQueue = -1;  // id of connected other client, if present
+int inputProcess = -1; // proccess handling inputs from command line
+int fd[2];  // pipe to send info (e.g. peerQueue nr) to inputProcess
+
+void registerSelf();
+void awaitClientId();
+void send(int to, mtype type, char *text);
+void handleInput(char *input); // input process
+static void sigHandler(int sig); // input process
+void handleQueue(struct Message* msg); // main process (handle incoming messages)
 
 int main(){
     // turn off stdout buffering so messages are visible immediately
@@ -42,9 +41,10 @@ int main(){
     if (clientQueId == -1) perrorAndQuit("ClientQueId problem");
     printf("Created client queue with id %d.\n", clientQueId);
 
-
     registerSelf();
     awaitClientId(clientQueId);
+    // start work - create inputProcess and listen for:
+    // incoming console input (child)/ sys V messages(parent)
     pipe(fd);
     inputProcess = fork();
     if(inputProcess == 0){
@@ -85,7 +85,7 @@ ssize_t receive_command(int queue_ID, Message *message_buffer, long msgtype){
 }
 void registerSelf() {
     char message[MSG_LEN];
-    snprintf(message, MSG_LEN, "%d %d",  getpid(), clientQueId);
+    snprintf(message, MSG_LEN, "%d", clientQueId);
     send(serverQueId, INIT, message);
 }
 
@@ -101,8 +101,6 @@ void send(int to, mtype type, char *text) {
 void awaitClientId(){
     Message message;
     receive_command(clientQueId, &message, NEW_CLIENT);
-    if (running == false) // received SIGINT while waiting for NEW_CLIENT message
-        return;
     clientID = message.clientId;
     printf("client received id %d\n", clientID);
 }
@@ -110,9 +108,12 @@ void awaitClientId(){
 void handleInput(char *input){
     int cmd = -1;
     char *msg = parseTextOrCmd(input, &cmd);
-    if (cmd == -1){ // chat mode
+    // cmd - command nr or -1, msg - text after command or whole text (if cmd=-1)
+    if (cmd == -1){ // n
         if(peerQueue == -1)
-            puts("noone to send message to. \nto send message to server try command pattern:\nCOMMAND some message (i.e CONNECT 2)\n");
+            puts("Command unrecognized. \nto send message to server try command pattern:"
+                 "\nCOMMAND some message (i.e CONNECT 2)\n"
+                 "to start chat type: CONNECT friendId");
         else send(peerQueue, MESSAGE, msg);
         return;
     }
@@ -130,7 +131,6 @@ void handleInput(char *input){
             break;
         case LIST:
             send(serverQueId, LIST, msg);
-            // or list here?
             break;
         default:
             puts("unknown command");
@@ -143,7 +143,7 @@ static void sigHandler (int signum){
         kill(getppid(), SIGINT);
         closeAndQuit(clientQueId);
     }
-    else if(signum == SIGUSR1){
+    else if(signum == SIGUSR1){ // info that peerId is waiting
         read(fd[0], &peerQueue, sizeof(peerQueue));
         printf("peer Queue: %d\n", peerQueue);
     }
@@ -161,13 +161,17 @@ void handleQueue(struct Message* msg){
             kill(inputProcess, SIGUSR1);
             break;
         case CONNECT:
-            puts("received queue!");
             peerQueue = atoi(msg->msg);
             write(fd[1], &peerQueue, sizeof(peerQueue));
             kill(inputProcess, SIGUSR1);
+            if(peerQueue != -1)
+                puts("you are in chat mode now. type DISCONNECT to disconnect");
             break;
         case MESSAGE:
             printf("[friend]:%s", msg->msg);
+            break;
+        case LIST:
+            printf("%s", msg->msg);
             break;
         default:
             puts("unhandled signal");
