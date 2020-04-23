@@ -66,7 +66,6 @@ void handleQueue(char *msg){
     int mtype = atoi(strtok(msg, " "));
     int clientId = atoi(strtok(NULL, " "));
     char *args = strtok(NULL, "\0");
-    printf("mtype: %d client %d args %s\n", mtype, clientId, args);
     switch(mtype){
         case STOP:
             handleStop(clientId);
@@ -89,8 +88,8 @@ void handleQueue(char *msg){
 }
 void send(mtype type, int clientID, char *msg ) {
     char message[MSGSIZE];
-    snprintf(message, MSGSIZE, "%s", msg);
-    printf("\nsent %s", message);
+    snprintf(message, MSGSIZE, "%d %d %s",type, clientID, msg);
+    printf("send:%d %d %s\n",type, clientID, msg);
     if (mq_send(clients[clientID].queueId, message, MSGSIZE, type) == -1)
         perror("message not sent");
 }
@@ -167,9 +166,7 @@ void handleDisconnect(int clientId) {
 }
 static void sigintHandler (int signum){
     for (int i = 0; i < MAX_CLIENTS + 1; ++i) {
-        if(clients[i].queueId > 0){
-            handleStop(i);
-        }
+        if(clients[i].queueId > 0)  handleStop(i);
     }
     if(connectedClients != 0)
         printf("\nclosing with connected clients: %d left", connectedClients);

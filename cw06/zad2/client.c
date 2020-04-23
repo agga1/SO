@@ -3,13 +3,10 @@
 # include "config.h"
 #include <errno.h>
 #include <fcntl.h>
-#include <limits.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
 #include <unistd.h>
 char clientPath[50];
 int running = true;
@@ -18,8 +15,6 @@ mqd_t serverQueue = -1;
 mqd_t clientQueue = -1;
 
 int peerQueue = -1;  // id of connected other client, if present
-int inputProcess = -1; // proccess handling inputs from command line
-int fd[2];  // pipe to send info (e.g. peerQueue nr) to inputProcess
 
 void awaitClientId();
 void send(int to, mtype type, char *text);
@@ -29,8 +24,6 @@ static void notificationHandler(union sigval sv);
 static void handleQueue(char *msg, unsigned int mtype); // main process (handle incoming messages)
 void set_notification();
 int main(){
-    // turn off stdout buffering so messages are visible immediately
-//    if (setvbuf(stdout, NULL, _IONBF, 0) != 0) perrorAndQuit("cant change buffering mode");
     // get server queue
     serverQueue = mq_open(SERVER_QUEUE, O_RDWR);
     if (serverQueue == -1) perrorAndQuit("cant open serverQueue, make sure server running");
@@ -65,11 +58,14 @@ void set_notification(){
     notification.sigev_value.sival_ptr = &clientQueue;
     if(mq_notify(clientQueue, &notification) == -1) perrorAndQuit("notification not set");
 }
-ssize_t receive_command(char *msg, int *type){
-    if (mq_receive(clientQueue, msg, MSGSIZE + 2, type) < 0){
-        printf("%s", msg);
+ssize_t receive_command(char *args, int *type){
+    char message[MSGSIZE+2];
+    if (mq_receive(clientQueue, message, MSGSIZE + 2, NULL) < 0){
         perror("server: receiving message failed");
     }
+    *type = atoi(strtok(message, " "));
+    strtok(NULL, " ");
+    snprintf(args, MSGSIZE, "%s", strtok(NULL, "\0"));
     return 0;
 }
 
@@ -89,9 +85,7 @@ void awaitClientId(){
     if(type == NEW_CLIENT){
         clientID = atoi(msg);
     }
-    printf("got id %d", clientID);
 }
-// inputProcess------------------
 void handleInput(char *input){
     int cmd = -1;
     char *msg = parseTextOrCmd(input, &cmd);
@@ -123,24 +117,19 @@ void handleInput(char *input){
 }
 
 static void sigHandler (int signum){
-    if(signum==SIGINT){
+    if(signum==SIGINT)
         send(serverQueue, STOP, "ok");
-//        usleep(5000);
-//        closeAndQuit(clientQueue, clientPath);
-    }
 }
 static void notificationHandler(union sigval sv) {
-    puts("here");
-    char msg[MSGSIZE+2];
-    memset(msg, '\0', MSGSIZE+2);
+    char args[MSGSIZE + 2];
+    memset(args, '\0', MSGSIZE + 2);
     int type;
-    receive_command(msg, &type);
-    handleQueue(msg, type);
+    receive_command(args, &type);
+    handleQueue(args, type);
     set_notification();
 }
 
 static void handleQueue(char *msg, unsigned int mtype){
-//    printf("handlig msg %s", msg);
     if (msg == NULL) return;
     switch(mtype){
         case STOP:
