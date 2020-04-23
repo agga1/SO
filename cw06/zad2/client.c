@@ -35,12 +35,16 @@ int main(){
     clientQueue = mq_open(clientPath, O_CREAT | O_RDONLY | O_EXCL, 0666, &attr);
     if (clientQueue == -1) perrorAndQuit("clientQueueId problem");
     printf("Created client queue with id %d.\n", clientQueue);
+
     catchSignal(SIGINT, sigHandler);  // Ctrl+C
-    catchSignal(SIGUSR1, notificationHandler);
+    catchSignal(SIGUSR1, notificationHandler); // get notification of received message
+    // register client
     send(serverQueue, INIT, clientPath);
     awaitClientId();
-    char input[MSG_LEN + 16]; // command + message text; read from terminal
+
+    char input[MSG_LEN + 16]; // command + message textl
     set_notification();
+
     while(running){
         memset(input, '\0', MSG_LEN + 16);
         fgets(input, MSG_LEN+16, stdin);
@@ -150,7 +154,7 @@ static void handleQueue(char *msg, unsigned int mtype){
 
             break;
         case MESSAGE:
-            printf("[friend]:%s", msg);
+            printf("[friend]: %s", msg);
             break;
         case LIST:
             printf("%s", msg);
