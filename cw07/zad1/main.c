@@ -14,16 +14,15 @@
 int semGroupId = -1;
 int sharedMem = -1;
 
-pid_t workers[CREATORS_COUNT + PACKERS_COUNT + SENDERS_COUNT];
+pid_t workers[CREATORS_CNT + PACKERS_CNT + SENDERS_CNT];
 
-void sigtermHandler() {
-    for (int i = 0; i < CREATORS_COUNT + PACKERS_COUNT + SENDERS_COUNT; i++) {
+void sigint_handler() {
+    for (int i = 0; i < CREATORS_CNT + PACKERS_CNT + SENDERS_CNT; i++)
         kill(workers[i], SIGTERM);
-    }
 }
 
 int main() {
-    signal(SIGINT, sigtermHandler);
+    signal(SIGINT, sigint_handler);
     key_t key = ftok(FTOK_PATH, PROJECT_ID);
 
     semGroupId = semget(key, 4, IPC_CREAT | 0666);
@@ -37,12 +36,11 @@ int main() {
     warehouse->creators_idx = 0;
     warehouse->packers_idx = 0;
     warehouse->senders_idx = 0;
-    for (int i = 0; i < WAREHOUSE_SPACE; i++) { // TODO memset?
-        warehouse->packages[i] = 0;
-    }
+    for (int i = 0; i < WAREHOUSE_SPACE; i++) warehouse->packages[i] = 0;
+
     shmdt(warehouse);
     int j = 0;
-    for (int i = 0; i < CREATORS_COUNT; i++) {
+    for (int i = 0; i < CREATORS_CNT; i++) {
         workers[j] = fork();
         if (workers[j] == 0) {
             execlp("./creator", "./creator", NULL);
@@ -51,7 +49,7 @@ int main() {
         j++;
     }
 
-    for (int i = 0; i < PACKERS_COUNT; i++) {
+    for (int i = 0; i < PACKERS_CNT; i++) {
         workers[j] = fork();
         if (workers[j] == 0) {
             execlp("./packer", "./packer", NULL);
@@ -61,7 +59,7 @@ int main() {
         j++;
     }
 
-    for (int i = 0; i < SENDERS_COUNT; i++) {
+    for (int i = 0; i < SENDERS_CNT; i++) {
         workers[j] = fork();
         if (workers[j] == 0) {
             execlp("./sender", "./sender", NULL);
@@ -70,16 +68,11 @@ int main() {
         j++;
     }
 
-    for (int i = 0; i < CREATORS_COUNT + PACKERS_COUNT + SENDERS_COUNT; i++) {
+    for (int i = 0; i < CREATORS_CNT + PACKERS_CNT + SENDERS_CNT; i++)
         wait(0);
-    }
 
-    if (semGroupId != -1) {
-        semctl(semGroupId, 0, IPC_RMID);
-    }
-    if (sharedMem != -1) {
-        shmctl(sharedMem, IPC_RMID, NULL);
-    }
+    if (semGroupId != -1) semctl(semGroupId, 0, IPC_RMID);
+    if (sharedMem != -1) shmctl(sharedMem, IPC_RMID, NULL);
 
     return 0;
 }

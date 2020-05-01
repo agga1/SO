@@ -11,9 +11,9 @@
 #define WAREHOUSE_SPACE 10
 #define MAX_PACKAGE_SIZE 6000
 
-#define CREATORS_COUNT 6
-#define PACKERS_COUNT 4
-#define SENDERS_COUNT 3
+#define CREATORS_CNT 8
+#define PACKERS_CNT 4
+#define SENDERS_CNT 3
 
 #define CREATORS_SEM 0
 #define PACKERS_SEM 1
