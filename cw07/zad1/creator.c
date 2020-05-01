@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
-#include <sys/shm.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/shm.h>
 
 #include "common.h"
 
@@ -17,40 +17,31 @@ int main() {
 
     int semGroupId = semget(key, 4, 0);
     int shMemId = shmget(key, sizeof(memory_t), 0);
-
-    struct sembuf lock_memory = {LOCK_MEM, -1, 0};
-    struct sembuf decrement_space = {SPACE_INDEX, -1, 0};
-    struct sembuf ops_start[2] = {lock_memory, decrement_space};
-
-    struct sembuf unlock_memory = {LOCK_MEM, 1, 0};
-    struct sembuf increment_created = {CREATED_INDEX, 1, 0};
-    struct sembuf ops_end[2] = {unlock_memory, increment_created};
+    // operations to before creation
+    struct sembuf lock_mem = {LOCK_MEM, -1, 0};
+    struct sembuf decr_space = {CREATORS_SEM, -1, 0};
+    struct sembuf ops_start[2] = {lock_mem, decr_space};
+    // operations to do after creation
+    struct sembuf unlock_mem = {LOCK_MEM, 1, 0};
+    struct sembuf inc_to_prepare = {PACKERS_SEM, 1, 0};
+    struct sembuf ops_end[2] = {unlock_mem, inc_to_prepare};
 
     while (1) {
         semop(semGroupId, ops_start, 2);
-
-        int n = rand() % MAX_PACKAGE_SIZE/6 +1;
-
         memory_t *warehouse = shmat(shMemId, NULL, 0);
 
-        int index;
-        if (warehouse->index == -1) {
-            warehouse->index = 0;
-            index = 0;
-        } else {
-            index = (warehouse->index + warehouse->size) % WAREHOUSE_SPACE;
-        }
+        // prepare new order
+        int n = rand() % MAX_PACKAGE_SIZE/6 +1;
+        int idx = warehouse->creators_idx;
+        warehouse->packages[idx] = n;
+        warehouse->creators_idx = (idx + 1) % WAREHOUSE_SPACE;
 
-        warehouse->packages[index].status = CREATED;
-        warehouse->packages[index].value = n;
-        warehouse->size++;
-
-        int created_count = semctl(semGroupId, CREATED_INDEX, GETVAL);
-        int packed_count = semctl(semGroupId, PACKED_INDEX, GETVAL);
-
-        printf("(%d %lu) Dostalem liczbe %d. ", getpid(), time(NULL), n);
-        printf("Liczba paczek do przygotowania: %d. ", created_count + 1);
-        printf("Liczba paczek do wyslania: %d\n", packed_count);
+        // display info
+        int to_prepare = semctl(semGroupId, PACKERS_SEM, GETVAL);
+        int to_send = semctl(semGroupId, SENDERS_SEM, GETVAL);
+        printf("(%d %lu) Dodalem liczbe: %d. ", getpid(), time(NULL), n);
+        printf("Liczba zamowien do przygotowania: %d. ", to_prepare + 1);
+        printf("Liczba zamowien do wyslania: %d\n", to_send);
 
         semop(semGroupId, ops_end, 2);
         shmdt(warehouse);

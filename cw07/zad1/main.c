@@ -27,18 +27,18 @@ int main() {
     key_t key = ftok(FTOK_PATH, PROJECT_ID);
 
     semGroupId = semget(key, 4, IPC_CREAT | 0666);
-    semctl(semGroupId, SPACE_INDEX, SETVAL, WAREHOUSE_SPACE);
-    semctl(semGroupId, CREATED_INDEX, SETVAL, 0);
-    semctl(semGroupId, PACKED_INDEX, SETVAL, 0);
+    semctl(semGroupId, CREATORS_SEM, SETVAL, WAREHOUSE_SPACE);
+    semctl(semGroupId, PACKERS_SEM, SETVAL, 0);
+    semctl(semGroupId, SENDERS_SEM, SETVAL, 0);
     semctl(semGroupId, LOCK_MEM, SETVAL, 1);
 
     sharedMem = shmget(key, sizeof(memory_t), IPC_CREAT | 0666);
     memory_t* warehouse = shmat(sharedMem, NULL, 0);
-    warehouse->index = -1;
-    warehouse->size = 0;
-    for (int i = 0; i < WAREHOUSE_SPACE; i++) {
-        warehouse->packages[i].status = SENT;
-        warehouse->packages[i].value = 0;
+    warehouse->creators_idx = 0;
+    warehouse->packers_idx = 0;
+    warehouse->senders_idx = 0;
+    for (int i = 0; i < WAREHOUSE_SPACE; i++) { // TODO memset?
+        warehouse->packages[i] = 0;
     }
     shmdt(warehouse);
     int j = 0;

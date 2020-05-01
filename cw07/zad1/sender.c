@@ -18,34 +18,31 @@ int main() {
     int memory = shmget(key, sizeof(memory_t), 0);
 
     struct sembuf lock_memory = {LOCK_MEM, -1, 0};
-    struct sembuf decrement_packed = {PACKED_INDEX, -1, 0};
-    struct sembuf ops_start[2] = {lock_memory, decrement_packed};
+    struct sembuf decr_to_send = {SENDERS_SEM, -1, 0};
+    struct sembuf ops_start[2] = {lock_memory, decr_to_send};
 
     struct sembuf unlock_memory = {LOCK_MEM, 1, 0};
-    struct sembuf increment_space = {SPACE_INDEX, 1, 0};
-    struct sembuf ops_end[2] = {unlock_memory, increment_space};
+    struct sembuf inc_space = {CREATORS_SEM, 1, 0};
+    struct sembuf ops_end[2] = {unlock_memory, inc_space};
 
     while (1) {
         semop(semaphores, ops_start, 2);
 
         memory_t *warehouse = shmat(memory, NULL, 0);
+        int idx = warehouse->senders_idx;
+        warehouse->senders_idx = (idx + 1) % WAREHOUSE_SPACE;
+        warehouse->packages[idx] *= 3;
+        int n = warehouse->packages[idx];
 
-        warehouse->packages[warehouse->index].status = SENT;
-        warehouse->packages[warehouse->index].value *= 3;
-        int n = warehouse->packages[warehouse->index].value;
-        warehouse->index = (warehouse->index + 1) % WAREHOUSE_SPACE;
-        warehouse->size--;
-
-        int created_count = semctl(semaphores, CREATED_INDEX, GETVAL);
-        int packed_count = semctl(semaphores, PACKED_INDEX, GETVAL);
-
+        // display info
+        int to_prepare = semctl(semaphores, PACKERS_SEM, GETVAL);
+        int to_send = semctl(semaphores, SENDERS_SEM, GETVAL);
         printf("(%d %lu) Wyslalem zamowienie o wielkosci %d. ", getpid(),
                time(NULL), n);
-        printf("Liczba paczek do przygotowania: %d. ", created_count);
-        printf("Liczba paczek do wyslania: %d\n", packed_count);
+        printf("Liczba zamowien do przygotowania: %d. ", to_prepare);
+        printf("Liczba zamowien do wyslania: %d\n", to_send);
 
         semop(semaphores, ops_end, 2);
-
         shmdt(warehouse);
 
         sleep(1);

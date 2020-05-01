@@ -11,25 +11,20 @@
 #define WAREHOUSE_SPACE 10
 #define MAX_PACKAGE_SIZE 6000
 
-#define CREATORS_COUNT 7
-#define PACKERS_COUNT 5
+#define CREATORS_COUNT 6
+#define PACKERS_COUNT 4
 #define SENDERS_COUNT 3
 
-typedef enum { CREATED, PACKED, SENT } package_status;
-typedef struct {
-    package_status status;
-    int value;
-} package_t;
-
-#define SPACE_INDEX 0
-#define CREATED_INDEX 1
-#define PACKED_INDEX 2
+#define CREATORS_SEM 0
+#define PACKERS_SEM 1
+#define SENDERS_SEM 2
 #define LOCK_MEM 3
 
 typedef struct {
-    int index;
-    int size;
-    package_t packages[WAREHOUSE_SPACE];
+    int creators_idx;
+    int packers_idx;
+    int senders_idx;
+    int packages[WAREHOUSE_SPACE];
 } memory_t;
 
 #endif //ZAD1_COMMON_H
