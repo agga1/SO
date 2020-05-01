@@ -11,10 +11,7 @@
 #include "common.h"
 
 pid_t workers[CREATORS_CNT + PACKERS_CNT + SENDERS_CNT];
-void sigint_handler() {
-    for (int i = 0; i < CREATORS_CNT + PACKERS_CNT + SENDERS_CNT; i++)
-        kill(workers[i], SIGTERM);
-}
+void sigint_handler();
 
 int main() {
     signal(SIGINT, sigint_handler);
@@ -22,7 +19,7 @@ int main() {
     sem_t *creators = sem_open(CREATORS_SEM, O_CREAT | O_RDWR, 0666, WAREHOUSE_SPACE);
     sem_t *packers = sem_open(PACKERS_SEM, O_CREAT | O_RDWR, 0666, 0);
     sem_t *senders = sem_open(SENDERS_SEM, O_CREAT | O_RDWR, 0666, 0);
-    sem_t *can_modify = sem_open(LOCK_MEM, O_CREAT | O_RDWR, 0666, 1);
+    sem_t *mem_lock = sem_open(LOCK_MEM, O_CREAT | O_RDWR, 0666, 1);
 
     int memory = shm_open(SH_MEM, O_CREAT | O_RDWR, 0666);
     ftruncate(memory, sizeof(memory_t));
@@ -69,7 +66,7 @@ int main() {
     sem_close(creators);
     sem_close(packers);
     sem_close(senders);
-    sem_close(can_modify);
+    sem_close(mem_lock);
 
     sem_unlink(CREATORS_SEM);
     sem_unlink(PACKERS_SEM);
@@ -78,4 +75,8 @@ int main() {
 
     shm_unlink(SH_MEM);
     return 0;
+}
+void sigint_handler() {
+    for (int i = 0; i < CREATORS_CNT + PACKERS_CNT + SENDERS_CNT; i++)
+        kill(workers[i], SIGTERM);
 }
