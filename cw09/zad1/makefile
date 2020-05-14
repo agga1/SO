@@ -9,6 +9,6 @@ clean:
 	rm -f main
 
 test: all
-	./main  8 4
+	./main  2 6
 
 
