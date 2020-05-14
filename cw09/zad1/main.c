@@ -42,11 +42,11 @@ void barber(){
         printf("%d more clients waiting, shaving client [%d]\n", waitingClients, atBarberSeat);
         pthread_mutex_unlock(&waitingRoomMutex);
 
-        sleep(getRnd(3, 5));
+        sleep(getRnd(3, 6));  //  ... shaving ...
 
         pthread_mutex_lock(&waitingRoomMutex);
         pthread_cancel(clientsThIds[atBarberSeat]);
-        printf("client %d shaved\n", atBarberSeat);
+        printf("client %d shaved\n\n", atBarberSeat);
         atBarberSeat = -1;
         pthread_mutex_unlock(&waitingRoomMutex);
     }
