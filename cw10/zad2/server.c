@@ -19,12 +19,15 @@ typedef struct {
     char* nick;
     int fd;
     int enemy_idx;
-    bool alive;
+    bool responded;
 } client_t;
 
 int clients_nr = 0;
 client_t* clients[MAX_CLIENTS];
 pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
+int net_socket;
+int loc_socket;
+struct sockaddr_un local_sockaddr;
 
 void easysend(int to, int cmd, char *arg, struct sockaddr address);
 int fd_from_poll(struct pollfd *pfds);
@@ -49,8 +52,8 @@ void ping_loop();
 int set_local(char *path);
 int set_net(char *port);
 void handle_msg(int from, char *msg,  struct sockaddr address);
-int net_socket;
-int loc_socket;
+
+
 int main(int argc, char* argv[]) {
     srand(time(NULL));
 
@@ -74,7 +77,7 @@ int main(int argc, char* argv[]) {
     char buffer[MSG_LEN+1];
     while (1) {
         int client_fd = fd_from_poll(pfds);
-        printf("got fd %d\n", client_fd);
+
         struct sockaddr address;
         socklen_t address_size = sizeof(address);
         if(recvfrom(client_fd, buffer, sizeof(message), MSG_WAITALL, &address, &address_size) < 0)
@@ -98,7 +101,6 @@ void easysend(int to, int cmd, char *arg, struct sockaddr address) {
 }
 
 void handle_msg(int from, char *msg, struct sockaddr address) {
-    puts(msg);
     int cmd = atoi(strtok(msg, "|"));
     char* arg = strtok(NULL, "|");
     char* nick = strtok(NULL, "|");
@@ -107,14 +109,11 @@ void handle_msg(int from, char *msg, struct sockaddr address) {
     if (cmd == CMD_ADD) {
         if(clients_nr == MAX_CLIENTS){
             easysend(from, cmd, "max_player_reached", address);
-            close(from);
             return;
         }
         int idx = add_client(nick, from, address);
-        printf("new client fd %d\n", clients[idx]->fd);
         if (idx == -1) {
             easysend(from, cmd, "taken", address);
-            close(from);
         } else if (set_opponent(idx) == -1) {
             easysend(from, cmd, "no_enemy", address);
         } else {
@@ -125,6 +124,10 @@ void handle_msg(int from, char *msg, struct sockaddr address) {
     }
     if (cmd == CMD_MOVE) {
         int idx = by_nick(nick);
+        if(idx == -1){
+            printf("client with nick [%s] not found\n", nick);
+            return;
+        }
         int enemy_idx = clients[idx]->enemy_idx;
         easysend(clients[enemy_idx]->fd, CMD_MOVE, arg, clients_addresses[enemy_idx]);
     }
@@ -132,10 +135,8 @@ void handle_msg(int from, char *msg, struct sockaddr address) {
         delete_client(by_nick(nick));
     }
     if (cmd == CMD_PONG) {
-        int player = by_nick(nick);
-        if (player != -1) {
-            clients[player]->alive = 1;
-        }
+        int idx = by_nick(nick);
+        if (idx != -1) clients[idx]->responded = 1;
     }
     pthread_mutex_unlock(&clients_mutex);
 
@@ -146,16 +147,14 @@ void ping_loop() {
 
     pthread_mutex_lock(&clients_mutex);
     for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (clients[i] != NULL && !clients[i]->alive) {
-            printf("%s unresponsive \n", clients[i]->nick);
-            delete_client(i);
-        }
-    }
-
-    for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (clients[i] != NULL) {
-            easysend(clients[i]->fd, CMD_PING, "", clients_addresses[i]);
-            clients[i]->alive = false;
+        if (clients[i] != NULL ) {
+            if(clients[i]->responded){
+                easysend(clients[i]->fd, CMD_PING, "", clients_addresses[i]);
+                clients[i]->responded = false;
+            }else{
+                printf("%s unresponsive \n", clients[i]->nick);
+                delete_client(i);
+            }
         }
     }
     pthread_mutex_unlock(&clients_mutex);
@@ -163,7 +162,6 @@ void ping_loop() {
     sleep(4);
     ping_loop();
 }
-struct sockaddr_un local_sockaddr;
 int set_local(char *path) {
     unlink(path);
     int local_socket = socket(AF_UNIX, SOCK_DGRAM, 0);
@@ -225,7 +223,7 @@ int add_client(char *nickname, int fd, struct sockaddr address) {
     new_client->nick = calloc(MSG_LEN, sizeof(char));
     strcpy(new_client->nick, nickname);
     new_client->fd = fd;
-    new_client->alive = 1;
+    new_client->responded = 1;
     new_client->enemy_idx = -1;
     clients[idx] = new_client;
     clients_addresses[idx] = address;

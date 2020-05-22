@@ -132,21 +132,19 @@ void ping_loop() {
 
     pthread_mutex_lock(&clients_mutex);
     for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (clients[i] != NULL && !clients[i]->alive) {
-            printf("%s unresponsive \n", clients[i]->nick);
-            delete_client(i);
-        }
-    }
-
-    for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (clients[i] != NULL) {
-            easysend(clients[i]->fd, CMD_PING, "");
-            clients[i]->alive = false;
+        if (clients[i] != NULL ) {
+            if(clients[i]->alive){
+                easysend(clients[i]->fd, CMD_PING, "");
+                clients[i]->alive = false;
+            }else{
+                printf("%s unresponsive \n", clients[i]->nick);
+                delete_client(i);
+            }
         }
     }
     pthread_mutex_unlock(&clients_mutex);
 
-    sleep(4);
+    sleep(3);
     ping_loop();
 }
 
