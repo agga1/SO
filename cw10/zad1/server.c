@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <sys/un.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/un.h>
+#include <sys/socket.h>
 #include <stdbool.h>
 
 #include "game_util.h"
@@ -23,43 +23,10 @@ typedef struct {
 
 int clients_nr = 0;
 client_t* clients[MAX_CLIENTS];
-
 pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void easysend(int to, int cmd, char *arg);
-int poll_sockets(int local_socket, int network_socket) {
-    struct pollfd* pfds = calloc(2 +clients_nr, sizeof(struct pollfd));
-    pfds[0].fd = local_socket;
-    pfds[0].events = POLLIN;
-    pfds[1].fd = network_socket;
-    pfds[1].events = POLLIN;
-
-    pthread_mutex_lock(&clients_mutex);
-    for (int i = 0; i < clients_nr; i++) {
-        pfds[i + 2].fd = clients[i]->fd;
-        pfds[i + 2].events = POLLIN;
-    }
-    pthread_mutex_unlock(&clients_mutex);
-    int fd = -1;
-    if(poll(pfds,  clients_nr+ 2, -1) > 0){
-        for (int i = 0; i <  clients_nr+ 2; i++) {
-            if (pfds[i].revents & POLLIN) {
-                fd = pfds[i].fd;
-                break;
-            }
-        }
-    }
-
-    if (fd == local_socket || fd == network_socket) {
-        fd = accept(fd, NULL, NULL);
-        printf("accepting new client fd %d\n", fd);
-    }
-
-    free(pfds);
-
-    return fd;
-}
-
+int fd_from_poll(int loc_socket, int net_socket, struct pollfd *pfds);
 int by_nick(char *nick);
 int find_free_space(){
     for(int i=0;i<MAX_CLIENTS;i++)
@@ -96,8 +63,14 @@ int main(int argc, char* argv[]) {
     pthread_t pthread;
     pthread_create(&pthread, NULL, (void *(*)(void *)) ping_loop, NULL);
 
+    struct pollfd* pfds = calloc(2 + MAX_CLIENTS, sizeof(struct pollfd));
+    pfds[0].fd = loc_socket;
+    pfds[0].events = POLLIN;
+    pfds[1].fd = net_socket;
+    pfds[1].events = POLLIN;
+
     while (1) {
-        int client_fd = poll_sockets(loc_socket, net_socket);
+        int client_fd = fd_from_poll(loc_socket, net_socket, pfds);
 
         char buffer[MSG_LEN + 1];
         recv(client_fd, buffer, MSG_LEN, 0);
@@ -212,13 +185,12 @@ int set_net(char *port) {
     listen(network_socket, MAX_BACKLOG);
 
     freeaddrinfo(info);
-
     return network_socket;
 }
 
 void delete_client(int idx) {
     if (idx == -1) return;
-    printf("removing %s\n", clients[idx]->nick);
+    printf("deleting %s\n", clients[idx]->nick);
     int enemy_idx = clients[idx]->enemy_idx;
 
     free(clients[idx]->nick);
@@ -258,4 +230,27 @@ int by_nick(char *nick) {
     return -1;
 }
 
+int fd_from_poll(int loc_socket, int net_socket, struct pollfd *pfds) {
+
+    int fd = -1;
+    if(poll(pfds,  clients_nr + 2, -1) > 0){ // sth received
+        for (int i = 0; i <  clients_nr+ 2; i++) {
+            if (pfds[i].revents & POLLIN) {
+                fd = pfds[i].fd;
+                break;
+            }
+        }
+    }
+
+    if (fd == loc_socket || fd == net_socket) {
+        fd = accept(fd, NULL, NULL);
+        printf("accepting new client fd %d\n", fd);
+
+        pthread_mutex_lock(&clients_mutex); // add new fd to poll
+        pfds[clients_nr + 1].fd = fd;
+        pfds[clients_nr + 1].events = POLLIN;
+        pthread_mutex_unlock(&clients_mutex);
+    }
+    return fd;
+}
 #pragma clang diagnostic pop

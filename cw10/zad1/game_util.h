@@ -3,15 +3,15 @@
 #define ZAD1_COMMON_H
 
 #define MAX_CLIENTS 20
-#define MAX_BACKLOG 10
 #define MSG_LEN 256
+#define MAX_BACKLOG 10
 
 // commands protocol
 typedef enum {CMD_ADD, CMD_MOVE, CMD_QUIT, CMD_PING, CMD_PONG} command;
 // field enum
 typedef enum { F_EMPTY, F_O, F_X } field_t;
 static char field_char[3] = " OX";
-
+// all game states
 typedef enum {
     META,
     ADD,
@@ -47,13 +47,13 @@ field_t get_winner_or_empty(field_t *board) {
     return F_EMPTY; // no winner
 }
 
-void draw_board(field_t *board) {
+void draw(field_t *board) {
     for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
             int idx = y * 3 + x;
             printf("|%c|", board[idx] == F_EMPTY ? '1'+idx : field_char[board[idx]]);
         }
-        puts("\n---------");
+        printf("\n--------\n");
     }
 }
 #endif //ZAD1_COMMON_H

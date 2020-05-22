@@ -152,7 +152,7 @@ void game_loop() {
         state = is_game_over() ? QUIT : MOVE;
     }
     else if (state == MOVE) {
-        draw_board(board);
+        draw(board);
 
         int move;
         printf("[%c] enter move: ", field_char[my_symbol]);
@@ -163,7 +163,7 @@ void game_loop() {
             scanf("%d", &move);
             move --;
         }
-        draw_board(board);
+        draw(board);
 
         client_send(server_socket, CMD_MOVE, move);
         state = is_game_over() ? QUIT : WAIT_FOR_MOVE;
