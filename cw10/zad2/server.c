@@ -184,7 +184,7 @@ int set_net(char *port) {
 
     struct addrinfo hints;
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_DGRAM;
     hints.ai_flags = AI_PASSIVE;
 
@@ -242,8 +242,8 @@ int by_nick(char *nick) {
 }
 
 int fd_from_poll(struct pollfd *pfds) {
-    poll(pfds, 1, -1);
-    for (int i = 0; i < 1; i++)
+    poll(pfds, 2, -1);
+    for (int i = 0; i < 2; i++)
         if (pfds[i].revents & POLLIN){
             return pfds[i].fd;
         }

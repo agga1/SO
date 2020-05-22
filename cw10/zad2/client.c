@@ -96,7 +96,7 @@ void set_local(char *path){
 void set_net(char *port){
     /*specifies criteria for selecting the socket address
           structures returned in the list pointed to by res. */
-    struct addrinfo hints = {.ai_family = AF_UNSPEC, .ai_socktype = SOCK_STREAM};
+    struct addrinfo hints = {.ai_family = AF_INET, .ai_socktype = SOCK_DGRAM};
     struct addrinfo* res;
     getaddrinfo("localhost", port, &hints, &res);
 
