@@ -1,6 +1,5 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
-#define _POSIX_C_SOURCE 200112L
 
 #include <netdb.h>
 #include <pthread.h>
@@ -11,151 +10,27 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#include "common.h"
+#include "game_util.h"
 
 int server_socket;
-int is_o;
-char buffer[MSG_LEN + 1];
+field my_symbol;
 char* nick;
 
-board_t board;
-
-void clientsend(int to, int cmd, int arg){
-    char buffer[MSG_LEN+1];
-    snprintf(buffer, MSG_LEN, "%d:%d:%s", cmd, arg, nick);
-    send(to, buffer, MSG_LEN, 0);
-}
-typedef enum {
-    WAIT,
-    ADD,
-    WAIT_FOR_ENEMY,
-    WAIT_FOR_MOVE,
-    ENEMY_MOVED,
-    MOVE,
-    QUIT
-} state_t;
-
-state_t state = WAIT;
 int cmd;
 char *arg;
+field board[9];
+gamestate state = META;
 
 pthread_mutex_t msg_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t new_reply = PTHREAD_COND_INITIALIZER;
 
-void join_server();
+void client_send(int to, int cmd, int arg);
 void handle_msg(char buffer[MSG_LEN]);
-
+int is_game_over();
+void game_loop();
 void quit() {
-    clientsend(server_socket, CMD_QUIT, 0);
+    client_send(server_socket, CMD_QUIT, 0);
     exit(0);
-}
-
-void check_board_status() {
-    // check for a win
-    int is_won = 0;
-    field winner = get_winner(&board);
-    if (winner != F_EMPTY) {
-        if ((is_o && winner == F_O) || (!is_o && winner == F_X)) {
-            puts("You have won the game!");
-        } else {
-            puts("You have lost :(");
-        }
-
-        is_won = 1;
-    }
-
-    // check for a draw
-    int is_drawn = 1;
-    for (int i = 0; i < 9; i++) {
-        if (board.objects[i] == F_EMPTY) {
-            is_drawn = 0;
-            break;
-        }
-    }
-
-    if (is_drawn && !is_won) {
-        puts("Game ended in a draw");
-    }
-
-    if (is_won || is_drawn) {
-        state = QUIT;
-    }
-}
-
-void draw_board() {
-    char symbols[3] = {' ', 'O', 'X'};
-    for (int y = 0; y < 3; y++) {
-        for (int x = 0; x < 3; x++) {
-            symbols[0] = y * 3 + x + 1 + '0';
-            printf("|%c|", symbols[board.objects[y * 3 + x]]);
-        }
-        puts("\n---------");
-    }
-}
-
-void game_loop() {
-    if (state == ADD) {
-        if (strcmp(arg, "taken") == 0) {
-            puts("nick already taken :(");
-            exit(1);
-        } else if (strcmp(arg, "no_enemy") == 0) {
-            puts("waiting for the other player");
-            state = WAIT_FOR_ENEMY;
-        } else {
-            board = new_board();
-            is_o = arg[0] == 'O';
-            state = is_o ? MOVE : WAIT_FOR_MOVE;
-        }
-    } else if (state == WAIT_FOR_ENEMY) {
-
-        pthread_mutex_lock(&msg_mutex);
-        while (state != ADD && state != QUIT) {
-            pthread_cond_wait(&new_reply, &msg_mutex);
-        }
-        pthread_mutex_unlock(&msg_mutex);
-
-        board = new_board();
-        is_o = arg[0] == 'O';
-        state = is_o ? MOVE : WAIT_FOR_MOVE;
-
-    } else if (state == WAIT_FOR_MOVE) {
-        puts("Waiting for enemy to make a move");
-
-        pthread_mutex_lock(&msg_mutex);
-        // wait for enemy_move or quit message
-        while (state != ENEMY_MOVED && state != QUIT) {
-            pthread_cond_wait(&new_reply, &msg_mutex);
-        }
-        pthread_mutex_unlock(&msg_mutex);
-
-    } else if (state == ENEMY_MOVED) {
-        make_move(&board, atoi(arg));
-        check_board_status();
-        if (state != QUIT) {
-            state = MOVE;
-        }
-    } else if (state == MOVE) {
-        draw_board();
-
-        int move;
-        do {
-            printf("Enter next move (%c): ", is_o ? 'O' : 'X');
-            scanf("%d", &move);
-            move--;
-        } while (!make_move(&board, move));
-
-        draw_board();
-
-        clientsend(server_socket, CMD_MOVE, move);
-
-        check_board_status();
-        if (state != QUIT) {
-            state = WAIT_FOR_MOVE;
-        }
-    } else if (state == QUIT) {
-        quit();
-    }
-    game_loop();
 }
 
 int main(int argc, char* argv[]) {
@@ -192,12 +67,14 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "type should be one of: local net");
         exit(0);
     }
-    join_server();
-    // start game loop (state WAIT)
+    // join server
+    client_send(server_socket, CMD_ADD, 0);
+    // start game loop (state META)
     pthread_t game;
     pthread_create(&game, NULL, (void* (*)(void*))game_loop, NULL);
     // listen for msg from server
     while (1) {
+        char buffer[MSG_LEN + 1];
         recv(server_socket, buffer, MSG_LEN, 0);
         handle_msg(buffer);
     }
@@ -218,7 +95,7 @@ void handle_msg(char buffer[MSG_LEN]) {
             state = QUIT;
             break;
         case CMD_PING:
-            clientsend(server_socket, CMD_PONG, 0);
+            client_send(server_socket, CMD_PONG, 0);
             break;
         default:
             printf("unrecognized command %d", cmd);
@@ -227,8 +104,84 @@ void handle_msg(char buffer[MSG_LEN]) {
     pthread_mutex_unlock(&msg_mutex);
 }
 
-void join_server() {
-    clientsend(server_socket, CMD_ADD, 0);
+void game_loop() {
+    if (state == ADD) {
+        if (strcmp(arg, "taken") == 0) {
+            puts("nick already taken :(");
+            exit(1);
+        }
+        else if (strcmp(arg, "no_enemy") == 0) {
+            state = META;
+            puts("waiting for the other player to join");
+            pthread_mutex_lock(&msg_mutex);
+            while (state != ADD && state != QUIT)
+                pthread_cond_wait(&new_reply, &msg_mutex);
+            pthread_mutex_unlock(&msg_mutex);
+        }
+        else {
+            my_symbol = arg[0] == 'O' ? F_O : F_X;
+            state = my_symbol == F_O ? MOVE : WAIT_FOR_MOVE;
+        }
+    }
+    else if (state == WAIT_FOR_MOVE) {
+        puts("opponent's turn");
+        // wait for enemy_move or quit message
+        pthread_mutex_lock(&msg_mutex);
+        while (state != ENEMY_MOVED && state != QUIT)
+            pthread_cond_wait(&new_reply, &msg_mutex);
+        pthread_mutex_unlock(&msg_mutex);
+    }
+    else if (state == ENEMY_MOVED) {
+        make_move(board, atoi(arg), my_symbol == F_O ? F_X : F_O);
+        state = is_game_over() ? QUIT : MOVE;
+    }
+    else if (state == MOVE) {
+        draw_board(board);
+
+        int move;
+        printf("[%c] enter move: ", field_char[my_symbol]);
+        scanf("%d", &move);
+        move --;
+        while (make_move(board, move, my_symbol) != 0){
+            puts("illegal move, choose again: ");
+            scanf("%d", &move);
+            move --;
+        }
+        draw_board(board);
+
+        client_send(server_socket, CMD_MOVE, move);
+        state = is_game_over() ? QUIT : WAIT_FOR_MOVE;
+
+    } else if (state == QUIT) {
+        quit();
+    }
+    game_loop();
 }
 
+int is_game_over() {
+    // check if somebody won
+    field winner = get_winner_or_empty(board);
+    if (winner != F_EMPTY) {
+        if (winner == my_symbol) puts("You have won the game!");
+        else puts("You have lost :(");
+        return 1;
+    }
+    // check for tie
+    int all_filled = 1;
+    for (int i = 0; i < 9; i++)
+        if (board[i] == F_EMPTY)
+            all_filled = 0;
+
+    if (all_filled) {
+        puts("It's a tie!");
+        return 1;
+    }
+    return 0;
+}
+
+void client_send(int to, int cmd, int arg) {
+    char buffer[MSG_LEN+1];
+    snprintf(buffer, MSG_LEN, "%d:%d:%s", cmd, arg, nick);
+    send(to, buffer, MSG_LEN, 0);
+}
 #pragma clang diagnostic pop

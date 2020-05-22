@@ -1,6 +1,5 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
-#define _POSIX_C_SOURCE 200112L
 
 #include <netdb.h>
 #include <poll.h>
@@ -13,7 +12,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "common.h"
+#include "game_util.h"
 
 typedef struct {
     char* nickname;
