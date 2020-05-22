@@ -8,12 +8,15 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <unistd.h>
 
 #include "game_util.h"
-
+#define _POSIX_C_SOURCE 200112L
 int server_socket;
+int type;
 field_t my_symbol;
 char* nick;
+struct sockaddr_un unix_sockaddr;
 
 int cmd;
 char *arg;
@@ -45,19 +48,21 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     nick = argv[1];
-    char* type = argv[2];
+    char* type_str = argv[2];
+    type = strcmp(type_str, "local") == 0? CON_LOCAL : CON_NETWORK;
     char* server_addr = argv[3];
 
     signal(SIGINT, quit); // handle ctrl+c
-
-    if (strcmp(type, "local") == 0) {
-        set_local(server_addr);
-    }
-    else if(strcmp(type, "net") == 0) {
-        set_net(server_addr);
-    } else{
-        fprintf(stderr, "type should be one of: local net");
-        exit(0);
+    switch (type){
+        case CON_LOCAL:
+            set_local(server_addr);
+            break;
+        case CON_NETWORK:
+            set_net(server_addr);
+            break;
+        default:
+            fprintf(stderr, "type should be one of: local net");
+            exit(0);
     }
     // join server
     client_send(server_socket, CMD_ADD, 0);
@@ -66,24 +71,27 @@ int main(int argc, char* argv[]) {
     pthread_t game;
     pthread_create(&game, NULL, (void* (*)(void*))game_loop, NULL);
 
-    // listen for msg from server
     while (1) {
         char buffer[MSG_LEN + 1];
-        recv(server_socket, buffer, MSG_LEN, 0);
+        read(server_socket, buffer, MSG_LEN);
         handle_msg(buffer);
     }
 }
 void set_local(char *path){
-    server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
-    if(server_socket==-1) perror_quit("socket function");
+    server_socket = socket(AF_UNIX, SOCK_DGRAM, 0);
+    if(server_socket==-1) perror_quit("in socket function");
 
-    struct sockaddr_un sockaddr;
-    memset(&sockaddr, 0, sizeof(struct sockaddr_un));
-    sockaddr.sun_family = AF_UNIX;
-    strcpy(sockaddr.sun_path, path);
+    memset(&unix_sockaddr, 0, sizeof(struct sockaddr_un));
+    unix_sockaddr.sun_family = AF_UNIX;
+    strcpy(unix_sockaddr.sun_path, path);
 
-    if(connect(server_socket, (struct sockaddr*)&sockaddr, sizeof(struct sockaddr_un)) != 0)
+    if(bind(server_socket, (struct sockaddr*)&unix_sockaddr, sizeof(sa_family_t)) ==-1)
+        perror_quit("binding problem");
+
+    if(connect(server_socket, (struct sockaddr*)&unix_sockaddr, sizeof(unix_sockaddr)) != 0)
         perror_quit("connection problem");
+
+    puts("local ok");
 }
 void set_net(char *port){
     /*specifies criteria for selecting the socket address
