@@ -20,7 +20,7 @@ test_c1: all
 test_c2:
 	./client nick2 local /tmp/socket
 
-test_c1n: all
+test_c1n:
 	./client nick1 net 1234
 
 test_c2n:

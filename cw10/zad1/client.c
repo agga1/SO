@@ -1,6 +1,5 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
-
 #include <netdb.h>
 #include <pthread.h>
 #include <signal.h>
@@ -13,12 +12,12 @@
 #include "game_util.h"
 
 int server_socket;
-field my_symbol;
+field_t my_symbol;
 char* nick;
 
 int cmd;
 char *arg;
-field board[9];
+field_t board[9];
 gamestate state = META;
 
 pthread_mutex_t msg_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -32,13 +31,18 @@ void quit() {
     client_send(server_socket, CMD_QUIT, 0);
     exit(0);
 }
+void perror_quit(char *msg){
+    perror(msg);
+    quit();
+}
+void set_loc(char *path);
+void set_net(char *port);
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         fprintf(stderr, "Provide arguments:\n ./client name type(local | net) server_address(UNIX path | port)");
         return 1;
     }
-
     nick = argv[1];
     char* type = argv[2];
     char* server_addr = argv[3];
@@ -46,29 +50,17 @@ int main(int argc, char* argv[]) {
     signal(SIGINT, quit); // handle ctrl+c
 
     if (strcmp(type, "local") == 0) {
-        server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
-        struct sockaddr_un local_sockaddr =
-                {.sun_family = AF_UNIX, .sun_path = *server_addr};
-        connect(server_socket, (struct sockaddr*)&local_sockaddr,
-                sizeof(struct sockaddr_un));
-
-    } else if(strcmp(type, "net") == 0) {
-        /*specifies criteria for selecting the socket address
-          structures returned in the list pointed to by res. */
-        struct addrinfo hints = {.ai_family = AF_UNSPEC, .ai_socktype = SOCK_STREAM};
-        struct addrinfo* res;
-        getaddrinfo("localhost", server_addr, &hints, &res);
-
-        server_socket = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-        connect(server_socket, res->ai_addr, res->ai_addrlen);
-
-        freeaddrinfo(res);
+        set_loc(server_addr);
+    }
+    else if(strcmp(type, "net") == 0) {
+        set_net(server_addr);
     } else{
         fprintf(stderr, "type should be one of: local net");
         exit(0);
     }
     // join server
     client_send(server_socket, CMD_ADD, 0);
+
     // start game loop (state META)
     pthread_t game;
     pthread_create(&game, NULL, (void* (*)(void*))game_loop, NULL);
@@ -79,10 +71,34 @@ int main(int argc, char* argv[]) {
         handle_msg(buffer);
     }
 }
+void set_loc(char *path){
+    server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
+    if(server_socket==-1) perror_quit("socket function");
 
+    struct sockaddr_un local_sockaddr;
+    memset(&local_sockaddr, 0, sizeof(struct sockaddr_un));
+    local_sockaddr.sun_family = AF_UNIX;
+    strcpy(local_sockaddr.sun_path, path);
+    if(connect(server_socket, (struct sockaddr*)&local_sockaddr, sizeof(struct sockaddr_un)) != 0)
+        perror_quit("connection problem");
+}
+void set_net(char *port){
+    /*specifies criteria for selecting the socket address
+          structures returned in the list pointed to by res. */
+    struct addrinfo hints = {.ai_family = AF_UNSPEC, .ai_socktype = SOCK_STREAM};
+    struct addrinfo* res;
+    getaddrinfo("localhost", port, &hints, &res);
+
+    server_socket = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if(server_socket==-1) perror_quit("socket function");
+    if(connect(server_socket, res->ai_addr, res->ai_addrlen)!= 0)
+        perror_quit("connection problem");
+
+    freeaddrinfo(res);
+}
 void handle_msg(char buffer[MSG_LEN]) {
-    cmd = atoi(strtok(buffer, ":"));
-    arg = strtok(NULL, ":");
+    cmd = atoi(strtok(buffer, "|"));
+    arg = strtok(NULL, "|");
     pthread_mutex_lock(&msg_mutex);
     switch(cmd){
         case CMD_ADD:
@@ -92,8 +108,8 @@ void handle_msg(char buffer[MSG_LEN]) {
             state = ENEMY_MOVED;
             break;
         case CMD_QUIT:
-            state = QUIT;
-            break;
+            puts("opponent disconnected...");
+            exit(0);
         case CMD_PING:
             client_send(server_socket, CMD_PONG, 0);
             break;
@@ -160,7 +176,7 @@ void game_loop() {
 
 int is_game_over() {
     // check if somebody won
-    field winner = get_winner_or_empty(board);
+    field_t winner = get_winner_or_empty(board);
     if (winner != F_EMPTY) {
         if (winner == my_symbol) puts("You have won the game!");
         else puts("You have lost :(");
@@ -181,7 +197,7 @@ int is_game_over() {
 
 void client_send(int to, int cmd, int arg) {
     char buffer[MSG_LEN+1];
-    snprintf(buffer, MSG_LEN, "%d:%d:%s", cmd, arg, nick);
+    snprintf(buffer, MSG_LEN, "%d|%d|%s", cmd, arg, nick);
     send(to, buffer, MSG_LEN, 0);
 }
 #pragma clang diagnostic pop

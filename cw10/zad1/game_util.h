@@ -2,14 +2,14 @@
 #ifndef ZAD1_COMMON_H
 #define ZAD1_COMMON_H
 
-#define MAX_PLAYERS 20
+#define MAX_CLIENTS 20
 #define MAX_BACKLOG 10
 #define MSG_LEN 256
 
 // commands protocol
 typedef enum {CMD_ADD, CMD_MOVE, CMD_QUIT, CMD_PING, CMD_PONG} command;
 // field enum
-typedef enum { F_EMPTY, F_O, F_X } field;
+typedef enum { F_EMPTY, F_O, F_X } field_t;
 static char field_char[3] = " OX";
 
 typedef enum {
@@ -21,14 +21,14 @@ typedef enum {
     QUIT
 } gamestate;
 
-int make_move(field board[9], int idx, field player) {
+int make_move(field_t board[9], int idx, field_t player) {
     if (idx < 0 || idx > 9 || board[idx] != F_EMPTY)
         return -1;  // can't move
     board[idx] = player;
     return 0;
 }
 
-field get_winner_or_empty(field *board) {
+field_t get_winner_or_empty(field_t *board) {
     // check in columns
     for (int x = 0; x < 3; x++) {
         if(board[x] == F_EMPTY) continue;
@@ -47,8 +47,7 @@ field get_winner_or_empty(field *board) {
     return F_EMPTY; // no winner
 }
 
-
-void draw_board(field *board) {
+void draw_board(field_t *board) {
     for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
             int idx = y * 3 + x;

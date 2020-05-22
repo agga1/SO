@@ -1,6 +1,5 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
-
 #include <netdb.h>
 #include <poll.h>
 #include <pthread.h>
@@ -11,147 +10,174 @@
 #include <sys/un.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "game_util.h"
 
 typedef struct {
-    char* nickname;
+    char* nick;
     int fd;
-    int is_alive;
+    int enemy_idx;
+    bool alive;
 } client_t;
 
-client_t* clients[MAX_PLAYERS] = {NULL};
-int clients_count = 0;
+int clients_nr = 0;
+client_t* clients[MAX_CLIENTS];
 
 pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void easysend(int to, int cmd, char *arg){
-    char buffer[MSG_LEN+1];
-    snprintf(buffer, MSG_LEN, "%d:%s", cmd, arg);
-    send(to, buffer, MSG_LEN, 0);
-}
+void easysend(int to, int cmd, char *arg);
 int poll_sockets(int local_socket, int network_socket) {
-    struct pollfd* pfds = calloc(2 + clients_count, sizeof(struct pollfd));
+    struct pollfd* pfds = calloc(2 +clients_nr, sizeof(struct pollfd));
     pfds[0].fd = local_socket;
     pfds[0].events = POLLIN;
     pfds[1].fd = network_socket;
     pfds[1].events = POLLIN;
 
     pthread_mutex_lock(&clients_mutex);
-    for (int i = 0; i < clients_count; i++) {
+    for (int i = 0; i < clients_nr; i++) {
         pfds[i + 2].fd = clients[i]->fd;
         pfds[i + 2].events = POLLIN;
     }
     pthread_mutex_unlock(&clients_mutex);
-
-    poll(pfds, clients_count + 2, -1);
-
-    int retval;
-    for (int i = 0; i < clients_count + 2; i++) {
-        if (pfds[i].revents & POLLIN) {
-            retval = pfds[i].fd;
-            break;
+    int fd = -1;
+    if(poll(pfds,  clients_nr+ 2, -1) > 0){
+        for (int i = 0; i <  clients_nr+ 2; i++) {
+            if (pfds[i].revents & POLLIN) {
+                fd = pfds[i].fd;
+                break;
+            }
         }
     }
 
-    if (retval == local_socket || retval == network_socket) {
-        retval = accept(retval, NULL, NULL);
+    if (fd == local_socket || fd == network_socket) {
+        fd = accept(fd, NULL, NULL);
+        printf("accepting new client fd %d\n", fd);
     }
 
     free(pfds);
 
-    return retval;
+    return fd;
 }
 
-int get_by_nickname(char* nickname) {
-    for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (clients[i] != NULL && strcmp(clients[i]->nickname, nickname) == 0) {
-            return i;
-        }
-    }
+int by_nick(char *nick);
+int find_free_space(){
+    for(int i=0;i<MAX_CLIENTS;i++)
+        if(clients[i] == NULL) return i;
     return -1;
 }
-
-int get_opponent(int index) { return index % 2 == 0 ? index + 1 : index - 1; }
-
-int add_client(char* nickname, int fd) {
-    if (get_by_nickname(nickname) != -1) return -1;
-
-    int index = -1;
-    // check if there is another player waiting for an opponent
-    for (int i = 0; i < MAX_PLAYERS; i += 2) {
-        if (clients[i] != NULL && clients[i + 1] == NULL) {
-            index = i + 1;
-            break;
+int set_opponent(int idx){
+    for(int i=0;i<MAX_CLIENTS;i++)
+        if(i != idx && clients[i] != NULL && clients[i]->enemy_idx == -1) {
+            clients[i]->enemy_idx = idx;
+            clients[idx]->enemy_idx = i;
+            return 0;
         }
+    return -1;
+}
+int add_client(char* nickname, int fd);
+void delete_client(int idx);
+void ping_loop();
+int set_loc(char *path);
+int set_net(char *port);
+void handle_msg(int from, char *msg);
+
+int main(int argc, char* argv[]) {
+    srand(time(NULL));
+
+    if (argc != 3) {
+        fprintf(stderr, "Provide arguments:\n ./server port UNIX_path");
+        return 1;
     }
 
-    // if no opponent avaible, get first free place
-    for (int i = 0; i < MAX_PLAYERS && index == -1; i++) {
-        if (clients[i] == NULL) {
-            index = i;
-            break;
-        }
+    int net_socket = set_net(argv[1]);
+    int loc_socket = set_loc(argv[2]);
+    printf("set local socket %d, network socket %d\n", loc_socket, net_socket);
+    pthread_t pthread;
+    pthread_create(&pthread, NULL, (void *(*)(void *)) ping_loop, NULL);
+
+    while (1) {
+        int client_fd = poll_sockets(loc_socket, net_socket);
+
+        char buffer[MSG_LEN + 1];
+        recv(client_fd, buffer, MSG_LEN, 0);
+        handle_msg(client_fd, buffer);
     }
 
-    if (index != -1) {
-        client_t* new_client = calloc(1, sizeof(client_t));
-        new_client->nickname = calloc(MSG_LEN, sizeof(char));
-        strcpy(new_client->nickname, nickname);
-        new_client->fd = fd;
-        new_client->is_alive = 1;
-
-        clients[index] = new_client;
-        clients_count++;
-    }
-
-    return index;
+}
+void easysend(int to, int cmd, char *arg) {
+    char buffer[MSG_LEN+1];
+    snprintf(buffer, MSG_LEN, "%d|%s", cmd, arg);
+    send(to, buffer, MSG_LEN, 0);
 }
 
-void remove_client(char* nickname) {
-    printf("removing client: %s\n", nickname);
-    int client_index = get_by_nickname(nickname);
-    if (client_index == -1) return;
+void handle_msg(int from, char *msg) {
+    int cmd = atoi(strtok(msg, "|"));
+    char* arg = strtok(NULL, "|");
+    char* nick = strtok(NULL, "|");
 
-    free(clients[client_index]->nickname);
-    free(clients[client_index]);
-    clients[client_index] = NULL;
-    clients_count--;
-
-    int opponent_index = get_opponent(client_index);
-
-    if (clients[opponent_index] != NULL) {
-        puts("removing opponent");
-        free(clients[opponent_index]->nickname);
-        free(clients[opponent_index]);
-        clients[opponent_index] = NULL;
-        clients_count--;
-    }
-}
-
-void pinging_loop() {
-    puts("pinging");
     pthread_mutex_lock(&clients_mutex);
-    for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (clients[i] != NULL && !clients[i]->is_alive) {
-            printf("removing ping: %s\n", clients[i]->nickname);
-            remove_client(clients[i]->nickname);
+    if (cmd == CMD_ADD) {
+        if(clients_nr == MAX_CLIENTS){
+            easysend(from, cmd, "max_player_reached");
+            close(from);
+            return;
+        }
+        int idx = add_client(nick, from);
+        printf("new client fd %d\n", clients[idx]->fd);
+        if (idx == -1) {
+            easysend(from, cmd, "taken");
+            close(from);
+        } else if (set_opponent(idx) == -1) {
+            easysend(from, cmd, "no_enemy");
+        } else {
+            int enemy_idx = clients[idx]->enemy_idx;
+            easysend(clients[idx]->fd, cmd, "O");
+            easysend(clients[enemy_idx]->fd, cmd, "X");
         }
     }
-
-    for (int i = 0; i < MAX_PLAYERS; i++) {
-        if (clients[i] != NULL) {
-            easysend(clients[i]->fd, CMD_PING, "");
-            clients[i]->is_alive = 0;
+    if (cmd == CMD_MOVE) {
+        int idx = by_nick(nick);
+        int enemy_idx = clients[idx]->enemy_idx;
+        easysend(clients[enemy_idx]->fd, CMD_MOVE, arg);
+    }
+    if (cmd == CMD_QUIT) {
+        delete_client(by_nick(nick));
+    }
+    if (cmd == CMD_PONG) {
+        int player = by_nick(nick);
+        if (player != -1) {
+            clients[player]->alive = 1;
         }
     }
     pthread_mutex_unlock(&clients_mutex);
 
-    sleep(2);
-    pinging_loop();
 }
 
-int setup_local_socket(char* path) {
+void ping_loop() {
+    puts("!ping!");
+
+    pthread_mutex_lock(&clients_mutex);
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients[i] != NULL && !clients[i]->alive) {
+            printf("%s unresponsive \n", clients[i]->nick);
+            delete_client(i);
+        }
+    }
+
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients[i] != NULL) {
+            easysend(clients[i]->fd, CMD_PING, "");
+            clients[i]->alive = false;
+        }
+    }
+    pthread_mutex_unlock(&clients_mutex);
+
+    sleep(4);
+    ping_loop();
+}
+
+int set_loc(char *path) {
     int local_socket = socket(AF_UNIX, SOCK_STREAM, 0);
 
     struct sockaddr_un local_sockaddr;
@@ -168,7 +194,7 @@ int setup_local_socket(char* path) {
     return local_socket;
 }
 
-int setup_network_socket(char* port) {
+int set_net(char *port) {
     struct addrinfo* info;
 
     struct addrinfo hints;
@@ -190,70 +216,46 @@ int setup_network_socket(char* port) {
     return network_socket;
 }
 
-void handle_msg(int from, char *msg){
-    puts(msg);
+void delete_client(int idx) {
+    if (idx == -1) return;
+    printf("removing %s\n", clients[idx]->nick);
+    int enemy_idx = clients[idx]->enemy_idx;
 
-    int cmd = atoi(strtok(msg, ":"));
-    char* arg = strtok(NULL, ":");
-    char* nick = strtok(NULL, ":"); // TODO int player = getbynick
+    free(clients[idx]->nick);
+    free(clients[idx]);
+    clients[idx] = NULL;
+    clients_nr--;
 
-    pthread_mutex_lock(&clients_mutex);
-    if (cmd == CMD_ADD) {
-        int index = add_client(nick, from);
-
-        if (index == -1) {
-            easysend(from, cmd, "taken");
-            close(from);
-        } else if (index % 2 == 0) {
-            easysend(from, cmd, "no_enemy");
-        } else {
-            int waiting_client_goes_first = rand() % 2;
-            int player_idx = index - waiting_client_goes_first;
-            int opponent_idx = get_opponent(player_idx);
-
-            easysend(clients[player_idx]->fd, cmd, "O");
-            easysend(clients[opponent_idx]->fd, cmd, "X");
-        }
+    if (enemy_idx != -1) {
+        clients[enemy_idx]->enemy_idx = -1;
+        easysend(clients[enemy_idx]->fd, CMD_QUIT, 0);
+        delete_client(enemy_idx);
     }
-    if (cmd == CMD_MOVE) {
-        int player = get_by_nickname(nick);
-        easysend(clients[get_opponent(player)]->fd, CMD_MOVE, arg);
-    }
-    if (cmd == CMD_QUIT) {
-        remove_client(nick);
-    }
-    if (cmd == CMD_PONG) {
-        int player = get_by_nickname(nick);
-        if (player != -1) {
-            clients[player]->is_alive = 1;
-        }
-    }
-    pthread_mutex_unlock(&clients_mutex);
-
 }
-int main(int argc, char* argv[]) {
-    srand(time(NULL));
 
-    if (argc != 3) {
-        fprintf(stderr, "Provide arguments:\n ./server port UNIX_path");
-        return 1;
-    }
+int add_client(char *nickname, int fd) {
+    if (by_nick(nickname) != -1) return -1;
 
-    int network_socket = setup_network_socket(argv[1]);
-    int local_socket = setup_local_socket(argv[2]);
+    int idx = find_free_space();
+    if(idx == -1) return -1;
 
-    pthread_t t;
-    pthread_create(&t, NULL, (void* (*)(void*))pinging_loop, NULL);
+    client_t* new_client = calloc(1, sizeof(client_t));
+    new_client->nick = calloc(MSG_LEN, sizeof(char));
+    strcpy(new_client->nick, nickname);
+    new_client->fd = fd;
+    new_client->alive = 1;
+    new_client->enemy_idx = -1;
+    clients[idx] = new_client;
+    clients_nr++;
 
-    while (1) {
-        int client_fd = poll_sockets(local_socket, network_socket);
+    return idx;
+}
 
-        char buffer[MSG_LEN + 1];
-        recv(client_fd, buffer, MSG_LEN, 0);
-
-        handle_msg(client_fd, buffer);
-    }
-
+int by_nick(char *nick) {
+    for (int i = 0; i < MAX_CLIENTS; i++)
+        if (clients[i] != NULL && strcmp(clients[i]->nick, nick) == 0)
+            return i;
+    return -1;
 }
 
 #pragma clang diagnostic pop
