@@ -4,7 +4,6 @@
 
 #define MAX_CLIENTS 20
 #define MSG_LEN 256
-#define MAX_BACKLOG 10
 
 // commands protocol
 typedef enum {CMD_ADD, CMD_MOVE, CMD_QUIT, CMD_PING, CMD_PONG} command;
@@ -12,12 +11,6 @@ typedef enum {CMD_ADD, CMD_MOVE, CMD_QUIT, CMD_PING, CMD_PONG} command;
 typedef enum { F_EMPTY, F_O, F_X } field_t;
 static char field_char[3] = " OX";
 typedef enum { CON_LOCAL, CON_NETWORK} connection_t;
-struct message {
-    command cmd;
-    char *args;
-    char nick[MSG_LEN];
-} typedef message;
-
 // all game states
 typedef enum {
     META,

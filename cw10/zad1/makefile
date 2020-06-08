@@ -14,7 +14,7 @@ clean:
 test_s: all
 	./server 1234 /tmp/socket
 
-test_c1: all
+test_c1:
 	./client nick1 local /tmp/socket
 
 test_c2:

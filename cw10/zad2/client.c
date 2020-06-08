@@ -11,7 +11,6 @@
 #include <unistd.h>
 
 #include "game_util.h"
-#define _POSIX_C_SOURCE 200112L
 int server_socket;
 int type;
 field_t my_symbol;

@@ -44,7 +44,7 @@ int set_opponent(int idx){
 }
 int add_client(char* nickname, int fd);
 void delete_client(int idx);
-void ping_loop();
+void infinite_ping();
 int set_local(char *path);
 int set_net(char *port);
 void handle_msg(int from, char *msg);
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     int loc_socket = set_local(argv[2]);
     printf("set local socket %d, network socket %d\n", loc_socket, net_socket);
     pthread_t pthread;
-    pthread_create(&pthread, NULL, (void *(*)(void *)) ping_loop, NULL);
+    pthread_create(&pthread, NULL, (void *(*)(void *)) infinite_ping, NULL);
 
     struct pollfd* pfds = calloc(2 + MAX_CLIENTS, sizeof(struct pollfd));
     pfds[0].fd = loc_socket;
@@ -127,7 +127,7 @@ void handle_msg(int from, char *msg) {
 
 }
 
-void ping_loop() {
+void infinite_ping() {
     puts("!ping!");
 
     pthread_mutex_lock(&clients_mutex);
@@ -145,7 +145,7 @@ void ping_loop() {
     pthread_mutex_unlock(&clients_mutex);
 
     sleep(3);
-    ping_loop();
+    infinite_ping();
 }
 
 int set_local(char *path) {
@@ -168,6 +168,7 @@ int set_local(char *path) {
 int set_net(char *port) {
     struct addrinfo* info;
 
+    // specifying hints
     struct addrinfo hints;
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;
@@ -175,11 +176,10 @@ int set_net(char *port) {
     hints.ai_flags = AI_PASSIVE;
 
     getaddrinfo(NULL, port, &hints, &info);
-
-    int network_socket =
-            socket(info->ai_family, info->ai_socktype, info->ai_protocol);
+    // create and bind socket
+    int network_socket = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
     bind(network_socket, info->ai_addr, info->ai_addrlen);
-
+    // start listening
     listen(network_socket, MAX_BACKLOG);
 
     freeaddrinfo(info);
@@ -242,9 +242,9 @@ int fd_from_poll(int loc_socket, int net_socket, struct pollfd *pfds) {
 
     if (fd == loc_socket || fd == net_socket) {
         fd = accept(fd, NULL, NULL);
-        printf("accepting new client fd %d\n", fd);
-
-        pthread_mutex_lock(&clients_mutex); // add new fd to poll
+        printf("accepting new client with fd %d\n", fd);
+        // add new fd to poll
+        pthread_mutex_lock(&clients_mutex);
         pfds[clients_nr + 1].fd = fd;
         pfds[clients_nr + 1].events = POLLIN;
         pthread_mutex_unlock(&clients_mutex);

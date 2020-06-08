@@ -48,7 +48,7 @@ int set_opponent(int idx){
 }
 int add_client(char* nickname, int fd, struct sockaddr address);
 void delete_client(int idx);
-void ping_loop();
+void infinite_ping();
 int set_local(char *path);
 int set_net(char *port);
 void handle_msg(int from, char *msg,  struct sockaddr address);
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
     loc_socket = set_local(argv[2]);
     printf("set local socket %d, network socket %d\n", loc_socket, net_socket);
     pthread_t pthread;
-    pthread_create(&pthread, NULL, (void *(*)(void *)) ping_loop, NULL);
+    pthread_create(&pthread, NULL, (void *(*)(void *)) infinite_ping, NULL);
 
     struct pollfd pfds[2];
     pfds[0].fd = loc_socket;
@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 
         struct sockaddr address;
         socklen_t address_size = sizeof(address);
-        if(recvfrom(client_fd, buffer, sizeof(message), MSG_WAITALL, &address, &address_size) < 0)
+        if(recvfrom(client_fd, buffer, sizeof(buffer), MSG_WAITALL, &address, &address_size) < 0)
             perror("cant receive");
         handle_msg(client_fd, buffer, address);
     }
@@ -142,7 +142,7 @@ void handle_msg(int from, char *msg, struct sockaddr address) {
 
 }
 
-void ping_loop() {
+void infinite_ping() {
     puts("!ping!");
 
     pthread_mutex_lock(&clients_mutex);
@@ -160,7 +160,7 @@ void ping_loop() {
     pthread_mutex_unlock(&clients_mutex);
 
     sleep(4);
-    ping_loop();
+    infinite_ping();
 }
 int set_local(char *path) {
     unlink(path);
@@ -179,7 +179,7 @@ int set_local(char *path) {
 
 int set_net(char *port) {
     struct addrinfo* info;
-
+    // setting hints
     struct addrinfo hints;
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;
@@ -245,7 +245,6 @@ int fd_from_poll(struct pollfd *pfds) {
         if (pfds[i].revents & POLLIN){
             return pfds[i].fd;
         }
-
     return -1;
 }
 #pragma clang diagnostic pop
